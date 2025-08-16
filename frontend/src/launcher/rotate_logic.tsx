@@ -45,13 +45,13 @@ export const useRotateLogic = () => {
     checkAndLoadImages();
   }, []);
 
-  // Get items filtered by existence and having at least one rotation enabled
+  // Get items filtered by existence and display setting
   const getDisplayableItems = (): RotateItem[] => {
     return rotateItems
       .filter(item => 
         item.exists && 
         item.itemName && 
-        (item.rotation1.enabled === 'yes' || item.rotation2.enabled === 'yes')
+        item.itemDisplay === 'yes' // Use itemDisplay instead of rotation enabled
       )
       .sort((a, b) => a.itemLayer - b.itemLayer); // Sort by layer (bottom to top)
   };
