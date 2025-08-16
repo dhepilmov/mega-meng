@@ -15,6 +15,7 @@ export interface RotateItemConfig {
   itemPath: string;
   itemLayer: number;
   itemSize: number; // percentage from its own center
+  itemDisplay: 'yes' | 'no' | ''; // Controls whether PNG is displayed or hidden
   rotation1: RotationConfig;
   rotation2: RotationConfig;
 }
