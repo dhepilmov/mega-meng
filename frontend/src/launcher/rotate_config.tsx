@@ -96,9 +96,9 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 3,
     itemSize: 90,
     itemDisplay: 'yes',
-    // Decorative item - keeps original rotation behavior
-    handType: null,
-    handRotation: null,
+    // This will act as the hour hand using ROTATION1
+    handType: 'hour',
+    handRotation: 'ROTATION1',
     rotation1: {
       enabled: 'yes',
       itemTiltPosition: 0,
@@ -106,8 +106,8 @@ export const rotateConfig: RotateItemConfig[] = [
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 45,
-      rotationWay: '-', // anti-clockwise
+      rotationSpeed: 45, // This will be overridden by clock logic
+      rotationWay: '+', // clockwise
     },
     rotation2: {
       enabled: 'no',
