@@ -583,7 +583,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 18,
     itemSize: 42,
     itemDisplay: 'yes',
-    // Large decorative element
+    // Large decorative element - made faster and more visible
     handType: null,
     handRotation: null,
     rotation1: {
@@ -593,7 +593,7 @@ export const rotateConfig: RotateItemConfig[] = [
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 200,
+      rotationSpeed: 60, // Made faster (was 200)
       rotationWay: '-',
     },
     rotation2: {
