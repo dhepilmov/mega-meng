@@ -11,6 +11,7 @@ const Launcher: React.FC<LauncherProps> = () => {
   const { settings, updateSettings } = useLauncher();
   const {
     loading,
+    clockState,
     getDisplayableItems,
     calculateBasePosition,
     calculateItemTransform,
