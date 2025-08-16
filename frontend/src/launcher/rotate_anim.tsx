@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { RotateItem } from './rotate_logic';
+import { RotationConfig } from './rotate_config';
 
 interface RotateAnimProps {
   items: RotateItem[];
@@ -21,27 +22,72 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items }) => {
     let cssContent = '';
     
     items.forEach(item => {
-      if (item.display === 'yes' && item.exists) {
-        const direction = item.rotation === 'clockwise' ? '360deg' : '-360deg';
+      if (item.exists && item.itemName) {
+        // Generate animation for rotation1
+        if (item.rotation1.enabled === 'yes' && item.rotation1.rotationWay && item.rotation1.rotationWay !== 'no') {
+          const direction1 = item.rotation1.rotationWay === '+' ? '360deg' : '-360deg';
+          const animationName1 = `rotate1-${item.itemCode}`;
+          
+          cssContent += `
+            @keyframes ${animationName1} {
+              from {
+                transform: translate(-50%, -50%) 
+                          translate(${item.rotation1.itemPositionX}%, ${item.rotation1.itemPositionY}%) 
+                          rotate(${item.rotation1.itemTiltPosition}deg);
+              }
+              to {
+                transform: translate(-50%, -50%) 
+                          translate(${item.rotation1.itemPositionX}%, ${item.rotation1.itemPositionY}%) 
+                          rotate(calc(${item.rotation1.itemTiltPosition}deg + ${direction1}));
+              }
+            }
+          `;
+        }
+
+        // Generate animation for rotation2
+        if (item.rotation2.enabled === 'yes' && item.rotation2.rotationWay && item.rotation2.rotationWay !== 'no') {
+          const direction2 = item.rotation2.rotationWay === '+' ? '360deg' : '-360deg';
+          const animationName2 = `rotate2-${item.itemCode}`;
+          
+          cssContent += `
+            @keyframes ${animationName2} {
+              from {
+                transform: translate(-50%, -50%) 
+                          translate(${item.rotation2.itemPositionX}%, ${item.rotation2.itemPositionY}%) 
+                          rotate(${item.rotation2.itemTiltPosition}deg);
+              }
+              to {
+                transform: translate(-50%, -50%) 
+                          translate(${item.rotation2.itemPositionX}%, ${item.rotation2.itemPositionY}%) 
+                          rotate(calc(${item.rotation2.itemTiltPosition}deg + ${direction2}));
+              }
+            }
+          `;
+        }
+
+        // Apply animations to the element
+        let animations: string[] = [];
         
-        cssContent += `
-          @keyframes rotate-${item.code} {
-            from {
-              transform: translate(-50%, -50%) rotate(${item.tiltPosition}deg);
+        if (item.rotation1.enabled === 'yes' && item.rotation1.rotationWay && item.rotation1.rotationWay !== 'no') {
+          animations.push(`rotate1-${item.itemCode} ${item.rotation1.rotationSpeed}s linear infinite`);
+        }
+        
+        if (item.rotation2.enabled === 'yes' && item.rotation2.rotationWay && item.rotation2.rotationWay !== 'no') {
+          animations.push(`rotate2-${item.itemCode} ${item.rotation2.rotationSpeed}s linear infinite`);
+        }
+
+        if (animations.length > 0) {
+          cssContent += `
+            .rotate-item-${item.itemCode} {
+              animation: ${animations.join(', ')};
+              transform-origin: ${item.rotation1.enabled === 'yes' ? item.rotation1.itemAxisX : item.rotation2.itemAxisX}% ${item.rotation1.enabled === 'yes' ? item.rotation1.itemAxisY : item.rotation2.itemAxisY}%;
             }
-            to {
-              transform: translate(-50%, -50%) rotate(calc(${item.tiltPosition}deg + ${direction}));
+            
+            .rotate-item-${item.itemCode}:hover {
+              animation-play-state: paused;
             }
-          }
-          
-          .rotate-item-${item.code} {
-            animation: rotate-${item.code} ${item.rotationSpeed}s linear infinite;
-          }
-          
-          .rotate-item-${item.code}:hover {
-            animation-play-state: paused;
-          }
-        `;
+          `;
+        }
       }
     });
 
@@ -119,8 +165,27 @@ export const useRotateAnimation = () => {
     setGlobalSpeed(speed);
     const rotateItems = document.querySelectorAll('.rotate-item');
     rotateItems.forEach(item => {
-      (item as HTMLElement).style.animationDuration = `${speed}s`;
+      const currentAnimation = (item as HTMLElement).style.animation;
+      if (currentAnimation) {
+        // Modify animation duration while preserving other properties
+        const modifiedAnimation = currentAnimation.replace(/(\d+(?:\.\d+)?)s/g, `${speed}s`);
+        (item as HTMLElement).style.animation = modifiedAnimation;
+      }
     });
+  };
+
+  const pauseItemAnimation = (itemCode: string) => {
+    const item = document.querySelector(`.rotate-item-${itemCode}`) as HTMLElement;
+    if (item) {
+      item.style.animationPlayState = 'paused';
+    }
+  };
+
+  const resumeItemAnimation = (itemCode: string) => {
+    const item = document.querySelector(`.rotate-item-${itemCode}`) as HTMLElement;
+    if (item) {
+      item.style.animationPlayState = 'running';
+    }
   };
 
   return {
@@ -130,5 +195,7 @@ export const useRotateAnimation = () => {
     resumeAllAnimations,
     toggleAnimations,
     setAnimationSpeed,
+    pauseItemAnimation,
+    resumeItemAnimation,
   };
 };
