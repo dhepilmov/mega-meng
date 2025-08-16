@@ -12,8 +12,9 @@ const Launcher: React.FC<LauncherProps> = () => {
   const {
     loading,
     getDisplayableItems,
-    calculatePosition,
-    getAnimationStyle,
+    calculateBasePosition,
+    calculateItemTransform,
+    calculateTransformOrigin,
   } = useRotateLogic();
 
   const displayableItems = getDisplayableItems();
@@ -37,10 +38,11 @@ const Launcher: React.FC<LauncherProps> = () => {
         {/* Render all displayable rotate items */}
         {displayableItems.map((item) => (
           <RotateItemComponent
-            key={item.code}
+            key={item.itemCode}
             item={item}
-            calculatePosition={calculatePosition}
-            getAnimationStyle={getAnimationStyle}
+            calculateBasePosition={calculateBasePosition}
+            calculateItemTransform={calculateItemTransform}
+            calculateTransformOrigin={calculateTransformOrigin}
           />
         ))}
         
