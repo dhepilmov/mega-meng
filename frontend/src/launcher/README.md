@@ -69,7 +69,7 @@ The launcher features a sophisticated dual rotation system with 20 configurable 
 - **itemDisplay**: 'yes' to show PNG, 'no' or '' to hide PNG completely
 
 ### ROTATION 1 Properties
-- **enabled**: 'yes' to enable, 'no' or null to disable
+- **enabled**: 'yes' to animate, 'no' to display static (PNG still shows if itemDisplay is 'yes')
 - **itemTiltPosition**: Initial rotation angle in degrees
 - **itemAxisX**: Rotation axis X position (% from image's own center)
 - **itemAxisY**: Rotation axis Y position (% from image's own center)
