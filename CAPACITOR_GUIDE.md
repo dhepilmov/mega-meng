@@ -30,7 +30,7 @@ yarn cap:open
 
 ### **Backend URL Configuration:**
 - **File**: `/app/frontend/.env`
-- **Current**: `REACT_APP_BACKEND_URL=https://apk-conversion.preview.emergentagent.com`
+- **Current**: `REACT_APP_BACKEND_URL=https://clock-cleanup.preview.emergentagent.com`
 - **Local Testing**: Change to `http://localhost:8001`
 - **Production**: Change to your deployed backend URL
 
