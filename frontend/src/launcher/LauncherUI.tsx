@@ -46,11 +46,12 @@ const Launcher: React.FC<LauncherProps> = () => {
   return (
     <div className="launcher-container">
       <div 
-        className="launcher-content gesture-container"
+        className="launcher-content"
         style={{
           transform: `scale(${gestureState.scale})`,
           transformOrigin: 'center center',
           transition: 'transform 0.1s ease-out',
+          touchAction: 'none',
         }}
         {...touchHandlers}
       >
@@ -72,11 +73,8 @@ const Launcher: React.FC<LauncherProps> = () => {
         <DotMark />
       </div>
       
-      {/* Gesture Controls */}
-      <GestureControls 
-        controls={controls}
-        gestureState={gestureState}
-      />
+      {/* Simple Gesture Controls */}
+      <GestureControls controls={controls} gestureState={gestureState} />
     </div>
   );
 };
