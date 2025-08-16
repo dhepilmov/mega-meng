@@ -27,6 +27,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/clockBG.png',
     itemLayer: 1,
     itemSize: 80,
+    itemDisplay: 'yes',
     rotation1: {
       enabled: 'yes',
       itemTiltPosition: 0,
