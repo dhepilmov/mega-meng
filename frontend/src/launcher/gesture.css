@@ -1,8 +1,8 @@
 /* Gesture Controls Styles */
 .gesture-controls {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
   display: flex;
   align-items: center;
   gap: 10px;
