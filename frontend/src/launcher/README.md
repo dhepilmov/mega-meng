@@ -124,20 +124,36 @@ Same properties as ROTATION 1, allowing for independent dual rotation behavior.
 
 ## Usage Examples
 
+### Display Static Image (No Animation)
+```tsx
+itemDisplay: 'yes'
+rotation1: { enabled: 'no', itemAxisX: 50, itemAxisY: 50 }
+rotation2: { enabled: 'no' }
+```
+
 ### Simple Self-Rotation
 ```tsx
+itemDisplay: 'yes'
 rotation1: { enabled: 'yes', itemAxisX: 50, itemAxisY: 50, rotationSpeed: 20, rotationWay: '+' }
 rotation2: { enabled: 'no' }
 ```
 
 ### Orbital Motion
 ```tsx
+itemDisplay: 'yes'
 rotation1: { enabled: 'yes', itemPositionX: 30, itemPositionY: 0, rotationSpeed: 15, rotationWay: '+' }
 rotation2: { enabled: 'no' }
 ```
 
 ### Planet System (Dual Rotation)
 ```tsx
+itemDisplay: 'yes'
 rotation1: { enabled: 'yes', itemAxisX: 50, itemAxisY: 50, rotationSpeed: 5, rotationWay: '+' }  // Self-spin
 rotation2: { enabled: 'yes', itemPositionX: 40, itemPositionY: 0, rotationSpeed: 20, rotationWay: '+' }  // Orbit
+```
+
+### Hide PNG Completely
+```tsx
+itemDisplay: 'no'
+// rotation settings are ignored when itemDisplay is 'no'
 ```
