@@ -55,6 +55,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/minutes_circle.png',
     itemLayer: 2,
     itemSize: 70,
+    itemDisplay: 'yes',
     rotation1: {
       enabled: 'yes',
       itemTiltPosition: 0,
