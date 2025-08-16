@@ -3,9 +3,8 @@ import { useLauncher } from './launcher_hook';
 import DotMark from './DotMark';
 import { useRotateLogic, RotateItemComponent } from './rotate_logic';
 import { RotateAnim } from './rotate_anim';
-import { useGestures, GestureProvider, GestureControls } from './launcher_gesture';
+import { useGestures, GestureControls } from './launcher_gesture';
 import './launcher.css';
-import './gesture.css';
 
 interface LauncherProps {}
 
