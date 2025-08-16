@@ -99,7 +99,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemName: 'outer_circle',
     itemPath: 'res/outer_circle.png',
     itemLayer: 4,
-    itemSize: 90,
+    itemSize: 70,
     itemDisplay: 'yes',
     // Hour hand using ROTATION1
     handType: 'hour',
