@@ -66,6 +66,7 @@ The launcher features a sophisticated dual rotation system with 20 configurable 
 - **itemPath**: File path relative to res/ folder
 - **itemLayer**: Z-index layer (1 = back, 20 = front)
 - **itemSize**: Size as percentage from its own center
+- **itemDisplay**: 'yes' to show PNG, 'no' or '' to hide PNG completely
 
 ### ROTATION 1 Properties
 - **enabled**: 'yes' to enable, 'no' or null to disable
