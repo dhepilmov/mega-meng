@@ -1,0 +1,63 @@
+/* Launcher Container Styles */
+.launcher-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #f5f5f5; /* Light grey background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.launcher-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .launcher-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .launcher-container {
+    padding: 0.5rem;
+  }
+}
+
+/* Animation base classes for future use */
+.launcher-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.launcher-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
