@@ -34,8 +34,9 @@ The launcher features a sophisticated dual rotation system with 20 configurable 
      itemPath: 'res/your_image.png',
      itemLayer: 4,                     // Layer position (1 = back, 20 = front)
      itemSize: 60,                     // Size percentage from its own center
+     itemDisplay: 'yes',               // 'yes' to show PNG, 'no' or '' to hide PNG
      rotation1: {
-       enabled: 'yes',                 // 'yes', 'no', or null
+       enabled: 'yes',                 // 'yes' to animate, 'no' for static display
        itemTiltPosition: 0,            // Initial tilt angle
        itemAxisX: 50,                  // Rotation axis X (% from image center)
        itemAxisY: 50,                  // Rotation axis Y (% from image center)
