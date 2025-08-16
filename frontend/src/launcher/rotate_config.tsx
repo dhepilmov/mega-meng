@@ -34,6 +34,9 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 2,
     itemSize: 80,
     itemDisplay: 'yes',
+    // Clock background - decorative only
+    handType: null,
+    handRotation: null,
     rotation1: {
       enabled: 'no',
       itemTiltPosition: 0,
@@ -62,6 +65,9 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 1,
     itemSize: 70,
     itemDisplay: 'yes',
+    // This will act as minute hand using ROTATION1
+    handType: 'minute',
+    handRotation: 'ROTATION1',
     rotation1: {
       enabled: 'yes',
       itemTiltPosition: 0,
@@ -69,7 +75,7 @@ export const rotateConfig: RotateItemConfig[] = [
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 60,
+      rotationSpeed: 60, // This will be overridden by clock logic
       rotationWay: '+',
     },
     rotation2: {
@@ -90,6 +96,9 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 3,
     itemSize: 90,
     itemDisplay: 'yes',
+    // Decorative item - keeps original rotation behavior
+    handType: null,
+    handRotation: null,
     rotation1: {
       enabled: 'yes',
       itemTiltPosition: 0,
