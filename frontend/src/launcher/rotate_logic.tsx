@@ -178,11 +178,15 @@ export const useRotateLogic = () => {
   return {
     rotateItems,
     loading,
+    clockState, // Expose clock state for animation layer
     getDisplayableItems,
     getItemByCode,
     calculateBasePosition,
     calculateItemTransform,
     calculateTransformOrigin,
+    isClockHand, // Expose for animation layer
+    getClockAngle, // Expose for animation layer
+    getActiveRotationConfig, // Expose for animation layer
   };
 };
 
