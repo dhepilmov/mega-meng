@@ -20,6 +20,18 @@ const Launcher: React.FC<LauncherProps> = () => {
     calculateTransformOrigin,
   } = useRotateLogic();
 
+  // Initialize gesture controls
+  const { gestureState, touchHandlers, controls } = useGestures({
+    minScale: 0.3,
+    maxScale: 4.0,
+    scaleStep: 0.2,
+    enablePinchZoom: true,
+    enableDoubleTapZoom: true,
+    enablePan: false, // Keep false to not interfere with launcher rotation
+    enableRotation: false, // Keep false to not interfere with launcher rotation
+    doubleTapZoomScale: 2.0,
+  });
+
   const displayableItems = getDisplayableItems();
 
   if (loading) {
