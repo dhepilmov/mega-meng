@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { rotateConfig, RotateItemConfig, RotationConfig } from './rotate_config';
+import { useClock, ClockState } from './clock_logic';
 
 export interface RotateItem extends RotateItemConfig {
   exists: boolean;
