@@ -519,7 +519,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 16,
     itemSize: 22,
     itemDisplay: 'yes',
-    // High-speed decorative spinner
+    // High-speed decorative spinner - made faster
     handType: null,
     handRotation: null,
     rotation1: {
@@ -529,7 +529,7 @@ export const rotateConfig: RotateItemConfig[] = [
       itemAxisY: 50,
       itemPositionX: -30,
       itemPositionY: 0,
-      rotationSpeed: 15,
+      rotationSpeed: 8, // Made much faster (was 15)
       rotationWay: '+',
     },
     rotation2: {
