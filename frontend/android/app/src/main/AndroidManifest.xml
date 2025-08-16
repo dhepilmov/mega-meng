@@ -38,4 +38,22 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- Print API Permission -->
+    <uses-permission android:name="android.permission.BIND_PRINT_SERVICE" />
+    
+    <!-- Network State (for checking connectivity) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- Optional: Future permissions you might need -->
+    <!-- Camera (if you add camera features later) -->
+    <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
+    
+    <!-- File storage (if you add file download/upload) -->
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+    
+    <!-- Location (if you add location features later) -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
 </manifest>
