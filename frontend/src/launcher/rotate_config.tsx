@@ -16,6 +16,12 @@ export interface RotateItemConfig {
   itemLayer: number;
   itemSize: number; // percentage from its own center
   itemDisplay: 'yes' | 'no' | ''; // Controls whether PNG is displayed or hidden
+  
+  // NEW: Clock hand configuration
+  handType?: 'hour' | 'minute' | 'second' | null;
+  handRotation?: 'ROTATION1' | 'ROTATION2' | null;
+  // When handType is set, clock logic overrides the specified rotation
+  
   rotation1: RotationConfig;
   rotation2: RotationConfig;
 }
