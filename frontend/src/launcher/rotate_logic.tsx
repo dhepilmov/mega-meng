@@ -124,10 +124,24 @@ export const useRotateLogic = () => {
     return transforms.join(' ');
   };
 
-  // Calculate combined transform for item
+  // Calculate combined transform for item (with clock integration)
   const calculateItemTransform = (item: RotateItem): string => {
     let transform = 'translate(-50%, -50%)';
     
+    // For clock hands, use clock angles
+    if (isClockHand(item) && item.handType) {
+      const activeRotation = getActiveRotationConfig(item);
+      if (activeRotation) {
+        const clockAngle = getClockAngle(item.handType);
+        // Apply position offset
+        transform += ` translate(${activeRotation.itemPositionX}%, ${activeRotation.itemPositionY}%)`;
+        // Apply clock rotation with initial tilt
+        transform += ` rotate(${activeRotation.itemTiltPosition + clockAngle}deg)`;
+        return transform;
+      }
+    }
+
+    // For non-hand items, use original logic
     // Apply rotation 1 positioning
     if (item.rotation1.enabled === 'yes') {
       transform += ` translate(${item.rotation1.itemPositionX}%, ${item.rotation1.itemPositionY}%)`;
