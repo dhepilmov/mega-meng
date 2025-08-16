@@ -11,7 +11,7 @@ interface RotateAnimProps {
   };
 }
 
-export const RotateAnim: React.FC<RotateAnimProps> = ({ items }) => {
+export const RotateAnim: React.FC<RotateAnimProps> = ({ items, clockState }) => {
   useEffect(() => {
     // Create and inject CSS animations for each item
     const styleElement = document.createElement('style');
@@ -23,11 +23,31 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items }) => {
       existingStyle.remove();
     }
 
+    // Helper function to check if item is a clock hand
+    const isClockHand = (item: RotateItem): boolean => {
+      return item.handType !== null && item.handType !== undefined && item.handRotation !== null;
+    };
+
     // Generate CSS keyframes for all items
     let cssContent = '';
     
     items.forEach(item => {
       if (item.exists && item.itemName) {
+        
+        // Skip CSS animations for clock hands - they're controlled by real-time transforms
+        if (isClockHand(item)) {
+          // Clock hands get smooth real-time updates via transform in rotate_logic
+          // No CSS animation needed - requestAnimationFrame handles it
+          cssContent += `
+            .rotate-item-${item.itemCode} {
+              /* Clock hand - no CSS animation, controlled by real-time transforms */
+              transition: none;
+            }
+          `;
+          return;
+        }
+
+        // Generate animation for non-hand items (decorative elements)
         // Generate animation for rotation1
         if (item.rotation1.enabled === 'yes' && item.rotation1.rotationWay && item.rotation1.rotationWay !== 'no') {
           const direction1 = item.rotation1.rotationWay === '+' ? '360deg' : '-360deg';
@@ -70,7 +90,7 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items }) => {
           `;
         }
 
-        // Apply animations to the element
+        // Apply animations to the element (only for non-hand items)
         let animations: string[] = [];
         
         if (item.rotation1.enabled === 'yes' && item.rotation1.rotationWay && item.rotation1.rotationWay !== 'no') {
