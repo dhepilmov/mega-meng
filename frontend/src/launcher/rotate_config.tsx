@@ -112,6 +112,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/',
     itemLayer: index + 4,
     itemSize: 50,
+    itemDisplay: 'no' as const, // Hidden by default
     rotation1: {
       enabled: 'no' as const,
       itemTiltPosition: 0,
