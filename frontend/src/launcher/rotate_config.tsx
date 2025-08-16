@@ -83,6 +83,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/outer_circle.png',
     itemLayer: 3,
     itemSize: 90,
+    itemDisplay: 'yes',
     rotation1: {
       enabled: 'yes',
       itemTiltPosition: 0,
