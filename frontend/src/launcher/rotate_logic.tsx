@@ -58,7 +58,28 @@ export const useRotateLogic = () => {
       .sort((a, b) => a.itemLayer - b.itemLayer); // Sort by layer (bottom to top)
   };
 
-  // Get item by code
+  // Get clock angle for hand type
+  const getClockAngle = (handType: 'hour' | 'minute' | 'second'): number => {
+    switch (handType) {
+      case 'hour': return clockState.hourAngle;
+      case 'minute': return clockState.minuteAngle;
+      case 'second': return clockState.secondAngle;
+      default: return 0;
+    }
+  };
+
+  // Check if item is a clock hand
+  const isClockHand = (item: RotateItem): boolean => {
+    return item.handType !== null && item.handType !== undefined && item.handRotation !== null;
+  };
+
+  // Get active rotation config for hand items
+  const getActiveRotationConfig = (item: RotateItem): RotationConfig | null => {
+    if (!isClockHand(item)) return null;
+    
+    return item.handRotation === 'ROTATION1' ? item.rotation1 : 
+           item.handRotation === 'ROTATION2' ? item.rotation2 : null;
+  };
   const getItemByCode = (code: string): RotateItem | undefined => {
     return rotateItems.find(item => item.itemCode === code);
   };
