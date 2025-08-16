@@ -10,6 +10,7 @@ export interface RotateItem extends RotateItemConfig {
 export const useRotateLogic = () => {
   const [rotateItems, setRotateItems] = useState<RotateItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const clockState = useClock(); // Get real-time clock angles
 
   // Check if image files exist and load them
   useEffect(() => {
