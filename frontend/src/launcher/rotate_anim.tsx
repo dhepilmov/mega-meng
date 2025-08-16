@@ -4,6 +4,11 @@ import { RotationConfig } from './rotate_config';
 
 interface RotateAnimProps {
   items: RotateItem[];
+  clockState?: {
+    hourAngle: number;
+    minuteAngle: number;
+    secondAngle: number;
+  };
 }
 
 export const RotateAnim: React.FC<RotateAnimProps> = ({ items }) => {
