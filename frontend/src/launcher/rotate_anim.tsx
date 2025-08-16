@@ -148,7 +148,7 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items, clockState }) => 
         styleToRemove.remove();
       }
     };
-  }, [items]);
+  }, [items, clockState]); // Include clockState in dependencies
 
   return null; // This component only manages CSS, doesn't render anything
 };
