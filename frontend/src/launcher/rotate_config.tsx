@@ -120,9 +120,41 @@ export const rotateConfig: RotateItemConfig[] = [
       rotationWay: '',
     },
   },
-  // Placeholder items 4-20
-  ...Array.from({ length: 17 }, (_, index) => ({
-    itemCode: `item_${index + 4}`,
+  // Add a second hand using the clockBG as a smaller element
+  {
+    itemCode: 'item_4',
+    itemName: 'clockBG',
+    itemPath: 'res/clockBG.png',
+    itemLayer: 4,
+    itemSize: 30, // Smaller for second hand
+    itemDisplay: 'yes',
+    // This will act as second hand using ROTATION1
+    handType: 'second',
+    handRotation: 'ROTATION1',
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 20, // This will be overridden by clock logic
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 30,
+      rotationWay: '+',
+    },
+  },
+  // Placeholder items 5-20
+  ...Array.from({ length: 16 }, (_, index) => ({
+    itemCode: `item_${index + 5}`,
     itemName: '',
     itemPath: 'res/',
     itemLayer: index + 4,
