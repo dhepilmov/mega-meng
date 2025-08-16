@@ -19,7 +19,11 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test"
+    "test": "craco test",
+    "cap:build": "yarn build && npx cap sync android",
+    "cap:open": "npx cap open android",
+    "cap:run": "yarn cap:build && npx cap run android",
+    "cap:build-apk": "yarn cap:build && cd android && ./gradlew assembleDebug"
   },
   "browserslist": {
     "production": [
