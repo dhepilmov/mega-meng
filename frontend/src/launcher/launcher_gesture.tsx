@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 
-// Gesture Types
+// Combined Gesture Types
 export interface GestureState {
   scale: number;
   translateX: number;
@@ -14,42 +14,65 @@ export interface TouchPoint {
   y: number;
 }
 
+export interface SwipeGesture {
+  direction: 'left' | 'right' | 'up' | 'down';
+  distance: number;
+  velocity: number;
+}
+
 export interface GestureConfig {
+  // Zoom settings
   minScale: number;
   maxScale: number;
   scaleStep: number;
   enablePinchZoom: boolean;
   enableDoubleTapZoom: boolean;
+  doubleTapZoomScale: number;
+  
+  // Pan/Rotation settings
   enablePan: boolean;
   enableRotation: boolean;
-  doubleTapZoomScale: number;
+  
+  // Extended gestures
+  enableSwipe: boolean;
+  enableLongPress: boolean;
+  
+  // Timing
   animationDuration: number;
+  longPressDuration: number;
+  
+  // Thresholds
   threshold: {
     pinch: number;
     pan: number;
     rotation: number;
+    swipe: number;
   };
 }
 
-// Default gesture configuration
+// Default configuration
 export const defaultGestureConfig: GestureConfig = {
-  minScale: 0.5,
-  maxScale: 3.0,
-  scaleStep: 0.1,
+  minScale: 0.3,
+  maxScale: 4.0,
+  scaleStep: 0.2,
   enablePinchZoom: true,
   enableDoubleTapZoom: true,
-  enablePan: false, // Disabled by default to not interfere with launcher rotation
-  enableRotation: false, // Disabled by default to not interfere with launcher rotation
   doubleTapZoomScale: 2.0,
+  enablePan: false,
+  enableRotation: false,
+  enableSwipe: false,
+  enableLongPress: false,
   animationDuration: 300,
+  longPressDuration: 500,
   threshold: {
     pinch: 10,
     pan: 5,
     rotation: 5,
+    swipe: 50,
   },
 };
 
-// Gesture Hook
+// Main Gesture Hook
 export const useGestures = (config: Partial<GestureConfig> = {}) => {
   const fullConfig = { ...defaultGestureConfig, ...config };
   
@@ -62,12 +85,17 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
 
   const [isGesturing, setIsGesturing] = useState(false);
   const [lastTap, setLastTap] = useState<number>(0);
+  const [swipeState, setSwipeState] = useState<SwipeGesture | null>(null);
+  const [longPressActive, setLongPressActive] = useState(false);
   
+  // Refs
   const touchesRef = useRef<TouchPoint[]>([]);
   const initialDistanceRef = useRef<number>(0);
   const initialAngleRef = useRef<number>(0);
   const initialCenterRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const animationFrameRef = useRef<number>(0);
+  const swipeStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
+  const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Helper functions
   const getDistance = (touch1: TouchPoint, touch2: TouchPoint): number => {
@@ -91,12 +119,40 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
     return Math.max(fullConfig.minScale, Math.min(fullConfig.maxScale, scale));
   };
 
+  // Animation helper
+  const animateScale = useCallback((targetScale: number) => {
+    const startScale = gestureState.scale;
+    const startTime = performance.now();
+    const duration = fullConfig.animationDuration;
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const currentScale = startScale + (targetScale - startScale) * easeOut;
+
+      setGestureState(prev => ({
+        ...prev,
+        scale: clampScale(currentScale),
+      }));
+
+      if (progress < 1) {
+        animationFrameRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+    animationFrameRef.current = requestAnimationFrame(animate);
+  }, [gestureState.scale, fullConfig.animationDuration]);
+
   // Touch event handlers
   const handleTouchStart = useCallback((event: React.TouchEvent) => {
     event.preventDefault();
     setIsGesturing(true);
 
-    const touches: TouchPoint[] = Array.from(event.touches).map((touch, index) => ({
+    const touches: TouchPoint[] = Array.from(event.touches).map((touch) => ({
       id: touch.identifier,
       x: touch.clientX,
       y: touch.clientY,
@@ -105,22 +161,43 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
     touchesRef.current = touches;
 
     if (touches.length === 2) {
-      // Two finger gestures (pinch, rotate)
+      // Two finger gestures
       initialDistanceRef.current = getDistance(touches[0], touches[1]);
       initialAngleRef.current = getAngle(touches[0], touches[1]);
       initialCenterRef.current = getCenter(touches[0], touches[1]);
     }
 
-    // Double tap detection
-    if (touches.length === 1 && fullConfig.enableDoubleTapZoom) {
-      const now = Date.now();
-      const timeDiff = now - lastTap;
-      if (timeDiff < 300) {
-        handleDoubleTap(touches[0]);
+    if (touches.length === 1) {
+      const touch = touches[0];
+      
+      // Double tap detection
+      if (fullConfig.enableDoubleTapZoom) {
+        const now = Date.now();
+        const timeDiff = now - lastTap;
+        if (timeDiff < 300) {
+          const newScale = gestureState.scale === 1 ? fullConfig.doubleTapZoomScale : 1;
+          animateScale(newScale);
+        }
+        setLastTap(now);
       }
-      setLastTap(now);
+
+      // Swipe start
+      if (fullConfig.enableSwipe) {
+        swipeStartRef.current = { x: touch.x, y: touch.y, time: Date.now() };
+        setSwipeState(null);
+      }
+
+      // Long press start
+      if (fullConfig.enableLongPress) {
+        if (longPressTimerRef.current) {
+          clearTimeout(longPressTimerRef.current);
+        }
+        longPressTimerRef.current = setTimeout(() => {
+          setLongPressActive(true);
+        }, fullConfig.longPressDuration);
+      }
     }
-  }, [lastTap, fullConfig.enableDoubleTapZoom]);
+  }, [lastTap, gestureState.scale, fullConfig]);
 
   const handleTouchMove = useCallback((event: React.TouchEvent) => {
     event.preventDefault();
@@ -144,10 +221,7 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
         const newScale = clampScale(gestureState.scale * scaleChange);
         
         if (Math.abs(currentDistance - initialDistanceRef.current) > fullConfig.threshold.pinch) {
-          setGestureState(prev => ({
-            ...prev,
-            scale: newScale,
-          }));
+          setGestureState(prev => ({ ...prev, scale: newScale }));
           initialDistanceRef.current = currentDistance;
         }
       }
@@ -164,7 +238,7 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
         }
       }
 
-      // Pan (with two fingers)
+      // Pan
       if (fullConfig.enablePan) {
         const deltaX = currentCenter.x - initialCenterRef.current.x;
         const deltaY = currentCenter.y - initialCenterRef.current.y;
@@ -180,6 +254,12 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
       }
     }
 
+    // Cancel long press on move
+    if (fullConfig.enableLongPress && longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+
     touchesRef.current = touches;
   }, [isGesturing, gestureState.scale, fullConfig]);
 
@@ -191,44 +271,42 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
       touchesRef.current = [];
       initialDistanceRef.current = 0;
       initialAngleRef.current = 0;
-    }
-  }, []);
 
-  const handleDoubleTap = useCallback((touch: TouchPoint) => {
-    const newScale = gestureState.scale === 1 ? fullConfig.doubleTapZoomScale : 1;
-    animateScale(newScale);
-  }, [gestureState.scale, fullConfig.doubleTapZoomScale]);
+      // Handle swipe end
+      if (fullConfig.enableSwipe && swipeStartRef.current) {
+        const touch = event.changedTouches[0];
+        if (touch) {
+          const endTime = Date.now();
+          const duration = endTime - swipeStartRef.current.time;
+          const deltaX = touch.clientX - swipeStartRef.current.x;
+          const deltaY = touch.clientY - swipeStartRef.current.y;
+          const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+          const velocity = distance / duration;
 
-  const animateScale = useCallback((targetScale: number) => {
-    const startScale = gestureState.scale;
-    const startTime = performance.now();
-    const duration = fullConfig.animationDuration;
+          if (distance > fullConfig.threshold.swipe && velocity > 0.5) {
+            let direction: SwipeGesture['direction'];
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+              direction = deltaX > 0 ? 'right' : 'left';
+            } else {
+              direction = deltaY > 0 ? 'down' : 'up';
+            }
 
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Easing function (ease-out)
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-      const currentScale = startScale + (targetScale - startScale) * easeOut;
-
-      setGestureState(prev => ({
-        ...prev,
-        scale: clampScale(currentScale),
-      }));
-
-      if (progress < 1) {
-        animationFrameRef.current = requestAnimationFrame(animate);
+            setSwipeState({ direction, distance, velocity });
+          }
+        }
+        swipeStartRef.current = null;
       }
-    };
 
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
+      // Clear long press
+      if (longPressTimerRef.current) {
+        clearTimeout(longPressTimerRef.current);
+        longPressTimerRef.current = null;
+      }
+      setLongPressActive(false);
     }
-    animationFrameRef.current = requestAnimationFrame(animate);
-  }, [gestureState.scale, fullConfig.animationDuration]);
+  }, [fullConfig]);
 
-  // Programmatic control functions
+  // Control functions
   const zoomIn = useCallback(() => {
     const newScale = clampScale(gestureState.scale + fullConfig.scaleStep);
     animateScale(newScale);
@@ -259,12 +337,17 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
+      if (longPressTimerRef.current) {
+        clearTimeout(longPressTimerRef.current);
+      }
     };
   }, []);
 
   return {
     gestureState,
     isGesturing,
+    swipeState,
+    longPressActive,
     touchHandlers: {
       onTouchStart: handleTouchStart,
       onTouchMove: handleTouchMove,
@@ -280,88 +363,72 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
   };
 };
 
-// Gesture Provider Component
-export interface GestureProviderProps {
-  children: React.ReactNode;
-  config?: Partial<GestureConfig>;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-export const GestureProvider: React.FC<GestureProviderProps> = ({
-  children,
-  config = {},
-  className = '',
-  style = {},
-}) => {
-  const { gestureState, touchHandlers } = useGestures(config);
-
-  const transformStyle: React.CSSProperties = {
-    transform: `
-      scale(${gestureState.scale})
-      translate(${gestureState.translateX}px, ${gestureState.translateY}px)
-      rotate(${gestureState.rotation}deg)
-    `,
-    transformOrigin: 'center center',
-    transition: 'transform 0.1s ease-out',
-    ...style,
-  };
-
-  return (
-    <div
-      className={className}
-      style={transformStyle}
-      {...touchHandlers}
-    >
-      {children}
-    </div>
-  );
-};
-
-// Gesture Controls Component (optional UI controls)
+// Simple Gesture Controls Component
 export interface GestureControlsProps {
   controls: {
     zoomIn: () => void;
     zoomOut: () => void;
     resetZoom: () => void;
-    setScale: (scale: number) => void;
   };
   gestureState: GestureState;
-  className?: string;
+  show?: boolean;
 }
 
 export const GestureControls: React.FC<GestureControlsProps> = ({
   controls,
   gestureState,
-  className = '',
+  show = true,
 }) => {
+  if (!show) return null;
+
+  const controlsStyle: React.CSSProperties = {
+    position: 'fixed',
+    bottom: '30px',
+    right: '30px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: 'rgba(0, 0, 0, 0.7)',
+    borderRadius: '20px',
+    padding: '8px 12px',
+    zIndex: 1002,
+    userSelect: 'none',
+  };
+
+  const buttonStyle: React.CSSProperties = {
+    width: '32px',
+    height: '32px',
+    borderRadius: '50%',
+    border: 'none',
+    background: 'rgba(255, 255, 255, 0.2)',
+    color: '#ffffff',
+    fontSize: '16px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
+  const indicatorStyle: React.CSSProperties = {
+    color: '#ffffff',
+    fontSize: '11px',
+    minWidth: '35px',
+    textAlign: 'center',
+    padding: '0 6px',
+  };
+
   return (
-    <div className={`gesture-controls ${className}`}>
-      <button 
-        onClick={controls.zoomOut}
-        className="gesture-btn zoom-out"
-        aria-label="Zoom Out"
-      >
+    <div style={controlsStyle}>
+      <button style={buttonStyle} onClick={controls.zoomOut}>
         -
       </button>
-      
-      <div className="zoom-indicator">
+      <div style={indicatorStyle}>
         {Math.round(gestureState.scale * 100)}%
       </div>
-      
-      <button 
-        onClick={controls.zoomIn}
-        className="gesture-btn zoom-in"
-        aria-label="Zoom In"
-      >
+      <button style={buttonStyle} onClick={controls.zoomIn}>
         +
       </button>
-      
-      <button 
-        onClick={controls.resetZoom}
-        className="gesture-btn reset-zoom"
-        aria-label="Reset Zoom"
-      >
+      <button style={buttonStyle} onClick={controls.resetZoom}>
         ⌂
       </button>
     </div>
