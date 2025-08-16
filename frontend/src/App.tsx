@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Launcher from './launcher/launcher_UI';
+import Launcher from './launcher/LauncherUI';
 import './App.css';
 
 const App: React.FC = () => {
