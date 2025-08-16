@@ -155,8 +155,17 @@ export const useRotateLogic = () => {
     return transform;
   };
 
-  // Calculate transform origin for rotations
+  // Calculate transform origin for rotations (with clock integration)
   const calculateTransformOrigin = (item: RotateItem): string => {
+    // For clock hands, use the active rotation's origin
+    if (isClockHand(item)) {
+      const activeRotation = getActiveRotationConfig(item);
+      if (activeRotation) {
+        return `${activeRotation.itemAxisX}% ${activeRotation.itemAxisY}%`;
+      }
+    }
+
+    // For non-hand items, use original logic
     // Use rotation1 axis as primary, fallback to rotation2, then center
     if (item.rotation1.enabled === 'yes') {
       return `${item.rotation1.itemAxisX}% ${item.rotation1.itemAxisY}%`;
