@@ -3,7 +3,6 @@ import { useLauncher } from './launcher_hook';
 import DotMark from './DotMark';
 import { useRotateLogic, RotateItemComponent } from './rotate_logic';
 import { RotateAnim } from './rotate_anim';
-import { ClockTest } from './test_clock';
 import './launcher.css';
 
 interface LauncherProps {}
