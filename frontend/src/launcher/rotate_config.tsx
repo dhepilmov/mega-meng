@@ -25,11 +25,11 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_1',
     itemName: 'clockBG',
     itemPath: 'res/clockBG.png',
-    itemLayer: 1,
+    itemLayer: 2,
     itemSize: 80,
     itemDisplay: 'yes',
     rotation1: {
-      enabled: 'yes',
+      enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50, // center of its own image
       itemAxisY: 50, // center of its own image
@@ -53,7 +53,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_2',
     itemName: 'minutes_circle',
     itemPath: 'res/minutes_circle.png',
-    itemLayer: 2,
+    itemLayer: 1,
     itemSize: 70,
     itemDisplay: 'yes',
     rotation1: {
@@ -63,7 +63,7 @@ export const rotateConfig: RotateItemConfig[] = [
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 30,
+      rotationSpeed: 60,
       rotationWay: '+',
     },
     rotation2: {
