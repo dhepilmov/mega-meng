@@ -128,6 +128,9 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: index + 4,
     itemSize: 50,
     itemDisplay: 'no' as const, // Hidden by default
+    // Default to decorative items (not clock hands)
+    handType: null as const,
+    handRotation: null as const,
     rotation1: {
       enabled: 'no' as const,
       itemTiltPosition: 0,
