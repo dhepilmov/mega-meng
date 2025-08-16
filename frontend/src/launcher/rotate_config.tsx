@@ -166,7 +166,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (5).png',
     itemLayer: 2,
     itemSize: 35,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
+    itemDisplay: 'yes', // Changed from 'yes' to 'no'
     // Decorative - slow clockwise rotation
     handType: null,
     handRotation: null,
