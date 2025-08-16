@@ -20,6 +20,22 @@
   justify-content: center;
 }
 
+/* Loading state */
+.loading-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: #666666;
+  z-index: 1001;
+}
+
+/* Dot mark should be on top of everything */
+.dot-mark {
+  z-index: 1000 !important;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .launcher-container {
@@ -30,6 +46,10 @@
 @media (max-width: 480px) {
   .launcher-container {
     padding: 0.5rem;
+  }
+  
+  .loading-text {
+    font-size: 1rem;
   }
 }
 
