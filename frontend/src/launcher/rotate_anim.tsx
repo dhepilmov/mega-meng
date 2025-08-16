@@ -82,10 +82,6 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items }) => {
               animation: ${animations.join(', ')};
               transform-origin: ${item.rotation1.enabled === 'yes' ? item.rotation1.itemAxisX : item.rotation2.itemAxisX}% ${item.rotation1.enabled === 'yes' ? item.rotation1.itemAxisY : item.rotation2.itemAxisY}%;
             }
-            
-            .rotate-item-${item.itemCode}:hover {
-              animation-play-state: paused;
-            }
           `;
         }
       }
