@@ -27,11 +27,12 @@ export interface RotateItemConfig {
 }
 
 export const rotateConfig: RotateItemConfig[] = [
+  // Clock Background - Static
   {
     itemCode: 'item_1',
     itemName: 'clockBG',
     itemPath: 'res/clockBG.png',
-    itemLayer: 2,
+    itemLayer: 1,
     itemSize: 80,
     itemDisplay: 'yes',
     // Clock background - decorative only
@@ -40,12 +41,12 @@ export const rotateConfig: RotateItemConfig[] = [
     rotation1: {
       enabled: 'no',
       itemTiltPosition: 0,
-      itemAxisX: 50, // center of its own image
-      itemAxisY: 50, // center of its own image
-      itemPositionX: 0, // centered on dot mark
-      itemPositionY: 0, // centered on dot mark
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
       rotationSpeed: 60,
-      rotationWay: '+', // clockwise
+      rotationWay: 'no',
     },
     rotation2: {
       enabled: 'no',
@@ -58,14 +59,16 @@ export const rotateConfig: RotateItemConfig[] = [
       rotationWay: '',
     },
   },
+
+  // Minute Hand - Blue ring
   {
     itemCode: 'item_2',
     itemName: 'minutes_circle',
     itemPath: 'res/minutes_circle.png',
-    itemLayer: 1,
+    itemLayer: 5,
     itemSize: 70,
     itemDisplay: 'yes',
-    // This will act as minute hand using ROTATION1
+    // Minute hand using ROTATION1
     handType: 'minute',
     handRotation: 'ROTATION1',
     rotation1: {
@@ -75,7 +78,7 @@ export const rotateConfig: RotateItemConfig[] = [
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 60, // This will be overridden by clock logic
+      rotationSpeed: 3600, // Overridden by clock logic
       rotationWay: '+',
     },
     rotation2: {
@@ -89,14 +92,16 @@ export const rotateConfig: RotateItemConfig[] = [
       rotationWay: '',
     },
   },
+
+  // Hour Hand - Outer ring  
   {
     itemCode: 'item_3',
     itemName: 'outer_circle',
     itemPath: 'res/outer_circle.png',
-    itemLayer: 3,
+    itemLayer: 4,
     itemSize: 90,
     itemDisplay: 'yes',
-    // This will act as the hour hand using ROTATION1
+    // Hour hand using ROTATION1
     handType: 'hour',
     handRotation: 'ROTATION1',
     rotation1: {
@@ -106,8 +111,8 @@ export const rotateConfig: RotateItemConfig[] = [
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 45, // This will be overridden by clock logic
-      rotationWay: '+', // clockwise
+      rotationSpeed: 86400, // Overridden by clock logic 
+      rotationWay: '+',
     },
     rotation2: {
       enabled: 'no',
@@ -120,15 +125,16 @@ export const rotateConfig: RotateItemConfig[] = [
       rotationWay: '',
     },
   },
-  // Add a second hand using the clockBG as a smaller element
+
+  // Second Hand - Small fast element
   {
     itemCode: 'item_4',
-    itemName: 'clockBG',
-    itemPath: 'res/clockBG.png',
-    itemLayer: 4,
-    itemSize: 30, // Smaller for second hand
+    itemName: 'dummy (4)',
+    itemPath: 'res/dummy (4).png',
+    itemLayer: 6,
+    itemSize: 25,
     itemDisplay: 'yes',
-    // This will act as second hand using ROTATION1
+    // Second hand using ROTATION1
     handType: 'second',
     handRotation: 'ROTATION1',
     rotation1: {
@@ -138,7 +144,7 @@ export const rotateConfig: RotateItemConfig[] = [
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 20, // This will be overridden by clock logic
+      rotationSpeed: 60, // Overridden by clock logic
       rotationWay: '+',
     },
     rotation2: {
@@ -148,40 +154,521 @@ export const rotateConfig: RotateItemConfig[] = [
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 30,
-      rotationWay: '+',
+      rotationSpeed: 0,
+      rotationWay: '',
     },
   },
-  // Placeholder items 5-20
-  ...Array.from({ length: 16 }, (_, index) => ({
-    itemCode: `item_${index + 5}`,
-    itemName: '',
-    itemPath: 'res/',
-    itemLayer: index + 5,
-    itemSize: 50,
-    itemDisplay: 'no' as const, // Hidden by default
-    // Default to decorative items (not clock hands)
+
+  // Decorative Elements - Various ornamental items that rotate independently
+  {
+    itemCode: 'item_5',
+    itemName: 'dummy (5)',
+    itemPath: 'res/dummy (5).png',
+    itemLayer: 2,
+    itemSize: 35,
+    itemDisplay: 'yes',
+    // Decorative - slow clockwise rotation
     handType: null,
     handRotation: null,
     rotation1: {
-      enabled: 'no' as const,
+      enabled: 'yes',
+      itemTiltPosition: 45,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 120,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_6',
+    itemName: 'dummy (6)',
+    itemPath: 'res/dummy (6).png',
+    itemLayer: 3,
+    itemSize: 40,
+    itemDisplay: 'yes',
+    // Decorative - counter-clockwise rotation
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 90,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 80,
+      rotationWay: '-',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_7',
+    itemName: 'dummy (7)',
+    itemPath: 'res/dummy (7).png',
+    itemLayer: 7,
+    itemSize: 30,
+    itemDisplay: 'yes',
+    // Decorative - fast rotation
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 30,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_8',
+    itemName: 'dummy (8)',
+    itemPath: 'res/dummy (8).png',
+    itemLayer: 8,
+    itemSize: 45,
+    itemDisplay: 'yes',
+    // Decorative - dual rotation system
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 15,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 60,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 30,
+      itemAxisY: 30,
+      itemPositionX: 10,
+      itemPositionY: -10,
+      rotationSpeed: 90,
+      rotationWay: '-',
+    },
+  },
+
+  {
+    itemCode: 'item_9',
+    itemName: 'dummy (9)',
+    itemPath: 'res/dummy (9).png',
+    itemLayer: 9,
+    itemSize: 20,
+    itemDisplay: 'yes',
+    // Decorative - positioned and rotating
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 15,
+      itemPositionY: 15,
+      rotationSpeed: 25,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_10',
+    itemName: 'dummy (10)',
+    itemPath: 'res/dummy (10).png',
+    itemLayer: 10,
+    itemSize: 35,
+    itemDisplay: 'yes',
+    // Static decorative element
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'no',
+      itemTiltPosition: 30,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: -20,
+      itemPositionY: 20,
+      rotationSpeed: 0,
+      rotationWay: 'no',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_11',
+    itemName: 'dummy (11)',
+    itemPath: 'res/dummy (11).png',
+    itemLayer: 11,
+    itemSize: 28,
+    itemDisplay: 'yes',
+    // Additional second hand option (can be disabled)
+    handType: 'second',
+    handRotation: 'ROTATION1',
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 90,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 60, // Overridden by clock logic
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_12',
+    itemName: 'dummy (12)',
+    itemPath: 'res/dummy (12).png',
+    itemLayer: 12,
+    itemSize: 50,
+    itemDisplay: 'yes',
+    // Decorative - medium speed
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 100,
+      rotationWay: '-',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_13',
+    itemName: 'dummy (13)',
+    itemPath: 'res/dummy (13).png',
+    itemLayer: 13,
+    itemSize: 15,
+    itemDisplay: 'yes',
+    // Small decorative orbiting element
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 25,
+      itemPositionY: -25,
+      rotationSpeed: 40,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'yes',
       itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
       rotationSpeed: 20,
-      rotationWay: '+' as const,
+      rotationWay: '-',
     },
-    rotation2: {
-      enabled: 'no' as const,
+  },
+
+  {
+    itemCode: 'item_14',
+    itemName: 'dummy (14)',
+    itemPath: 'res/dummy (14).png',
+    itemLayer: 14,
+    itemSize: 32,
+    itemDisplay: 'yes',
+    // Alternative minute hand (can be toggled)
+    handType: 'minute',
+    handRotation: 'ROTATION2',
+    rotation1: {
+      enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 30,
-      rotationWay: '+' as const,
+      rotationSpeed: 0,
+      rotationWay: '',
     },
-  })),
+    rotation2: {
+      enabled: 'yes',
+      itemTiltPosition: 45,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 3600, // Overridden by clock logic
+      rotationWay: '+',
+    },
+  },
+
+  {
+    itemCode: 'item_15',
+    itemName: 'dummy (15)',
+    itemPath: 'res/dummy (15).png',
+    itemLayer: 15,
+    itemSize: 38,
+    itemDisplay: 'yes',
+    // Decorative with complex dual rotation
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 60,
+      itemAxisX: 70,
+      itemAxisY: 30,
+      itemPositionX: 10,
+      itemPositionY: 10,
+      rotationSpeed: 75,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 150,
+      rotationWay: '-',
+    },
+  },
+
+  {
+    itemCode: 'item_16',
+    itemName: 'dummy (16)',
+    itemPath: 'res/dummy (16).png',
+    itemLayer: 16,
+    itemSize: 22,
+    itemDisplay: 'yes',
+    // High-speed decorative spinner
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: -30,
+      itemPositionY: 0,
+      rotationSpeed: 15,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_17',
+    itemName: 'dummy (17)',
+    itemPath: 'res/dummy (17).png',
+    itemLayer: 17,
+    itemSize: 26,
+    itemDisplay: 'yes',
+    // Alternative hour hand (can be enabled)
+    handType: 'hour',
+    handRotation: 'ROTATION2',
+    rotation1: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+    rotation2: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 86400, // Overridden by clock logic
+      rotationWay: '+',
+    },
+  },
+
+  {
+    itemCode: 'item_18',
+    itemName: 'dummy (18)',
+    itemPath: 'res/dummy (18).png',
+    itemLayer: 18,
+    itemSize: 42,
+    itemDisplay: 'yes',
+    // Large decorative element
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 135,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 200,
+      rotationWay: '-',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_19',
+    itemName: 'dummy (19)',
+    itemPath: 'res/dummy (19).png',
+    itemLayer: 19,
+    itemSize: 18,
+    itemDisplay: 'yes',
+    // Small orbiting element
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 35,
+      itemPositionY: 35,
+      rotationSpeed: 50,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+
+  {
+    itemCode: 'item_20',
+    itemName: 'dummy (20)',
+    itemPath: 'res/dummy (20).png',
+    itemLayer: 20,
+    itemSize: 55,
+    itemDisplay: 'yes',
+    // Static large background element
+    handType: null,
+    handRotation: null,
+    rotation1: {
+      enabled: 'no',
+      itemTiltPosition: 180,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: 'no',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
 ];
