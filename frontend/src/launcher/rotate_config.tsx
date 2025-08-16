@@ -126,14 +126,14 @@ export const rotateConfig: RotateItemConfig[] = [
     },
   },
 
-  // Second Hand - Small fast element
+  // Second Hand - Small fast element (HIDDEN)
   {
     itemCode: 'item_4',
     itemName: 'dummy (4)',
     itemPath: 'res/dummy (4).png',
     itemLayer: 6,
     itemSize: 25,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Second hand using ROTATION1
     handType: 'second',
     handRotation: 'ROTATION1',
@@ -159,14 +159,14 @@ export const rotateConfig: RotateItemConfig[] = [
     },
   },
 
-  // Decorative Elements - Various ornamental items that rotate independently
+  // Decorative Elements - Various ornamental items (ALL HIDDEN)
   {
     itemCode: 'item_5',
     itemName: 'dummy (5)',
     itemPath: 'res/dummy (5).png',
     itemLayer: 2,
     itemSize: 35,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Decorative - slow clockwise rotation
     handType: null,
     handRotation: null,
@@ -198,7 +198,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (6).png',
     itemLayer: 3,
     itemSize: 40,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Decorative - counter-clockwise rotation
     handType: null,
     handRotation: null,
@@ -230,7 +230,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (7).png',
     itemLayer: 7,
     itemSize: 30,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Decorative - fast rotation
     handType: null,
     handRotation: null,
@@ -262,7 +262,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (8).png',
     itemLayer: 8,
     itemSize: 45,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Decorative - dual rotation system
     handType: null,
     handRotation: null,
@@ -294,7 +294,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (9).png',
     itemLayer: 9,
     itemSize: 20,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Decorative - positioned and rotating
     handType: null,
     handRotation: null,
@@ -326,7 +326,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (10).png',
     itemLayer: 10,
     itemSize: 35,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Changed from static to slow rotating decorative element
     handType: null,
     handRotation: null,
@@ -358,7 +358,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (11).png',
     itemLayer: 11,
     itemSize: 28,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Additional second hand option (can be disabled)
     handType: 'second',
     handRotation: 'ROTATION1',
@@ -390,7 +390,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (12).png',
     itemLayer: 12,
     itemSize: 50,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Decorative - medium speed
     handType: null,
     handRotation: null,
@@ -422,7 +422,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (13).png',
     itemLayer: 13,
     itemSize: 15,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Small decorative orbiting element
     handType: null,
     handRotation: null,
@@ -454,7 +454,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (14).png',
     itemLayer: 14,
     itemSize: 32,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Alternative minute hand (can be toggled)
     handType: 'minute',
     handRotation: 'ROTATION2',
@@ -486,7 +486,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (15).png',
     itemLayer: 15,
     itemSize: 38,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Decorative with complex dual rotation
     handType: null,
     handRotation: null,
@@ -518,7 +518,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (16).png',
     itemLayer: 16,
     itemSize: 22,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // High-speed decorative spinner - made faster
     handType: null,
     handRotation: null,
@@ -550,7 +550,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (17).png',
     itemLayer: 17,
     itemSize: 26,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Alternative hour hand (can be enabled)
     handType: 'hour',
     handRotation: 'ROTATION2',
@@ -582,7 +582,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (18).png',
     itemLayer: 18,
     itemSize: 42,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Large decorative element - made faster and more visible
     handType: null,
     handRotation: null,
@@ -614,7 +614,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (19).png',
     itemLayer: 19,
     itemSize: 18,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Small orbiting element
     handType: null,
     handRotation: null,
@@ -646,7 +646,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemPath: 'res/dummy (20).png',
     itemLayer: 20,
     itemSize: 55,
-    itemDisplay: 'yes',
+    itemDisplay: 'no', // Changed from 'yes' to 'no'
     // Static large background element
     handType: null,
     handRotation: null,
