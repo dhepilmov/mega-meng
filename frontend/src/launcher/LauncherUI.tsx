@@ -49,6 +49,9 @@ const Launcher: React.FC<LauncherProps> = () => {
         
         {/* Dot mark as center reference - highest z-index */}
         <DotMark />
+        
+        {/* Clock Test Component - temporary for testing */}
+        <ClockTest />
       </div>
     </div>
   );
