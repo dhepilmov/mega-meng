@@ -34,7 +34,7 @@ const Launcher: React.FC<LauncherProps> = () => {
     <div className="launcher-container">
       <div className="launcher-content">
         {/* Rotate Animation CSS Manager */}
-        <RotateAnim items={displayableItems} />
+        <RotateAnim items={displayableItems} clockState={clockState} />
         
         {/* Render all displayable rotate items */}
         {displayableItems.map((item) => (
