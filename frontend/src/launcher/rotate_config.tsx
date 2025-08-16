@@ -157,7 +157,7 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: `item_${index + 5}`,
     itemName: '',
     itemPath: 'res/',
-    itemLayer: index + 4,
+    itemLayer: index + 5,
     itemSize: 50,
     itemDisplay: 'no' as const, // Hidden by default
     // Default to decorative items (not clock hands)
