@@ -46,7 +46,15 @@ const Launcher: React.FC<LauncherProps> = () => {
 
   return (
     <div className="launcher-container">
-      <div className="launcher-content">
+      <div 
+        className="launcher-content gesture-container"
+        style={{
+          transform: `scale(${gestureState.scale})`,
+          transformOrigin: 'center center',
+          transition: 'transform 0.1s ease-out',
+        }}
+        {...touchHandlers}
+      >
         {/* Rotate Animation CSS Manager */}
         <RotateAnim items={displayableItems} clockState={clockState} />
         
@@ -64,6 +72,12 @@ const Launcher: React.FC<LauncherProps> = () => {
         {/* Dot mark as center reference - highest z-index */}
         <DotMark />
       </div>
+      
+      {/* Gesture Controls */}
+      <GestureControls 
+        controls={controls}
+        gestureState={gestureState}
+      />
     </div>
   );
 };
