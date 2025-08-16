@@ -327,18 +327,18 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 10,
     itemSize: 35,
     itemDisplay: 'yes',
-    // Static decorative element
+    // Changed from static to slow rotating decorative element
     handType: null,
     handRotation: null,
     rotation1: {
-      enabled: 'no',
+      enabled: 'yes', // Changed from 'no' to 'yes'
       itemTiltPosition: 30,
       itemAxisX: 50,
       itemAxisY: 50,
       itemPositionX: -20,
       itemPositionY: 20,
-      rotationSpeed: 0,
-      rotationWay: 'no',
+      rotationSpeed: 180, // Added slow rotation
+      rotationWay: '+', // Changed from 'no' to '+'
     },
     rotation2: {
       enabled: 'no',
