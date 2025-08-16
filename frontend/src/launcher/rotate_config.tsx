@@ -105,9 +105,38 @@ export const rotateConfig: RotateItemConfig[] = [
       rotationWay: '',
     },
   },
-  // Placeholder items 4-20
-  ...Array.from({ length: 17 }, (_, index) => ({
-    itemCode: `item_${index + 4}`,
+  // Example: Static image (no animation) using item_4
+  {
+    itemCode: 'item_4',
+    itemName: 'minutes_circle',
+    itemPath: 'res/minutes_circle.png',
+    itemLayer: 4,
+    itemSize: 30,
+    itemDisplay: 'yes', // Show the PNG
+    rotation1: {
+      enabled: 'no', // No animation - static display
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 30, // Offset position to the right
+      itemPositionY: 0,
+      rotationSpeed: 20,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no', // No second rotation
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 30,
+      rotationWay: '+',
+    },
+  },
+  // Placeholder items 5-20
+  ...Array.from({ length: 16 }, (_, index) => ({
+    itemCode: `item_${index + 5}`,
     itemName: '',
     itemPath: 'res/',
     itemLayer: index + 4,
