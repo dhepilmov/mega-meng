@@ -17,9 +17,9 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "cap:build": "yarn build && npx cap sync android",
     "cap:open": "npx cap open android",
     "cap:run": "yarn cap:build && npx cap run android",
