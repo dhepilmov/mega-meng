@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { rotateConfig, RotateItemConfig, RotationConfig } from './rotate_config';
-import { useClock, ClockState } from './clock_logic';
+import { useClock, ClockState, getTimezoneHourAngle } from './clock_logic';
 
 export interface RotateItem extends RotateItemConfig {
   exists: boolean;
@@ -58,13 +58,20 @@ export const useRotateLogic = () => {
       .sort((a, b) => a.itemLayer - b.itemLayer); // Sort by layer (bottom to top)
   };
 
-  // Get clock angle for hand type
-  const getClockAngle = (handType: 'hour' | 'minute' | 'second'): number => {
+  // Get clock angle for hand type (with timezone support for hour hands)
+  const getClockAngle = (handType: 'hour' | 'minute' | 'second', item: RotateItem): number => {
     switch (handType) {
-      case 'hour': return clockState.hourAngle;
-      case 'minute': return clockState.minuteAngle;
-      case 'second': return clockState.secondAngle;
-      default: return 0;
+      case 'hour': 
+        // Use timezone-aware hour angle if configured
+        return getTimezoneHourAngle(item.timezone);
+      case 'minute': 
+        // Minutes are the same worldwide
+        return clockState.minuteAngle;
+      case 'second': 
+        // Seconds are the same worldwide
+        return clockState.secondAngle;
+      default: 
+        return 0;
     }
   };
 
@@ -80,6 +87,7 @@ export const useRotateLogic = () => {
     return item.handRotation === 'ROTATION1' ? item.rotation1 : 
            item.handRotation === 'ROTATION2' ? item.rotation2 : null;
   };
+
   const getItemByCode = (code: string): RotateItem | undefined => {
     return rotateItems.find(item => item.itemCode === code);
   };
@@ -124,15 +132,15 @@ export const useRotateLogic = () => {
     return transforms.join(' ');
   };
 
-  // Calculate combined transform for item (with clock integration)
+  // Calculate combined transform for item (with enhanced clock integration)
   const calculateItemTransform = (item: RotateItem): string => {
     let transform = 'translate(-50%, -50%)';
     
-    // For clock hands, use clock angles
+    // For clock hands, use clock angles (with timezone support for hour hands)
     if (isClockHand(item) && item.handType) {
       const activeRotation = getActiveRotationConfig(item);
       if (activeRotation) {
-        const clockAngle = getClockAngle(item.handType);
+        const clockAngle = getClockAngle(item.handType, item);
         // Apply position offset
         transform += ` translate(${activeRotation.itemPositionX}%, ${activeRotation.itemPositionY}%)`;
         // Apply clock rotation with initial tilt
@@ -155,7 +163,7 @@ export const useRotateLogic = () => {
     return transform;
   };
 
-  // Calculate transform origin for rotations (with clock integration)
+  // Calculate transform origin for rotations (with enhanced clock integration)
   const calculateTransformOrigin = (item: RotateItem): string => {
     // For clock hands, use the active rotation's origin
     if (isClockHand(item)) {
@@ -185,7 +193,7 @@ export const useRotateLogic = () => {
     calculateItemTransform,
     calculateTransformOrigin,
     isClockHand, // Expose for animation layer
-    getClockAngle, // Expose for animation layer
+    getClockAngle, // Enhanced with timezone support
     getActiveRotationConfig, // Expose for animation layer
   };
 };

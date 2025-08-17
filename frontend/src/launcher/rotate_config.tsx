@@ -9,6 +9,12 @@ export interface RotationConfig {
   rotationWay: '+' | '-' | 'no' | '' | null; // + clockwise, - anti-clockwise, no/empty = no rotate
 }
 
+export interface TimezoneConfig {
+  enabled: 'yes' | 'no';
+  utcOffset: number; // UTC offset in hours (e.g., +9, -5, +0)
+  use24Hour: 'yes' | 'no'; // 1 rotation per 24 hours or 2 rotations per 24 hours
+}
+
 export interface RotateItemConfig {
   itemCode: string;
   itemName: string;
@@ -17,17 +23,21 @@ export interface RotateItemConfig {
   itemSize: number; // percentage from its own center
   itemDisplay: 'yes' | 'no' | ''; // Controls whether PNG is displayed or hidden
   
-  // NEW: Clock hand configuration
+  // CLOCK HAND CONFIGURATION
   handType?: 'hour' | 'minute' | 'second' | null;
   handRotation?: 'ROTATION1' | 'ROTATION2' | null;
   // When handType is set, clock logic overrides the specified rotation
   
+  // TIMEZONE (only for hour hands)
+  timezone?: TimezoneConfig;
+  
+  // ROTATION CONFIGURATION
   rotation1: RotationConfig;
   rotation2: RotationConfig;
 }
 
 export const rotateConfig: RotateItemConfig[] = [
-  // Clock Background - Static
+  // LAYER 1 - Clock Background
   {
     itemCode: 'item_1',
     itemName: 'clockBG',
@@ -35,9 +45,12 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 1,
     itemSize: 80,
     itemDisplay: 'yes',
-    // Clock background - decorative only
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
       enabled: 'no',
       itemTiltPosition: 0,
@@ -60,7 +73,7 @@ export const rotateConfig: RotateItemConfig[] = [
     },
   },
 
-  // Minute Hand - Blue ring
+  // LAYER 2 - Minute Hand
   {
     itemCode: 'item_2',
     itemName: 'minutes_circle',
@@ -68,9 +81,12 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 5,
     itemSize: 70,
     itemDisplay: 'yes',
-    // Minute hand using ROTATION1
+    
+    // CLOCK HAND CONFIGURATION
     handType: 'minute',
     handRotation: 'ROTATION1',
+    
+    // ROTATION CONFIGURATION
     rotation1: {
       enabled: 'yes',
       itemTiltPosition: 0,
@@ -93,7 +109,7 @@ export const rotateConfig: RotateItemConfig[] = [
     },
   },
 
-  // Hour Hand - Outer ring  
+  // LAYER 3 - Hour Hand with Timezone
   {
     itemCode: 'item_3',
     itemName: 'outer_circle',
@@ -101,9 +117,19 @@ export const rotateConfig: RotateItemConfig[] = [
     itemLayer: 4,
     itemSize: 70,
     itemDisplay: 'yes',
-    // Hour hand using ROTATION1
+    
+    // CLOCK HAND CONFIGURATION
     handType: 'hour',
     handRotation: 'ROTATION1',
+    
+    // TIMEZONE
+    timezone: {
+      enabled: 'yes',
+      utcOffset: 0, // UTC+0 (London time)
+      use24Hour: 'yes', // 1 rotation per 24 hours
+    },
+    
+    // ROTATION CONFIGURATION
     rotation1: {
       enabled: 'yes',
       itemTiltPosition: 0,
@@ -126,17 +152,20 @@ export const rotateConfig: RotateItemConfig[] = [
     },
   },
 
-  // Second Hand - Small fast element (HIDDEN)
+  // LAYER 4 - Second Hand (Hidden)
   {
     itemCode: 'item_4',
     itemName: 'dummy (4)',
     itemPath: 'res/dummy (4).png',
     itemLayer: 6,
     itemSize: 25,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Second hand using ROTATION1
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: 'second',
     handRotation: 'ROTATION1',
+    
+    // ROTATION CONFIGURATION
     rotation1: {
       enabled: 'yes',
       itemTiltPosition: 0,
@@ -159,36 +188,39 @@ export const rotateConfig: RotateItemConfig[] = [
     },
   },
 
-  // Decorative Elements - Various ornamental items (ALL HIDDEN)
+  // LAYER 5 to 20 - Available for more layers
   {
     itemCode: 'item_5',
     itemName: 'dummy (5)',
     itemPath: 'res/dummy (5).png',
-    itemLayer: 2,
-    itemSize: 35,
-    itemDisplay: 'yes', // Changed from 'yes' to 'no'
-    // Decorative - slow clockwise rotation
+    itemLayer: 7,
+    itemSize: 60,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 45,
+      enabled: 'no',
+      itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
-      itemPositionX: 0,
+      itemPositionX: 15,
       itemPositionY: 0,
-      rotationSpeed: 120,
+      rotationSpeed: 20,
       rotationWay: '+',
     },
     rotation2: {
       enabled: 'no',
       itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      itemAxisX: 75,
+      itemAxisY: 25,
+      itemPositionX: 20,
+      itemPositionY: -10,
+      rotationSpeed: 45,
+      rotationWay: '-',
     },
   },
 
@@ -196,20 +228,23 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_6',
     itemName: 'dummy (6)',
     itemPath: 'res/dummy (6).png',
-    itemLayer: 3,
+    itemLayer: 8,
     itemSize: 40,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Decorative - counter-clockwise rotation
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 90,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 80,
+      enabled: 'no',
+      itemTiltPosition: 45,
+      itemAxisX: 25,
+      itemAxisY: 75,
+      itemPositionX: -20,
+      itemPositionY: 15,
+      rotationSpeed: 35,
       rotationWay: '-',
     },
     rotation2: {
@@ -228,21 +263,59 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_7',
     itemName: 'dummy (7)',
     itemPath: 'res/dummy (7).png',
-    itemLayer: 7,
-    itemSize: 30,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Decorative - fast rotation
+    itemLayer: 9,
+    itemSize: 55,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
+      enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
       itemPositionX: 0,
+      itemPositionY: -25,
+      rotationSpeed: 50,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 90,
+      itemAxisX: 0,
+      itemAxisY: 100,
+      itemPositionX: 25,
       itemPositionY: 0,
       rotationSpeed: 30,
       rotationWay: '+',
+    },
+  },
+
+  {
+    itemCode: 'item_8',
+    itemName: 'dummy (8)',
+    itemPath: 'res/dummy (8).png',
+    itemLayer: 10,
+    itemSize: 45,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
+    handType: null,
+    handRotation: null,
+    
+    // ROTATION CONFIGURATION
+    rotation1: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 30,
+      itemPositionY: 20,
+      rotationSpeed: 40,
+      rotationWay: '-',
     },
     rotation2: {
       enabled: 'no',
@@ -257,54 +330,25 @@ export const rotateConfig: RotateItemConfig[] = [
   },
 
   {
-    itemCode: 'item_8',
-    itemName: 'dummy (8)',
-    itemPath: 'res/dummy (8).png',
-    itemLayer: 8,
-    itemSize: 45,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Decorative - dual rotation system
-    handType: null,
-    handRotation: null,
-    rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 15,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 60,
-      rotationWay: '+',
-    },
-    rotation2: {
-      enabled: 'yes',
-      itemTiltPosition: 0,
-      itemAxisX: 30,
-      itemAxisY: 30,
-      itemPositionX: 10,
-      itemPositionY: -10,
-      rotationSpeed: 90,
-      rotationWay: '-',
-    },
-  },
-
-  {
     itemCode: 'item_9',
     itemName: 'dummy (9)',
     itemPath: 'res/dummy (9).png',
-    itemLayer: 9,
-    itemSize: 20,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Decorative - positioned and rotating
+    itemLayer: 11,
+    itemSize: 35,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
+      enabled: 'no',
+      itemTiltPosition: 180,
+      itemAxisX: 100,
       itemAxisY: 50,
-      itemPositionX: 15,
-      itemPositionY: 15,
+      itemPositionX: -15,
+      itemPositionY: -15,
       rotationSpeed: 25,
       rotationWay: '+',
     },
@@ -324,31 +368,34 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_10',
     itemName: 'dummy (10)',
     itemPath: 'res/dummy (10).png',
-    itemLayer: 10,
-    itemSize: 35,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Changed from static to slow rotating decorative element
+    itemLayer: 12,
+    itemSize: 65,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes', // Changed from 'no' to 'yes'
-      itemTiltPosition: 30,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: -20,
-      itemPositionY: 20,
-      rotationSpeed: 180, // Added slow rotation
-      rotationWay: '+', // Changed from 'no' to '+'
-    },
-    rotation2: {
       enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
       itemPositionX: 0,
+      itemPositionY: 30,
+      rotationSpeed: 60,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 270,
+      itemAxisX: 50,
+      itemAxisY: 0,
+      itemPositionX: -30,
       itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      rotationSpeed: 45,
+      rotationWay: '-',
     },
   },
 
@@ -356,21 +403,24 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_11',
     itemName: 'dummy (11)',
     itemPath: 'res/dummy (11).png',
-    itemLayer: 11,
-    itemSize: 28,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Additional second hand option (can be disabled)
-    handType: 'second',
-    handRotation: 'ROTATION1',
+    itemLayer: 13,
+    itemSize: 50,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
+    handType: null,
+    handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 90,
+      enabled: 'no',
+      itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 60, // Overridden by clock logic
-      rotationWay: '+',
+      itemPositionX: 35,
+      itemPositionY: -25,
+      rotationSpeed: 15,
+      rotationWay: '-',
     },
     rotation2: {
       enabled: 'no',
@@ -388,21 +438,24 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_12',
     itemName: 'dummy (12)',
     itemPath: 'res/dummy (12).png',
-    itemLayer: 12,
-    itemSize: 50,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Decorative - medium speed
+    itemLayer: 14,
+    itemSize: 30,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 100,
-      rotationWay: '-',
+      enabled: 'no',
+      itemTiltPosition: 45,
+      itemAxisX: 0,
+      itemAxisY: 0,
+      itemPositionX: 40,
+      itemPositionY: 40,
+      rotationSpeed: 12,
+      rotationWay: '+',
     },
     rotation2: {
       enabled: 'no',
@@ -420,31 +473,34 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_13',
     itemName: 'dummy (13)',
     itemPath: 'res/dummy (13).png',
-    itemLayer: 13,
-    itemSize: 15,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Small decorative orbiting element
+    itemLayer: 15,
+    itemSize: 70,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
+      enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
-      itemPositionX: 25,
-      itemPositionY: -25,
-      rotationSpeed: 40,
+      itemPositionX: -40,
+      itemPositionY: 0,
+      rotationSpeed: 80,
       rotationWay: '+',
     },
     rotation2: {
-      enabled: 'yes',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 20,
-      rotationWay: '-',
+      enabled: 'no',
+      itemTiltPosition: 135,
+      itemAxisX: 25,
+      itemAxisY: 25,
+      itemPositionX: 10,
+      itemPositionY: -35,
+      rotationSpeed: 55,
+      rotationWay: '+',
     },
   },
 
@@ -452,13 +508,26 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_14',
     itemName: 'dummy (14)',
     itemPath: 'res/dummy (14).png',
-    itemLayer: 14,
-    itemSize: 32,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Alternative minute hand (can be toggled)
-    handType: 'minute',
-    handRotation: 'ROTATION2',
+    itemLayer: 16,
+    itemSize: 40,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
+    handType: null,
+    handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: -40,
+      rotationSpeed: 30,
+      rotationWay: '-',
+    },
+    rotation2: {
       enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50,
@@ -468,47 +537,40 @@ export const rotateConfig: RotateItemConfig[] = [
       rotationSpeed: 0,
       rotationWay: '',
     },
-    rotation2: {
-      enabled: 'yes',
-      itemTiltPosition: 45,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 3600, // Overridden by clock logic
-      rotationWay: '+',
-    },
   },
 
   {
     itemCode: 'item_15',
     itemName: 'dummy (15)',
     itemPath: 'res/dummy (15).png',
-    itemLayer: 15,
-    itemSize: 38,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Decorative with complex dual rotation
+    itemLayer: 17,
+    itemSize: 55,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 60,
-      itemAxisX: 70,
-      itemAxisY: 30,
-      itemPositionX: 10,
-      itemPositionY: 10,
-      rotationSpeed: 75,
+      enabled: 'no',
+      itemTiltPosition: 90,
+      itemAxisX: 100,
+      itemAxisY: 50,
+      itemPositionX: 25,
+      itemPositionY: 35,
+      rotationSpeed: 70,
       rotationWay: '+',
     },
     rotation2: {
-      enabled: 'yes',
+      enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 150,
-      rotationWay: '-',
+      rotationSpeed: 0,
+      rotationWay: '',
     },
   },
 
@@ -516,21 +578,24 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_16',
     itemName: 'dummy (16)',
     itemPath: 'res/dummy (16).png',
-    itemLayer: 16,
-    itemSize: 22,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // High-speed decorative spinner - made faster
+    itemLayer: 18,
+    itemSize: 45,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
+      enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
-      itemPositionX: -30,
-      itemPositionY: 0,
-      rotationSpeed: 8, // Made much faster (was 15)
-      rotationWay: '+',
+      itemPositionX: -25,
+      itemPositionY: 25,
+      rotationSpeed: 18,
+      rotationWay: '-',
     },
     rotation2: {
       enabled: 'no',
@@ -548,31 +613,34 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_17',
     itemName: 'dummy (17)',
     itemPath: 'res/dummy (17).png',
-    itemLayer: 17,
-    itemSize: 26,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Alternative hour hand (can be enabled)
-    handType: 'hour',
-    handRotation: 'ROTATION2',
+    itemLayer: 19,
+    itemSize: 35,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
+    handType: null,
+    handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
       enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
-      itemPositionX: 0,
+      itemPositionX: 45,
       itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      rotationSpeed: 90,
+      rotationWay: '+',
     },
     rotation2: {
-      enabled: 'yes',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
+      enabled: 'no',
+      itemTiltPosition: 180,
+      itemAxisX: 0,
       itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 86400, // Overridden by clock logic
-      rotationWay: '+',
+      itemPositionX: -10,
+      itemPositionY: -40,
+      rotationSpeed: 25,
+      rotationWay: '-',
     },
   },
 
@@ -580,21 +648,24 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_18',
     itemName: 'dummy (18)',
     itemPath: 'res/dummy (18).png',
-    itemLayer: 18,
-    itemSize: 42,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Large decorative element - made faster and more visible
+    itemLayer: 20,
+    itemSize: 60,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 135,
+      enabled: 'no',
+      itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
       itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 60, // Made faster (was 200)
-      rotationWay: '-',
+      itemPositionY: 45,
+      rotationSpeed: 35,
+      rotationWay: '+',
     },
     rotation2: {
       enabled: 'no',
@@ -612,21 +683,24 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_19',
     itemName: 'dummy (19)',
     itemPath: 'res/dummy (19).png',
-    itemLayer: 19,
-    itemSize: 18,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Small orbiting element
+    itemLayer: 21,
+    itemSize: 25,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 0,
+      enabled: 'no',
+      itemTiltPosition: 270,
       itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 35,
-      itemPositionY: 35,
-      rotationSpeed: 50,
-      rotationWay: '+',
+      itemAxisY: 100,
+      itemPositionX: -35,
+      itemPositionY: -30,
+      rotationSpeed: 22,
+      rotationWay: '-',
     },
     rotation2: {
       enabled: 'no',
@@ -644,31 +718,34 @@ export const rotateConfig: RotateItemConfig[] = [
     itemCode: 'item_20',
     itemName: 'dummy (20)',
     itemPath: 'res/dummy (20).png',
-    itemLayer: 20,
-    itemSize: 55,
-    itemDisplay: 'no', // Changed from 'yes' to 'no'
-    // Static large background element
+    itemLayer: 22,
+    itemSize: 80,
+    itemDisplay: 'no',
+    
+    // CLOCK HAND CONFIGURATION
     handType: null,
     handRotation: null,
+    
+    // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 180,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: 'no',
-    },
-    rotation2: {
       enabled: 'no',
       itemTiltPosition: 0,
       itemAxisX: 50,
       itemAxisY: 50,
       itemPositionX: 0,
       itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      rotationSpeed: 100,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 45,
+      itemAxisX: 75,
+      itemAxisY: 75,
+      itemPositionX: 30,
+      itemPositionY: -20,
+      rotationSpeed: 65,
+      rotationWay: '+',
     },
   },
 ];
