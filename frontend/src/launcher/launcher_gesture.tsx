@@ -37,6 +37,10 @@ export interface GestureConfig {
   enableSwipe: boolean;
   enableLongPress: boolean;
   
+  // Multi-tap settings
+  enableMultiTap: boolean;
+  multiTapWindow: number;
+  
   // Timing
   animationDuration: number;
   longPressDuration: number;
@@ -62,6 +66,8 @@ export const defaultGestureConfig: GestureConfig = {
   enableRotation: false,
   enableSwipe: false,
   enableLongPress: false,
+  enableMultiTap: true,
+  multiTapWindow: 500, // 500ms window for multi-tap detection
   animationDuration: 300,
   longPressDuration: 500,
   threshold: {
@@ -85,6 +91,7 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
 
   const [isGesturing, setIsGesturing] = useState(false);
   const [lastTap, setLastTap] = useState<number>(0);
+  const [tapCount, setTapCount] = useState<number>(0);
   const [swipeState, setSwipeState] = useState<SwipeGesture | null>(null);
   const [longPressActive, setLongPressActive] = useState(false);
   
@@ -96,6 +103,7 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
   const animationFrameRef = useRef<number>(0);
   const swipeStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
   const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const tapTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Helper functions
   const getDistance = (touch1: TouchPoint, touch2: TouchPoint): number => {
@@ -147,6 +155,68 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
     animationFrameRef.current = requestAnimationFrame(animate);
   }, [gestureState.scale, fullConfig.animationDuration]);
 
+  // Multi-tap gesture functions
+  const calibrateCenter = useCallback(() => {
+    console.log('3-tap gesture: Calibrating center');
+    setGestureState(prev => ({
+      ...prev,
+      translateX: 0,
+      translateY: 0,
+      // Keep scale and rotation unchanged
+    }));
+  }, []);
+
+  const resetZoom = useCallback(() => {
+    console.log('4-tap gesture: Resetting zoom');
+    animateScale(1);
+    // Keep translateX, translateY, and rotation unchanged
+  }, []);
+
+  const resetEverything = useCallback(() => {
+    console.log('5-tap gesture: Resetting everything');
+    animateScale(1);
+    setGestureState(prev => ({
+      ...prev,
+      translateX: 0,
+      translateY: 0,
+      rotation: 0,
+      // scale will be reset by animateScale
+    }));
+  }, []);
+
+  const sixTapFunction = useCallback(() => {
+    console.log('6-tap gesture: Function reserved for future use');
+    // Placeholder for future functionality
+  }, []);
+
+  // Handle multi-tap detection
+  const handleMultiTap = useCallback((newTapCount: number) => {
+    if (!fullConfig.enableMultiTap) return;
+
+    switch (newTapCount) {
+      case 2:
+        // Double tap zoom (existing functionality)
+        const newScale = gestureState.scale === 1 ? fullConfig.doubleTapZoomScale : 1;
+        animateScale(newScale);
+        break;
+      case 3:
+        calibrateCenter();
+        break;
+      case 4:
+        resetZoom();
+        break;
+      case 5:
+        resetEverything();
+        break;
+      case 6:
+        sixTapFunction();
+        break;
+      default:
+        // Do nothing for other tap counts
+        break;
+    }
+  }, [gestureState.scale, fullConfig, calibrateCenter, resetZoom, resetEverything, sixTapFunction]);
+
   // Touch event handlers
   const handleTouchStart = useCallback((event: React.TouchEvent) => {
     event.preventDefault();
@@ -170,8 +240,47 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
     if (touches.length === 1) {
       const touch = touches[0];
       
-      // Double tap detection
-      if (fullConfig.enableDoubleTapZoom) {
+      // Multi-tap detection
+      if (fullConfig.enableMultiTap) {
+        const now = Date.now();
+        const timeDiff = now - lastTap;
+        
+        if (timeDiff < fullConfig.multiTapWindow) {
+          const newTapCount = tapCount + 1;
+          setTapCount(newTapCount);
+          
+          // Clear existing timer
+          if (tapTimerRef.current) {
+            clearTimeout(tapTimerRef.current);
+          }
+          
+          // Set new timer to execute gesture after window expires
+          tapTimerRef.current = setTimeout(() => {
+            handleMultiTap(newTapCount);
+            setTapCount(0);
+          }, fullConfig.multiTapWindow);
+          
+        } else {
+          // Reset tap count if too much time has passed
+          setTapCount(1);
+          
+          // Clear existing timer
+          if (tapTimerRef.current) {
+            clearTimeout(tapTimerRef.current);
+          }
+          
+          // Set timer for single tap
+          tapTimerRef.current = setTimeout(() => {
+            handleMultiTap(1);
+            setTapCount(0);
+          }, fullConfig.multiTapWindow);
+        }
+        
+        setLastTap(now);
+      }
+      
+      // Legacy double tap detection (fallback)
+      else if (fullConfig.enableDoubleTapZoom) {
         const now = Date.now();
         const timeDiff = now - lastTap;
         if (timeDiff < 300) {
@@ -197,7 +306,7 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
         }, fullConfig.longPressDuration);
       }
     }
-  }, [lastTap, gestureState.scale, fullConfig]);
+  }, [lastTap, tapCount, gestureState.scale, fullConfig, handleMultiTap]);
 
   const handleTouchMove = useCallback((event: React.TouchEvent) => {
     event.preventDefault();
@@ -317,7 +426,7 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
     animateScale(newScale);
   }, [gestureState.scale, fullConfig.scaleStep]);
 
-  const resetZoom = useCallback(() => {
+  const resetZoomControl = useCallback(() => {
     animateScale(1);
     setGestureState(prev => ({
       ...prev,
@@ -340,6 +449,9 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
       if (longPressTimerRef.current) {
         clearTimeout(longPressTimerRef.current);
       }
+      if (tapTimerRef.current) {
+        clearTimeout(tapTimerRef.current);
+      }
     };
   }, []);
 
@@ -348,6 +460,7 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
     isGesturing,
     swipeState,
     longPressActive,
+    tapCount, // Expose current tap count for debugging
     touchHandlers: {
       onTouchStart: handleTouchStart,
       onTouchMove: handleTouchMove,
@@ -356,8 +469,11 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
     controls: {
       zoomIn,
       zoomOut,
-      resetZoom,
+      resetZoom: resetZoomControl,
       setScale,
+      calibrateCenter,
+      resetEverything,
+      sixTapFunction,
     },
     config: fullConfig,
   };

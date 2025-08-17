@@ -15,6 +15,8 @@ const DotMark: React.FC<DotMarkProps> = () => {
         borderRadius: '50%',
         backgroundColor: '#666666',
         zIndex: 1000,
+        opacity: 0, // Hide the dot mark visually
+        pointerEvents: 'none', // Ensure it doesn't interfere with touch events
       }}
       className="dot-mark"
     />
