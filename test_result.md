@@ -153,7 +153,6 @@ metadata:
 test_plan:
   current_focus:
     - "Fix TypeScript version conflict"
-    - "Test launcher functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
