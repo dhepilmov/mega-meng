@@ -151,12 +151,13 @@ export const useRotateLogic = () => {
     return handType !== null && handType !== undefined && handRotation !== null;
   };
 
-  // Get active rotation config for hand items
+  // Get active rotation config for hand items (with safe property access)
   const getActiveRotationConfig = (item: RotateItem): RotationConfig | null => {
     if (!isClockHand(item)) return null;
     
-    return item.handRotation === 'ROTATION1' ? item.rotation1 : 
-           item.handRotation === 'ROTATION2' ? item.rotation2 : null;
+    const handRotation = safeString(item.handRotation, '');
+    return handRotation === 'ROTATION1' ? item.rotation1 : 
+           handRotation === 'ROTATION2' ? item.rotation2 : null;
   };
 
   const getItemByCode = (code: string): RotateItem | undefined => {
