@@ -164,15 +164,15 @@ export const useRotateLogic = () => {
     return rotateItems.find(item => item.itemCode === code);
   };
 
-  // Calculate base position based on center reference (dot mark position)
+  // Calculate base position based on center reference (dot mark position) with safe values
   const calculateBasePosition = (item: RotateItem) => {
     return {
       position: 'absolute' as const,
       left: '50%',
       top: '50%',
-      width: `${item.itemSize}%`,
+      width: `${safeNumber(item.itemSize, 20)}%`,
       height: 'auto',
-      zIndex: item.itemLayer,
+      zIndex: safeNumber(item.itemLayer, 1),
     };
   };
 
