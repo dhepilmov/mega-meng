@@ -21,6 +21,157 @@ const Launcher: React.FC<LauncherProps> = () => {
     calculateTransformOrigin,
   } = useRotateLogic();
 
+  // ========================================
+  // CONFIG UI MODAL STATE
+  // ========================================
+  const [showConfigUI, setShowConfigUI] = useState(false);
+  
+  // ========================================
+  // 6-TAP GESTURE DETECTION
+  // ========================================
+  const [tapCount, setTapCount] = useState(0);
+  const lastTapTime = useRef<number>(0);
+  const resetTimeout = useRef<NodeJS.Timeout>();
+
+  const handleSixTapGesture = () => {
+    const currentTime = Date.now();
+    const timeSinceLastTap = currentTime - lastTapTime.current;
+    const maxTapInterval = 500; // 500ms between taps
+    const requiredTaps = 6;
+    
+    // Clear existing reset timeout
+    if (resetTimeout.current) {
+      clearTimeout(resetTimeout.current);
+    }
+
+    // Check if tap is within allowed interval
+    if (timeSinceLastTap < maxTapInterval || tapCount === 0) {
+      const newTapCount = tapCount + 1;
+      setTapCount(newTapCount);
+      lastTapTime.current = currentTime;
+
+      // Check if gesture is complete
+      if (newTapCount >= requiredTaps) {
+        setShowConfigUI(true);
+        setTapCount(0);
+        return;
+      }
+
+      // Set timeout to reset if no more taps
+      resetTimeout.current = setTimeout(() => {
+        setTapCount(0);
+      }, 1000);
+    } else {
+      // Reset if too much time passed
+      setTapCount(1);
+      lastTapTime.current = currentTime;
+    }
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (resetTimeout.current) {
+        clearTimeout(resetTimeout.current);
+      }
+    };
+  }, []);
+
+  // ========================================
+  // MODAL OVERLAY COMPONENT
+  // ========================================
+  const ModalOverlay: React.FC<{ 
+    isOpen: boolean; 
+    onClose: () => void; 
+    children: React.ReactNode;
+  }> = ({ isOpen, onClose, children }) => {
+    // ESC key handler
+    useEffect(() => {
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && isOpen) {
+          onClose();
+        }
+      };
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }, [isOpen, onClose]);
+
+    // Prevent body scroll when modal is open
+    useEffect(() => {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }, [isOpen]);
+
+    if (!isOpen) return null;
+
+    return (
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          opacity: isOpen ? 1 : 0,
+          transition: 'all 0.3s ease-in-out'
+        }}
+        onClick={onClose}
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            position: 'relative',
+            width: '90vw',
+            height: '90vh',
+            transform: 'scale(0.9)',
+            transformOrigin: 'center center',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+          }}
+        >
+          {children}
+          
+          {/* Top Button Container with Close and Config Buttons */}
+          <TopButtonContainer showStroke={false}>
+            {/* Config Button - Left side */}
+            <MarkerButton 
+              type="new" 
+              showStroke={false}
+              onClick={() => console.log('Config button clicked')}
+              style={{ backgroundColor: 'rgba(59, 130, 246, 0.8)' }}
+            >
+              ⚙️
+            </MarkerButton>
+            
+            {/* Close Button - Right side */}
+            <MarkerButton 
+              type="close" 
+              showStroke={false}
+              onClick={onClose}
+              style={{ backgroundColor: 'rgba(239, 68, 68, 0.8)' }}
+            >
+              ✕
+            </MarkerButton>
+          </TopButtonContainer>
+        </div>
+      </div>
+    );
+  };
+
   // Initialize gesture controls
   const { gestureState, touchHandlers, controls } = useGestures({
     minScale: 0.3,
