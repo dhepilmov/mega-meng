@@ -132,7 +132,13 @@ const Launcher: React.FC<LauncherProps> = () => {
           opacity: isOpen ? 1 : 0,
           transition: 'all 0.3s ease-in-out'
         }}
-        onClick={onClose}
+        onClick={(e) => {
+          // Only close if clicking the backdrop, not the modal content
+          if (e.target === e.currentTarget) {
+            console.log('Backdrop clicked - closing modal');
+            onClose();
+          }
+        }}
       >
         <div
           onClick={(e) => e.stopPropagation()}
