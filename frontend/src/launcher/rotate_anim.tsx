@@ -11,6 +11,19 @@ interface RotateAnimProps {
   };
 }
 
+// SAFE PROPERTY ACCESS UTILITIES for animation
+const safeString = (value: any, defaultValue: string = 'no'): string => {
+  return value !== undefined && value !== null ? String(value) : defaultValue;
+};
+
+const safeNumber = (value: any, defaultValue: number = 0): number => {
+  return value !== undefined && value !== null && !isNaN(Number(value)) ? Number(value) : defaultValue;
+};
+
+const safeObject = <T>(value: any, defaultValue: T | null = null): T | null => {
+  return value !== undefined && value !== null ? value : defaultValue;
+};
+
 export const RotateAnim: React.FC<RotateAnimProps> = ({ items, clockState }) => {
   useEffect(() => {
     // Create and inject CSS animations for each item
