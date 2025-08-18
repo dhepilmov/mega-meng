@@ -29,7 +29,14 @@ export interface RotateItemConfig {
   // When handType is set, clock logic overrides the specified rotation
   
   // TIMEZONE (only for hour hands)
-  timezone?: TimezoneConfig;
+  timezone?: TimezoneConfig | null;
+  
+  // EFFECT
+  shadow: 'yes' | 'no';
+  glow: 'yes' | 'no';
+  transparent: 'yes' | 'no';
+  pulse: 'yes' | 'no';
+  render: 'yes' | 'no';
   
   // ROTATION CONFIGURATION
   rotation1: RotationConfig;
