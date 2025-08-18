@@ -152,7 +152,7 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items, clockState }) => 
       }
     });
 
-    // Add global styles for rotate items
+    // Add global styles for rotate items with EFFECT support
     cssContent += `
       .rotate-item {
         pointer-events: auto;
@@ -176,6 +176,56 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items, clockState }) => 
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
       }
+      
+      /* EFFECT animations */
+      @keyframes pulse {
+        0%, 100% { 
+          opacity: 1; 
+          transform: scale(1); 
+        }
+        50% { 
+          opacity: 0.7; 
+          transform: scale(1.05); 
+        }
+      }
+      
+      /* Apply EFFECT styles to items that have render: 'yes' */
+      ${items.map(item => {
+        const itemCode = safeString(item.itemCode, '');
+        const renderEnabled = safeString(item.render, 'no') === 'yes';
+        
+        if (!renderEnabled) return '';
+        
+        let effectStyles = '';
+        
+        // Shadow effect
+        if (safeString(item.shadow, 'no') === 'yes') {
+          effectStyles += 'filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));';
+        }
+        
+        // Glow effect
+        if (safeString(item.glow, 'no') === 'yes') {
+          effectStyles += effectStyles ? 
+            'filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));' :
+            'filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));';
+        }
+        
+        // Transparency effect
+        if (safeString(item.transparent, 'no') === 'yes') {
+          effectStyles += 'opacity: 0.7;';
+        }
+        
+        // Pulse effect
+        if (safeString(item.pulse, 'no') === 'yes') {
+          effectStyles += 'animation: pulse 2s ease-in-out infinite;';
+        }
+        
+        return effectStyles ? `
+          .rotate-item-${itemCode} {
+            ${effectStyles}
+          }
+        ` : '';
+      }).join('')}
     `;
 
     styleElement.textContent = cssContent;
