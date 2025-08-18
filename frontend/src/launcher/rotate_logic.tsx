@@ -20,6 +20,59 @@ export interface RotateItem extends RotateItemConfig {
   imageSrc?: string;
 }
 
+// Safe property normalizer for RotateItem
+const normalizeRotateItem = (item: any): RotateItem => {
+  return {
+    // Basic properties with safe defaults
+    itemCode: safeString(item.itemCode, ''),
+    itemName: safeString(item.itemName, ''),
+    itemPath: safeString(item.itemPath, ''),
+    itemLayer: safeNumber(item.itemLayer, 1),
+    itemSize: safeNumber(item.itemSize, 20),
+    itemDisplay: safeString(item.itemDisplay, 'no') as 'yes' | 'no' | '',
+    
+    // Clock hand configuration with safe defaults
+    handType: safeObject(item.handType, null) as 'hour' | 'minute' | 'second' | null,
+    handRotation: safeObject(item.handRotation, null) as 'ROTATION1' | 'ROTATION2' | null,
+    
+    // Timezone with safe defaults
+    timezone: safeObject(item.timezone, null),
+    
+    // Effect properties with safe defaults
+    shadow: safeString(item.shadow, 'no') as 'yes' | 'no',
+    glow: safeString(item.glow, 'no') as 'yes' | 'no',
+    transparent: safeString(item.transparent, 'no') as 'yes' | 'no',
+    pulse: safeString(item.pulse, 'no') as 'yes' | 'no',
+    render: safeString(item.render, 'no') as 'yes' | 'no',
+    
+    // Rotation configurations with safe defaults
+    rotation1: {
+      enabled: safeString(item.rotation1?.enabled, 'no') as 'yes' | 'no' | null,
+      itemTiltPosition: safeNumber(item.rotation1?.itemTiltPosition, 0),
+      itemAxisX: safeNumber(item.rotation1?.itemAxisX, 50),
+      itemAxisY: safeNumber(item.rotation1?.itemAxisY, 50),
+      itemPositionX: safeNumber(item.rotation1?.itemPositionX, 0),
+      itemPositionY: safeNumber(item.rotation1?.itemPositionY, 0),
+      rotationSpeed: safeNumber(item.rotation1?.rotationSpeed, 0),
+      rotationWay: safeString(item.rotation1?.rotationWay, 'no') as '+' | '-' | 'no' | '' | null,
+    },
+    rotation2: {
+      enabled: safeString(item.rotation2?.enabled, 'no') as 'yes' | 'no' | null,
+      itemTiltPosition: safeNumber(item.rotation2?.itemTiltPosition, 0),
+      itemAxisX: safeNumber(item.rotation2?.itemAxisX, 50),
+      itemAxisY: safeNumber(item.rotation2?.itemAxisY, 50),
+      itemPositionX: safeNumber(item.rotation2?.itemPositionX, 0),
+      itemPositionY: safeNumber(item.rotation2?.itemPositionY, 0),
+      rotationSpeed: safeNumber(item.rotation2?.rotationSpeed, 0),
+      rotationWay: safeString(item.rotation2?.rotationWay, 'no') as '+' | '-' | 'no' | '' | null,
+    },
+    
+    // Extended properties
+    exists: Boolean(item.exists),
+    imageSrc: item.imageSrc || '',
+  };
+};
+
 export const useRotateLogic = () => {
   const [rotateItems, setRotateItems] = useState<RotateItem[]>([]);
   const [loading, setLoading] = useState(true);
