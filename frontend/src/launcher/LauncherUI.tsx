@@ -132,8 +132,19 @@ const Launcher: React.FC<LauncherProps> = () => {
     enableRotation: false, // Keep false to not interfere with launcher rotation
     doubleTapZoomScale: 2.0,
     enableMultiTap: true,
-    onSixTap: () => setShowConfigUI(true), // 6-tap opens config UI
+    multiTapWindow: 600, // Increased window for easier detection
+    onSixTap: () => {
+      console.log('6-tap gesture detected! Opening config UI...');
+      setShowConfigUI(true);
+    },
   });
+
+  // Debug: Log tap count changes
+  useEffect(() => {
+    if (tapCount > 0) {
+      console.log(`Tap count: ${tapCount}/6`);
+    }
+  }, [tapCount]);
 
   const displayableItems = getDisplayableItems();
 
