@@ -27,6 +27,61 @@ const Launcher: React.FC<LauncherProps> = () => {
   const [showConfigUI, setShowConfigUI] = useState(false);
 
   // ========================================
+  // BACKUP 6-CLICK SYSTEM (for mouse clicks)
+  // ========================================
+  const [clickCount, setClickCount] = useState(0);
+  const lastClickTime = useRef<number>(0);
+  const clickResetTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const handleBackupSixClick = (event: React.MouseEvent) => {
+    const currentTime = Date.now();
+    const timeSinceLastClick = currentTime - lastClickTime.current;
+    const maxClickInterval = 500; // 500ms between clicks
+    
+    // Clear existing reset timeout
+    if (clickResetTimeout.current) {
+      clearTimeout(clickResetTimeout.current);
+    }
+
+    // Check if click is within allowed interval
+    if (timeSinceLastClick < maxClickInterval || clickCount === 0) {
+      const newClickCount = clickCount + 1;
+      setClickCount(newClickCount);
+      lastClickTime.current = currentTime;
+
+      console.log(`Click count: ${newClickCount}/6`);
+
+      // Check if gesture is complete
+      if (newClickCount >= 6) {
+        console.log('6-click gesture detected! Opening config UI...');
+        setShowConfigUI(true);
+        setClickCount(0);
+        return;
+      }
+
+      // Set timeout to reset if no more clicks
+      clickResetTimeout.current = setTimeout(() => {
+        console.log('Click sequence reset');
+        setClickCount(0);
+      }, 1000);
+    } else {
+      // Reset if too much time passed
+      console.log('Click sequence reset due to timeout, starting new sequence');
+      setClickCount(1);
+      lastClickTime.current = currentTime;
+    }
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (clickResetTimeout.current) {
+        clearTimeout(clickResetTimeout.current);
+      }
+    };
+  }, []);
+
+  // ========================================
   // MODAL OVERLAY COMPONENT
   // ========================================
   const ModalOverlay: React.FC<{ 
