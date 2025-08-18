@@ -52,6 +52,9 @@ export interface GestureConfig {
     rotation: number;
     swipe: number;
   };
+  
+  // Callback for 6-tap gesture
+  onSixTap?: () => void;
 }
 
 // Default configuration
