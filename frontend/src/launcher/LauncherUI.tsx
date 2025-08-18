@@ -159,7 +159,6 @@ const Launcher: React.FC<LauncherProps> = () => {
             touchAction: 'none',
           }}
           {...touchHandlers}
-          onClick={handleSixTapGesture}
         >
           {/* Rotate Animation CSS Manager */}
           <RotateAnim items={displayableItems} clockState={clockState} />
