@@ -193,7 +193,7 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
     if (fullConfig.onSixTap) {
       fullConfig.onSixTap();
     }
-  }, [fullConfig]);
+  }, [fullConfig.onSixTap]);
 
   // Handle multi-tap detection
   const handleMultiTap = useCallback((newTapCount: number) => {
