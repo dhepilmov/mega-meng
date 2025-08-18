@@ -245,22 +245,28 @@ export const useRotateLogic = () => {
     return transform;
   };
 
-  // Calculate transform origin for rotations (with enhanced clock integration)
+  // Calculate transform origin for rotations (with enhanced clock integration and safe property access)
   const calculateTransformOrigin = (item: RotateItem): string => {
     // For clock hands, use the active rotation's origin
     if (isClockHand(item)) {
       const activeRotation = getActiveRotationConfig(item);
       if (activeRotation) {
-        return `${activeRotation.itemAxisX}% ${activeRotation.itemAxisY}%`;
+        const axisX = safeNumber(activeRotation.itemAxisX, 50);
+        const axisY = safeNumber(activeRotation.itemAxisY, 50);
+        return `${axisX}% ${axisY}%`;
       }
     }
 
-    // For non-hand items, use original logic
+    // For non-hand items, use original logic with safe property access
     // Use rotation1 axis as primary, fallback to rotation2, then center
-    if (item.rotation1.enabled === 'yes') {
-      return `${item.rotation1.itemAxisX}% ${item.rotation1.itemAxisY}%`;
-    } else if (item.rotation2.enabled === 'yes') {
-      return `${item.rotation2.itemAxisX}% ${item.rotation2.itemAxisY}%`;
+    if (safeString(item.rotation1?.enabled, 'no') === 'yes') {
+      const axisX1 = safeNumber(item.rotation1?.itemAxisX, 50);
+      const axisY1 = safeNumber(item.rotation1?.itemAxisY, 50);
+      return `${axisX1}% ${axisY1}%`;
+    } else if (safeString(item.rotation2?.enabled, 'no') === 'yes') {
+      const axisX2 = safeNumber(item.rotation2?.itemAxisX, 50);
+      const axisY2 = safeNumber(item.rotation2?.itemAxisY, 50);
+      return `${axisX2}% ${axisY2}%`;
     }
     return '50% 50%';
   };
