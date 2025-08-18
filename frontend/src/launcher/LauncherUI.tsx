@@ -155,68 +155,96 @@ const Launcher: React.FC<LauncherProps> = () => {
         >
           {children}
           
-          {/* Direct Close Button - Most Stable Approach */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log('Close button clicked');
-              onClose();
-            }}
+          {/* Simple, Accessible Close Button */}
+          <div
             style={{
               position: 'absolute',
-              top: '20px',
-              right: '20px',
-              width: '48px',
-              height: '48px',
-              borderRadius: '12px',
-              backgroundColor: 'rgba(239, 68, 68, 0.9)',
-              color: 'white',
-              border: 'none',
-              fontSize: '24px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10001,
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+              top: '10px',
+              right: '10px',
+              zIndex: 10002,
+              padding: '10px'
             }}
-            className="hover:bg-opacity-90 hover:scale-105 active:scale-95"
           >
-            ✕
-          </button>
-          
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Simple close button clicked');
+                onClose();
+              }}
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '20px',
+                backgroundColor: '#ef4444',
+                color: 'white',
+                border: 'none',
+                fontSize: '18px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#dc2626';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#ef4444';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+              title="Close (ESC)"
+            >
+              ✕
+            </button>
+          </div>
+
           {/* Config Button - Left side */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log('Config button clicked');
-            }}
+          <div
             style={{
               position: 'absolute',
-              top: '20px',
-              right: '80px', // 48px width + 12px gap + 20px = 80px from right
-              width: '48px',
-              height: '48px',
-              borderRadius: '12px',
-              backgroundColor: 'rgba(59, 130, 246, 0.9)',
-              color: 'white',
-              border: 'none',
-              fontSize: '20px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10001,
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+              top: '10px',
+              right: '60px', // 40px width + 10px gap + 10px = 60px from right
+              zIndex: 10002,
+              padding: '10px'
             }}
-            className="hover:bg-opacity-90 hover:scale-105 active:scale-95"
           >
-            ⚙️
-          </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Simple config button clicked');
+              }}
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '20px',
+                backgroundColor: '#3b82f6',
+                color: 'white',
+                border: 'none',
+                fontSize: '16px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#2563eb';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#3b82f6';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+              title="Configuration"
+            >
+              ⚙️
+            </button>
+          </div>
         </div>
       </div>
     );
