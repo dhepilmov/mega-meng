@@ -25,57 +25,6 @@ const Launcher: React.FC<LauncherProps> = () => {
   // CONFIG UI MODAL STATE
   // ========================================
   const [showConfigUI, setShowConfigUI] = useState(false);
-  
-  // ========================================
-  // 6-TAP GESTURE DETECTION
-  // ========================================
-  const [tapCount, setTapCount] = useState(0);
-  const lastTapTime = useRef<number>(0);
-  const resetTimeout = useRef<NodeJS.Timeout>();
-
-  const handleSixTapGesture = () => {
-    const currentTime = Date.now();
-    const timeSinceLastTap = currentTime - lastTapTime.current;
-    const maxTapInterval = 500; // 500ms between taps
-    const requiredTaps = 6;
-    
-    // Clear existing reset timeout
-    if (resetTimeout.current) {
-      clearTimeout(resetTimeout.current);
-    }
-
-    // Check if tap is within allowed interval
-    if (timeSinceLastTap < maxTapInterval || tapCount === 0) {
-      const newTapCount = tapCount + 1;
-      setTapCount(newTapCount);
-      lastTapTime.current = currentTime;
-
-      // Check if gesture is complete
-      if (newTapCount >= requiredTaps) {
-        setShowConfigUI(true);
-        setTapCount(0);
-        return;
-      }
-
-      // Set timeout to reset if no more taps
-      resetTimeout.current = setTimeout(() => {
-        setTapCount(0);
-      }, 1000);
-    } else {
-      // Reset if too much time passed
-      setTapCount(1);
-      lastTapTime.current = currentTime;
-    }
-  };
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (resetTimeout.current) {
-        clearTimeout(resetTimeout.current);
-      }
-    };
-  }, []);
 
   // ========================================
   // MODAL OVERLAY COMPONENT
@@ -172,8 +121,8 @@ const Launcher: React.FC<LauncherProps> = () => {
     );
   };
 
-  // Initialize gesture controls
-  const { gestureState, touchHandlers, controls } = useGestures({
+  // Initialize gesture controls with 6-tap callback
+  const { gestureState, touchHandlers, controls, tapCount } = useGestures({
     minScale: 0.3,
     maxScale: 4.0,
     scaleStep: 0.2,
@@ -182,6 +131,8 @@ const Launcher: React.FC<LauncherProps> = () => {
     enablePan: false, // Keep false to not interfere with launcher rotation
     enableRotation: false, // Keep false to not interfere with launcher rotation
     doubleTapZoomScale: 2.0,
+    enableMultiTap: true,
+    onSixTap: () => setShowConfigUI(true), // 6-tap opens config UI
   });
 
   const displayableItems = getDisplayableItems();
