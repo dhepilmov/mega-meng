@@ -185,9 +185,12 @@ export const useGestures = (config: Partial<GestureConfig> = {}) => {
   }, []);
 
   const sixTapFunction = useCallback(() => {
-    console.log('6-tap gesture: Function reserved for future use');
-    // Placeholder for future functionality
-  }, []);
+    console.log('6-tap gesture: Opening rotation configuration UI');
+    // Trigger callback for opening config UI if provided
+    if (fullConfig.onSixTap) {
+      fullConfig.onSixTap();
+    }
+  }, [fullConfig]);
 
   // Handle multi-tap detection
   const handleMultiTap = useCallback((newTapCount: number) => {
