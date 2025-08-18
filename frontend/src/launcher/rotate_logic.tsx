@@ -2,6 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { rotateConfig, RotateItemConfig, RotationConfig } from './rotate_config';
 import { useClock, ClockState, getTimezoneHourAngle } from './clock_logic';
 
+// SAFE PROPERTY ACCESS UTILITIES - Default to 'no'/null if undefined
+const safeString = (value: any, defaultValue: string = 'no'): string => {
+  return value !== undefined && value !== null ? String(value) : defaultValue;
+};
+
+const safeNumber = (value: any, defaultValue: number = 0): number => {
+  return value !== undefined && value !== null && !isNaN(Number(value)) ? Number(value) : defaultValue;
+};
+
+const safeObject = <T>(value: any, defaultValue: T | null = null): T | null => {
+  return value !== undefined && value !== null ? value : defaultValue;
+};
+
 export interface RotateItem extends RotateItemConfig {
   exists: boolean;
   imageSrc?: string;
