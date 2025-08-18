@@ -300,24 +300,57 @@ export const RotateItemComponent: React.FC<RotateItemProps> = ({
   calculateItemTransform,
   calculateTransformOrigin,
 }) => {
-  if (!item.exists || !item.imageSrc) return null;
+  if (!item.exists || !safeString(item.imageSrc)) return null;
 
   const baseStyle = calculateBasePosition(item);
   const transform = calculateItemTransform(item);
   const transformOrigin = calculateTransformOrigin(item);
 
+  // Apply EFFECT properties with safe defaults
+  const applyEffects = (style: React.CSSProperties): React.CSSProperties => {
+    const effectsEnabled = safeString(item.render, 'no') === 'yes';
+    
+    if (!effectsEnabled) return style;
+
+    const effects = { ...style };
+
+    // Shadow effect
+    if (safeString(item.shadow, 'no') === 'yes') {
+      effects.filter = `${effects.filter || ''} drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))`.trim();
+    }
+
+    // Glow effect  
+    if (safeString(item.glow, 'no') === 'yes') {
+      effects.filter = `${effects.filter || ''} drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))`.trim();
+    }
+
+    // Transparency effect
+    if (safeString(item.transparent, 'no') === 'yes') {
+      effects.opacity = 0.7;
+    }
+
+    // Pulse effect (CSS animation will be added separately)
+    if (safeString(item.pulse, 'no') === 'yes') {
+      effects.animation = `${effects.animation || ''} pulse 2s ease-in-out infinite`.trim();
+    }
+
+    return effects;
+  };
+
+  const finalStyle = applyEffects({
+    ...baseStyle,
+    transform,
+    transformOrigin,
+  });
+
   return (
     <div
-      className={`rotate-item rotate-item-${item.itemCode}`}
-      style={{
-        ...baseStyle,
-        transform,
-        transformOrigin,
-      }}
+      className={`rotate-item rotate-item-${safeString(item.itemCode, '')}`}
+      style={finalStyle}
     >
       <img
         src={item.imageSrc}
-        alt={item.itemName}
+        alt={safeString(item.itemName, '')}
         style={{
           width: '100%',
           height: 'auto',
