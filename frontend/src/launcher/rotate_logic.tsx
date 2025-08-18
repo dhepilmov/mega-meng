@@ -144,9 +144,11 @@ export const useRotateLogic = () => {
     }
   };
 
-  // Check if item is a clock hand
+  // Check if item is a clock hand (with safe property access)
   const isClockHand = (item: RotateItem): boolean => {
-    return item.handType !== null && item.handType !== undefined && item.handRotation !== null;
+    const handType = safeObject(item.handType, null);
+    const handRotation = safeObject(item.handRotation, null);
+    return handType !== null && handType !== undefined && handRotation !== null;
   };
 
   // Get active rotation config for hand items
