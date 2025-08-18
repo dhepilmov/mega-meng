@@ -37,715 +37,963 @@ export interface RotateItemConfig {
 }
 
 export const rotateConfig: RotateItemConfig[] = [
-  // LAYER 1 - Clock Background
+  // LAYER 1
   {
-    itemCode: 'item_1',
-    itemName: 'clockBG',
-    itemPath: 'res/clockBG.png',
-    itemLayer: 1,
-    itemSize: 80,
-    itemDisplay: 'yes',
+    itemCode: 'item_1',               // Unique identifier for the item (item_1 to item_20)
+    itemName: 'clockBG',              // PNG filename without extension (string)
+    itemPath: 'res/clockBG.png',      // File path relative to res/ folder (string)
+    itemLayer: 1,                     // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
-    
-    // ROTATION CONFIGURATION
-    rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 60,
-      rotationWay: 'no',
-    },
-    rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
-    },
-  },
-
-  // LAYER 2 - Minute Hand
-  {
-    itemCode: 'item_2',
-    itemName: 'minutes_circle',
-    itemPath: 'res/minutes_circle.png',
-    itemLayer: 5,
-    itemSize: 70,
-    itemDisplay: 'yes',
-    
-    // CLOCK HAND CONFIGURATION
-    handType: 'minute',
-    handRotation: 'ROTATION1',
-    
-    // ROTATION CONFIGURATION
-    rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 3600, // Overridden by clock logic
-      rotationWay: '+',
-    },
-    rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
-    },
-  },
-
-  // LAYER 3 - Hour Hand with Timezone
-  {
-    itemCode: 'item_3',
-    itemName: 'outer_circle',
-    itemPath: 'res/outer_circle.png',
-    itemLayer: 4,
-    itemSize: 70,
-    itemDisplay: 'yes',
-    
-    // CLOCK HAND CONFIGURATION
-    handType: 'hour',
-    handRotation: 'ROTATION1',
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
     
     // TIMEZONE
-    timezone: {
-      enabled: 'yes',
-      utcOffset: 0, // UTC+0 (London time)
-      use24Hour: 'yes', // 1 rotation per 24 hours
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 0,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
     },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 86400, // Overridden by clock logic 
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
-  // LAYER 4 - Second Hand (Hidden)
+  // LAYER 2
   {
-    itemCode: 'item_4',
-    itemName: 'dummy (4)',
-    itemPath: 'res/dummy (4).png',
-    itemLayer: 6,
-    itemSize: 25,
-    itemDisplay: 'no',
+    itemCode: 'item_2',               // Unique identifier for the item (item_1 to item_20)
+    itemName: 'minutes_circle',       // PNG filename without extension (string)
+    itemPath: 'res/minutes_circle.png', // File path relative to res/ folder (string)
+    itemLayer: 2,                     // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: 'second',
-    handRotation: 'ROTATION1',
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 1,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
+    },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'yes',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 60, // Overridden by clock logic
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
-  // LAYER 5 to 20 - Available for more layers
+  // LAYER 3
   {
-    itemCode: 'item_5',
-    itemName: 'dummy (5)',
-    itemPath: 'res/dummy (5).png',
-    itemLayer: 7,
-    itemSize: 60,
-    itemDisplay: 'no',
+    itemCode: 'item_3',               // Unique identifier for the item (item_1 to item_20)
+    itemName: 'outer_circle',         // PNG filename without extension (string)
+    itemPath: 'res/outer_circle.png', // File path relative to res/ folder (string)
+    itemLayer: 3,                     // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 2,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
+    },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 15,
-      itemPositionY: 0,
-      rotationSpeed: 20,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 75,
-      itemAxisY: 25,
-      itemPositionX: 20,
-      itemPositionY: -10,
-      rotationSpeed: 45,
-      rotationWay: '-',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 4
   {
-    itemCode: 'item_6',
-    itemName: 'dummy (6)',
-    itemPath: 'res/dummy (6).png',
-    itemLayer: 8,
-    itemSize: 40,
-    itemDisplay: 'no',
+    itemCode: 'item_4',               // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (4)',            // PNG filename without extension (string)
+    itemPath: 'res/dummy (4).png',   // File path relative to res/ folder (string)
+    itemLayer: 4,                     // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 3,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
+    },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 45,
-      itemAxisX: 25,
-      itemAxisY: 75,
-      itemPositionX: -20,
-      itemPositionY: 15,
-      rotationSpeed: 35,
-      rotationWay: '-',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 5
   {
-    itemCode: 'item_7',
-    itemName: 'dummy (7)',
-    itemPath: 'res/dummy (7).png',
-    itemLayer: 9,
-    itemSize: 55,
-    itemDisplay: 'no',
+    itemCode: 'item_5',               // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (5)',            // PNG filename without extension (string)
+    itemPath: 'res/dummy (5).png',   // File path relative to res/ folder (string)
+    itemLayer: 5,                     // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 4,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
+    },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: -25,
-      rotationSpeed: 50,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 90,
-      itemAxisX: 0,
-      itemAxisY: 100,
-      itemPositionX: 25,
-      itemPositionY: 0,
-      rotationSpeed: 30,
-      rotationWay: '+',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 6
   {
-    itemCode: 'item_8',
-    itemName: 'dummy (8)',
-    itemPath: 'res/dummy (8).png',
-    itemLayer: 10,
-    itemSize: 45,
-    itemDisplay: 'no',
+    itemCode: 'item_6',               // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (6)',            // PNG filename without extension (string)
+    itemPath: 'res/dummy (6).png',   // File path relative to res/ folder (string)
+    itemLayer: 6,                     // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 5,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
+    },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 30,
-      itemPositionY: 20,
-      rotationSpeed: 40,
-      rotationWay: '-',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 7
   {
-    itemCode: 'item_9',
-    itemName: 'dummy (9)',
-    itemPath: 'res/dummy (9).png',
-    itemLayer: 11,
-    itemSize: 35,
-    itemDisplay: 'no',
+    itemCode: 'item_7',               // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (7)',            // PNG filename without extension (string)
+    itemPath: 'res/dummy (7).png',   // File path relative to res/ folder (string)
+    itemLayer: 7,                     // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 6,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
+    },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 180,
-      itemAxisX: 100,
-      itemAxisY: 50,
-      itemPositionX: -15,
-      itemPositionY: -15,
-      rotationSpeed: 25,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 8
   {
-    itemCode: 'item_10',
-    itemName: 'dummy (10)',
-    itemPath: 'res/dummy (10).png',
-    itemLayer: 12,
-    itemSize: 65,
-    itemDisplay: 'no',
+    itemCode: 'item_8',               // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (8)',            // PNG filename without extension (string)
+    itemPath: 'res/dummy (8).png',   // File path relative to res/ folder (string)
+    itemLayer: 8,                     // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 7,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
+    },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 30,
-      rotationSpeed: 60,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 270,
-      itemAxisX: 50,
-      itemAxisY: 0,
-      itemPositionX: -30,
-      itemPositionY: 0,
-      rotationSpeed: 45,
-      rotationWay: '-',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 9
   {
-    itemCode: 'item_11',
-    itemName: 'dummy (11)',
-    itemPath: 'res/dummy (11).png',
-    itemLayer: 13,
-    itemSize: 50,
-    itemDisplay: 'no',
+    itemCode: 'item_9',               // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (9)',            // PNG filename without extension (string)
+    itemPath: 'res/dummy (9).png',   // File path relative to res/ folder (string)
+    itemLayer: 9,                     // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 8,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
+    },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 35,
-      itemPositionY: -25,
-      rotationSpeed: 15,
-      rotationWay: '-',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 10
   {
-    itemCode: 'item_12',
-    itemName: 'dummy (12)',
-    itemPath: 'res/dummy (12).png',
-    itemLayer: 14,
-    itemSize: 30,
-    itemDisplay: 'no',
+    itemCode: 'item_10',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (10)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (10).png',  // File path relative to res/ folder (string)
+    itemLayer: 10,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'yes',               // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: {                       // Timezone configuration (object/null for items 11-20)
+      enabled: 'yes',                 // Enable timezone offset (yes/no)
+      utcOffset: 9,                   // UTC offset in hours (number -12 to +12)
+      use24Hour: 'yes',               // 1 rotation per 24 hours vs 12 hours (yes/no)
+    },
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 45,
-      itemAxisX: 0,
-      itemAxisY: 0,
-      itemPositionX: 40,
-      itemPositionY: 40,
-      rotationSpeed: 12,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 11
   {
-    itemCode: 'item_13',
-    itemName: 'dummy (13)',
-    itemPath: 'res/dummy (13).png',
-    itemLayer: 15,
-    itemSize: 70,
-    itemDisplay: 'no',
+    itemCode: 'item_11',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (11)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (11).png',  // File path relative to res/ folder (string)
+    itemLayer: 11,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: -40,
-      itemPositionY: 0,
-      rotationSpeed: 80,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 135,
-      itemAxisX: 25,
-      itemAxisY: 25,
-      itemPositionX: 10,
-      itemPositionY: -35,
-      rotationSpeed: 55,
-      rotationWay: '+',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 12
   {
-    itemCode: 'item_14',
-    itemName: 'dummy (14)',
-    itemPath: 'res/dummy (14).png',
-    itemLayer: 16,
-    itemSize: 40,
-    itemDisplay: 'no',
+    itemCode: 'item_12',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (12)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (12).png',  // File path relative to res/ folder (string)
+    itemLayer: 12,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: -40,
-      rotationSpeed: 30,
-      rotationWay: '-',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 13
   {
-    itemCode: 'item_15',
-    itemName: 'dummy (15)',
-    itemPath: 'res/dummy (15).png',
-    itemLayer: 17,
-    itemSize: 55,
-    itemDisplay: 'no',
+    itemCode: 'item_13',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (13)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (13).png',  // File path relative to res/ folder (string)
+    itemLayer: 13,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 90,
-      itemAxisX: 100,
-      itemAxisY: 50,
-      itemPositionX: 25,
-      itemPositionY: 35,
-      rotationSpeed: 70,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 14
   {
-    itemCode: 'item_16',
-    itemName: 'dummy (16)',
-    itemPath: 'res/dummy (16).png',
-    itemLayer: 18,
-    itemSize: 45,
-    itemDisplay: 'no',
+    itemCode: 'item_14',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (14)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (14).png',  // File path relative to res/ folder (string)
+    itemLayer: 14,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: -25,
-      itemPositionY: 25,
-      rotationSpeed: 18,
-      rotationWay: '-',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 15
   {
-    itemCode: 'item_17',
-    itemName: 'dummy (17)',
-    itemPath: 'res/dummy (17).png',
-    itemLayer: 19,
-    itemSize: 35,
-    itemDisplay: 'no',
+    itemCode: 'item_15',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (15)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (15).png',  // File path relative to res/ folder (string)
+    itemLayer: 15,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 45,
-      itemPositionY: 0,
-      rotationSpeed: 90,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 180,
-      itemAxisX: 0,
-      itemAxisY: 50,
-      itemPositionX: -10,
-      itemPositionY: -40,
-      rotationSpeed: 25,
-      rotationWay: '-',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 16
   {
-    itemCode: 'item_18',
-    itemName: 'dummy (18)',
-    itemPath: 'res/dummy (18).png',
-    itemLayer: 20,
-    itemSize: 60,
-    itemDisplay: 'no',
+    itemCode: 'item_16',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (16)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (16).png',  // File path relative to res/ folder (string)
+    itemLayer: 16,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 45,
-      rotationSpeed: 35,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 17
   {
-    itemCode: 'item_19',
-    itemName: 'dummy (19)',
-    itemPath: 'res/dummy (19).png',
-    itemLayer: 21,
-    itemSize: 25,
-    itemDisplay: 'no',
+    itemCode: 'item_17',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (17)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (17).png',  // File path relative to res/ folder (string)
+    itemLayer: 17,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 270,
-      itemAxisX: 50,
-      itemAxisY: 100,
-      itemPositionX: -35,
-      itemPositionY: -30,
-      rotationSpeed: 22,
-      rotationWay: '-',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 0,
-      rotationWay: '',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 
+  // LAYER 18
   {
-    itemCode: 'item_20',
-    itemName: 'dummy (20)',
-    itemPath: 'res/dummy (20).png',
-    itemLayer: 22,
-    itemSize: 80,
-    itemDisplay: 'no',
+    itemCode: 'item_18',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (18)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (18).png',  // File path relative to res/ folder (string)
+    itemLayer: 18,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
     
     // CLOCK HAND CONFIGURATION
-    handType: null,
-    handRotation: null,
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
     
     // ROTATION CONFIGURATION
     rotation1: {
-      enabled: 'no',
-      itemTiltPosition: 0,
-      itemAxisX: 50,
-      itemAxisY: 50,
-      itemPositionX: 0,
-      itemPositionY: 0,
-      rotationSpeed: 100,
-      rotationWay: '+',
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
     rotation2: {
-      enabled: 'no',
-      itemTiltPosition: 45,
-      itemAxisX: 75,
-      itemAxisY: 75,
-      itemPositionX: 30,
-      itemPositionY: -20,
-      rotationSpeed: 65,
-      rotationWay: '+',
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
+    },
+  },
+
+  // LAYER 19
+  {
+    itemCode: 'item_19',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (19)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (19).png',  // File path relative to res/ folder (string)
+    itemLayer: 19,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
+    
+    // CLOCK HAND CONFIGURATION
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
+    
+    // ROTATION CONFIGURATION
+    rotation1: {
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
+    },
+    rotation2: {
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
+    },
+  },
+
+  // LAYER 20
+  {
+    itemCode: 'item_20',              // Unique identifier for the item (item_1 to item_20)
+    itemName: 'dummy (20)',           // PNG filename without extension (string)
+    itemPath: 'res/dummy (20).png',  // File path relative to res/ folder (string)
+    itemLayer: 20,                    // Z-index layer position (1-20 sequential numbers)
+    itemSize: 20,                     // Size percentage from its own center (number 1-100)
+    itemDisplay: 'no',                // Show/hide PNG (yes/no)
+    
+    // CLOCK HAND CONFIGURATION
+    handType: 'hour',                 // Type of clock hand (hour/minute/second/null)
+    handRotation: 'ROTATION1',        // Which rotation to use for clock (ROTATION1/ROTATION2/null)
+    
+    // TIMEZONE
+    timezone: null,                   // Timezone configuration (object/null for items 11-20)
+    
+    // EFFECT
+    shadow: 'no',                     // Drop shadow effect around item (yes/no)
+    glow: 'no',                       // Glow effect around item (yes/no)
+    transparent: 'no',                // Transparency/opacity effect (yes/no)
+    pulse: 'no',                      // Pulsing animation effect (yes/no)
+    render: 'yes',                    // Enable/disable rendering of effects (yes/no)
+    
+    // ROTATION CONFIGURATION
+    rotation1: {
+      enabled: 'yes',                 // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 86400,           // Seconds for one complete rotation (number > 0)
+      rotationWay: '+',               // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
+    },
+    rotation2: {
+      enabled: 'no',                  // Enable this rotation animation (yes/no)
+      itemTiltPosition: 0,            // Initial rotation angle in degrees (number 0-359)
+      itemAxisX: 50,                  // Rotation axis X position from image center (number 0-100%)
+      itemAxisY: 50,                  // Rotation axis Y position from image center (number 0-100%)
+      itemPositionX: 0,               // Horizontal offset from dot mark center (number -100 to +100%)
+      itemPositionY: 0,               // Vertical offset from dot mark center (number -100 to +100%)
+      rotationSpeed: 0,               // Seconds for one complete rotation (number > 0)
+      rotationWay: '',                // Rotation direction (+/- for clockwise/counter-clockwise, no/'' for none)
     },
   },
 ];
