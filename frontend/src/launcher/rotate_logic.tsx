@@ -206,32 +206,40 @@ export const useRotateLogic = () => {
     return transforms.join(' ');
   };
 
-  // Calculate combined transform for item (with enhanced clock integration)
+  // Calculate combined transform for item (with enhanced clock integration and safe property access)
   const calculateItemTransform = (item: RotateItem): string => {
     let transform = 'translate(-50%, -50%)';
     
     // For clock hands, use clock angles (with timezone support for hour hands)
-    if (isClockHand(item) && item.handType) {
+    if (isClockHand(item) && safeObject(item.handType, null)) {
       const activeRotation = getActiveRotationConfig(item);
       if (activeRotation) {
-        const clockAngle = getClockAngle(item.handType, item);
-        // Apply position offset
-        transform += ` translate(${activeRotation.itemPositionX}%, ${activeRotation.itemPositionY}%)`;
+        const clockAngle = getClockAngle(item.handType!, item);
+        // Apply position offset (safe defaults)
+        const posX = safeNumber(activeRotation.itemPositionX, 0);
+        const posY = safeNumber(activeRotation.itemPositionY, 0);
+        const tilt = safeNumber(activeRotation.itemTiltPosition, 0);
+        
+        transform += ` translate(${posX}%, ${posY}%)`;
         // Apply clock rotation with initial tilt
-        transform += ` rotate(${activeRotation.itemTiltPosition + clockAngle}deg)`;
+        transform += ` rotate(${tilt + clockAngle}deg)`;
         return transform;
       }
     }
 
-    // For non-hand items, use original logic
+    // For non-hand items, use original logic with safe property access
     // Apply rotation 1 positioning
-    if (item.rotation1.enabled === 'yes') {
-      transform += ` translate(${item.rotation1.itemPositionX}%, ${item.rotation1.itemPositionY}%)`;
+    if (safeString(item.rotation1?.enabled, 'no') === 'yes') {
+      const posX1 = safeNumber(item.rotation1?.itemPositionX, 0);
+      const posY1 = safeNumber(item.rotation1?.itemPositionY, 0);
+      transform += ` translate(${posX1}%, ${posY1}%)`;
     }
     
     // Apply rotation 2 positioning if enabled
-    if (item.rotation2.enabled === 'yes') {
-      transform += ` translate(${item.rotation2.itemPositionX}%, ${item.rotation2.itemPositionY}%)`;
+    if (safeString(item.rotation2?.enabled, 'no') === 'yes') {
+      const posX2 = safeNumber(item.rotation2?.itemPositionX, 0);
+      const posY2 = safeNumber(item.rotation2?.itemPositionY, 0);
+      transform += ` translate(${posX2}%, ${posY2}%)`;
     }
 
     return transform;
