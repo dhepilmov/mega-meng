@@ -176,29 +176,31 @@ export const useRotateLogic = () => {
     };
   };
 
-  // Calculate transform for a single rotation
+  // Calculate transform for a single rotation (with safe property access)
   const calculateRotationTransform = (
     rotation: RotationConfig, 
     rotationIndex: number,
     baseTransform: string = ''
   ): string => {
-    if (rotation.enabled !== 'yes' || !rotation.rotationWay || rotation.rotationWay === 'no') {
+    const enabled = safeString(rotation?.enabled, 'no');
+    const rotationWay = safeString(rotation?.rotationWay, 'no');
+    
+    if (enabled !== 'yes' || !rotationWay || rotationWay === 'no') {
       return baseTransform;
     }
 
-    // Position offset from center
-    const translateX = rotation.itemPositionX;
-    const translateY = rotation.itemPositionY;
+    // Position offset from center (safe defaults)
+    const translateX = safeNumber(rotation?.itemPositionX, 0);
+    const translateY = safeNumber(rotation?.itemPositionY, 0);
     
-    // Transform origin based on axis within the image
-    const originX = rotation.itemAxisX;
-    const originY = rotation.itemAxisY;
+    // Initial tilt position (safe default)
+    const tiltPosition = safeNumber(rotation?.itemTiltPosition, 0);
 
     // Combine transforms
     const transforms = [
       `translate(-50%, -50%)`, // Center the element
       `translate(${translateX}%, ${translateY}%)`, // Move to position
-      `rotate(${rotation.itemTiltPosition}deg)`, // Initial tilt
+      `rotate(${tiltPosition}deg)`, // Initial tilt
     ];
 
     return transforms.join(' ');
