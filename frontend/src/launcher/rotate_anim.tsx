@@ -36,23 +36,29 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items, clockState }) => 
       existingStyle.remove();
     }
 
-    // Helper function to check if item is a clock hand
+    // Helper function to check if item is a clock hand (with safe property access)
     const isClockHand = (item: RotateItem): boolean => {
-      return item.handType !== null && item.handType !== undefined && item.handRotation !== null;
+      const handType = safeObject(item.handType, null);
+      const handRotation = safeObject(item.handRotation, null);
+      return handType !== null && handType !== undefined && handRotation !== null;
     };
 
     // Generate CSS keyframes for all items
     let cssContent = '';
     
     items.forEach(item => {
-      if (item.exists && item.itemName) {
+      const itemExists = Boolean(item.exists);
+      const itemName = safeString(item.itemName, '');
+      const itemCode = safeString(item.itemCode, '');
+      
+      if (itemExists && itemName) {
         
         // Skip CSS animations for clock hands - they're controlled by real-time transforms
         if (isClockHand(item)) {
           // Clock hands get smooth real-time updates via transform in rotate_logic
           // No CSS animation needed - requestAnimationFrame handles it
           cssContent += `
-            .rotate-item-${item.itemCode} {
+            .rotate-item-${itemCode} {
               /* Clock hand - no CSS animation, controlled by real-time transforms */
               transition: none;
             }
@@ -61,43 +67,55 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items, clockState }) => 
         }
 
         // Generate animation for non-hand items (decorative elements)
-        // Generate animation for rotation1
-        if (item.rotation1.enabled === 'yes' && item.rotation1.rotationWay && item.rotation1.rotationWay !== 'no') {
-          const direction1 = item.rotation1.rotationWay === '+' ? '360deg' : '-360deg';
-          const animationName1 = `rotate1-${item.itemCode}`;
+        // Generate animation for rotation1 with safe property access
+        const rotation1Enabled = safeString(item.rotation1?.enabled, 'no');
+        const rotation1Way = safeString(item.rotation1?.rotationWay, 'no');
+        
+        if (rotation1Enabled === 'yes' && rotation1Way && rotation1Way !== 'no') {
+          const direction1 = rotation1Way === '+' ? '360deg' : '-360deg';
+          const animationName1 = `rotate1-${itemCode}`;
+          const posX1 = safeNumber(item.rotation1?.itemPositionX, 0);
+          const posY1 = safeNumber(item.rotation1?.itemPositionY, 0);
+          const tilt1 = safeNumber(item.rotation1?.itemTiltPosition, 0);
           
           cssContent += `
             @keyframes ${animationName1} {
               from {
                 transform: translate(-50%, -50%) 
-                          translate(${item.rotation1.itemPositionX}%, ${item.rotation1.itemPositionY}%) 
-                          rotate(${item.rotation1.itemTiltPosition}deg);
+                          translate(${posX1}%, ${posY1}%) 
+                          rotate(${tilt1}deg);
               }
               to {
                 transform: translate(-50%, -50%) 
-                          translate(${item.rotation1.itemPositionX}%, ${item.rotation1.itemPositionY}%) 
-                          rotate(calc(${item.rotation1.itemTiltPosition}deg + ${direction1}));
+                          translate(${posX1}%, ${posY1}%) 
+                          rotate(calc(${tilt1}deg + ${direction1}));
               }
             }
           `;
         }
 
-        // Generate animation for rotation2
-        if (item.rotation2.enabled === 'yes' && item.rotation2.rotationWay && item.rotation2.rotationWay !== 'no') {
-          const direction2 = item.rotation2.rotationWay === '+' ? '360deg' : '-360deg';
-          const animationName2 = `rotate2-${item.itemCode}`;
+        // Generate animation for rotation2 with safe property access
+        const rotation2Enabled = safeString(item.rotation2?.enabled, 'no');
+        const rotation2Way = safeString(item.rotation2?.rotationWay, 'no');
+        
+        if (rotation2Enabled === 'yes' && rotation2Way && rotation2Way !== 'no') {
+          const direction2 = rotation2Way === '+' ? '360deg' : '-360deg';
+          const animationName2 = `rotate2-${itemCode}`;
+          const posX2 = safeNumber(item.rotation2?.itemPositionX, 0);
+          const posY2 = safeNumber(item.rotation2?.itemPositionY, 0);
+          const tilt2 = safeNumber(item.rotation2?.itemTiltPosition, 0);
           
           cssContent += `
             @keyframes ${animationName2} {
               from {
                 transform: translate(-50%, -50%) 
-                          translate(${item.rotation2.itemPositionX}%, ${item.rotation2.itemPositionY}%) 
-                          rotate(${item.rotation2.itemTiltPosition}deg);
+                          translate(${posX2}%, ${posY2}%) 
+                          rotate(${tilt2}deg);
               }
               to {
                 transform: translate(-50%, -50%) 
-                          translate(${item.rotation2.itemPositionX}%, ${item.rotation2.itemPositionY}%) 
-                          rotate(calc(${item.rotation2.itemTiltPosition}deg + ${direction2}));
+                          translate(${posX2}%, ${posY2}%) 
+                          rotate(calc(${tilt2}deg + ${direction2}));
               }
             }
           `;
@@ -106,19 +124,28 @@ export const RotateAnim: React.FC<RotateAnimProps> = ({ items, clockState }) => 
         // Apply animations to the element (only for non-hand items)
         let animations: string[] = [];
         
-        if (item.rotation1.enabled === 'yes' && item.rotation1.rotationWay && item.rotation1.rotationWay !== 'no') {
-          animations.push(`rotate1-${item.itemCode} ${item.rotation1.rotationSpeed}s linear infinite`);
+        if (rotation1Enabled === 'yes' && rotation1Way && rotation1Way !== 'no') {
+          const speed1 = safeNumber(item.rotation1?.rotationSpeed, 1);
+          animations.push(`rotate1-${itemCode} ${speed1}s linear infinite`);
         }
         
-        if (item.rotation2.enabled === 'yes' && item.rotation2.rotationWay && item.rotation2.rotationWay !== 'no') {
-          animations.push(`rotate2-${item.itemCode} ${item.rotation2.rotationSpeed}s linear infinite`);
+        if (rotation2Enabled === 'yes' && rotation2Way && rotation2Way !== 'no') {
+          const speed2 = safeNumber(item.rotation2?.rotationSpeed, 1);
+          animations.push(`rotate2-${itemCode} ${speed2}s linear infinite`);
         }
 
         if (animations.length > 0) {
+          const axisX = rotation1Enabled === 'yes' ? 
+            safeNumber(item.rotation1?.itemAxisX, 50) : 
+            safeNumber(item.rotation2?.itemAxisX, 50);
+          const axisY = rotation1Enabled === 'yes' ? 
+            safeNumber(item.rotation1?.itemAxisY, 50) : 
+            safeNumber(item.rotation2?.itemAxisY, 50);
+            
           cssContent += `
-            .rotate-item-${item.itemCode} {
+            .rotate-item-${itemCode} {
               animation: ${animations.join(', ')};
-              transform-origin: ${item.rotation1.enabled === 'yes' ? item.rotation1.itemAxisX : item.rotation2.itemAxisX}% ${item.rotation1.enabled === 'yes' ? item.rotation1.itemAxisY : item.rotation2.itemAxisY}%;
+              transform-origin: ${axisX}% ${axisY}%;
             }
           `;
         }
