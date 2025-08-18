@@ -249,7 +249,7 @@ const Launcher: React.FC<LauncherProps> = () => {
         <GestureControls controls={controls} gestureState={gestureState} />
         
         {/* Tap Counter Indicator (for debugging) */}
-        {tapCount > 0 && (
+        {(tapCount > 0 || clickCount > 0) && (
           <div 
             style={{
               position: 'absolute',
@@ -265,7 +265,7 @@ const Launcher: React.FC<LauncherProps> = () => {
               animation: 'pulse 0.5s ease-in-out'
             }}
           >
-            Taps: {tapCount}/6
+            Taps: {Math.max(tapCount, clickCount)}/6
           </div>
         )}
       </div>
