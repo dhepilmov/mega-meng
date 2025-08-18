@@ -149,28 +149,68 @@ const Launcher: React.FC<LauncherProps> = () => {
         >
           {children}
           
-          {/* Top Button Container with Close and Config Buttons */}
-          <TopButtonContainer showStroke={false}>
-            {/* Config Button - Left side */}
-            <MarkerButton 
-              type="new" 
-              showStroke={false}
-              onClick={() => console.log('Config button clicked')}
-              style={{ backgroundColor: 'rgba(59, 130, 246, 0.8)' }}
-            >
-              ⚙️
-            </MarkerButton>
-            
-            {/* Close Button - Right side */}
-            <MarkerButton 
-              type="close" 
-              showStroke={false}
-              onClick={onClose}
-              style={{ backgroundColor: 'rgba(239, 68, 68, 0.8)' }}
-            >
-              ✕
-            </MarkerButton>
-          </TopButtonContainer>
+          {/* Direct Close Button - Most Stable Approach */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('Close button clicked');
+              onClose();
+            }}
+            style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '12px',
+              backgroundColor: 'rgba(239, 68, 68, 0.9)',
+              color: 'white',
+              border: 'none',
+              fontSize: '24px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10001,
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+            }}
+            className="hover:bg-opacity-90 hover:scale-105 active:scale-95"
+          >
+            ✕
+          </button>
+          
+          {/* Config Button - Left side */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('Config button clicked');
+            }}
+            style={{
+              position: 'absolute',
+              top: '20px',
+              right: '80px', // 48px width + 12px gap + 20px = 80px from right
+              width: '48px',
+              height: '48px',
+              borderRadius: '12px',
+              backgroundColor: 'rgba(59, 130, 246, 0.9)',
+              color: 'white',
+              border: 'none',
+              fontSize: '20px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10001,
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+            }}
+            className="hover:bg-opacity-90 hover:scale-105 active:scale-95"
+          >
+            ⚙️
+          </button>
         </div>
       </div>
     );
