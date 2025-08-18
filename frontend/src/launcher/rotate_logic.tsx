@@ -84,23 +84,26 @@ export const useRotateLogic = () => {
       const itemsWithImages: RotateItem[] = [];
 
       for (const config of rotateConfig) {
+        // Normalize the config with safe defaults
+        const normalizedConfig = normalizeRotateItem(config);
+        
         let exists = false;
         let imageSrc = '';
 
-        if (config.itemName) {
+        if (normalizedConfig.itemName) {
           try {
             // Try to import the image dynamically
-            const imageModule = await import(`./res/${config.itemName}.png`);
+            const imageModule = await import(`./res/${normalizedConfig.itemName}.png`);
             imageSrc = imageModule.default;
             exists = true;
           } catch (error) {
-            console.warn(`Image not found: ${config.itemPath}${config.itemName}.png`);
+            console.warn(`Image not found: ${normalizedConfig.itemPath}${normalizedConfig.itemName}.png`);
             exists = false;
           }
         }
 
         itemsWithImages.push({
-          ...config,
+          ...normalizedConfig,
           exists,
           imageSrc,
         });
