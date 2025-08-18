@@ -121,10 +121,10 @@ export const useRotateLogic = () => {
     return rotateItems
       .filter(item => 
         item.exists && 
-        item.itemName && 
-        item.itemDisplay === 'yes' // Use itemDisplay instead of rotation enabled
+        safeString(item.itemName) && 
+        safeString(item.itemDisplay, 'no') === 'yes' // Safe check for display
       )
-      .sort((a, b) => a.itemLayer - b.itemLayer); // Sort by layer (bottom to top)
+      .sort((a, b) => safeNumber(a.itemLayer, 1) - safeNumber(b.itemLayer, 1)); // Safe layer sorting
   };
 
   // Get clock angle for hand type (with timezone support for hour hands)
