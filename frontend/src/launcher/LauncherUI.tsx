@@ -197,38 +197,67 @@ const Launcher: React.FC<LauncherProps> = () => {
   }
 
   return (
-    <div className="launcher-container">
-      <div 
-        className="launcher-content"
-        style={{
-          transform: `scale(${gestureState.scale})`,
-          transformOrigin: 'center center',
-          transition: 'transform 0.1s ease-out',
-          touchAction: 'none',
-        }}
-        {...touchHandlers}
-      >
-        {/* Rotate Animation CSS Manager */}
-        <RotateAnim items={displayableItems} clockState={clockState} />
+    <>
+      <div className="launcher-container">
+        <div 
+          className="launcher-content"
+          style={{
+            transform: `scale(${gestureState.scale})`,
+            transformOrigin: 'center center',
+            transition: 'transform 0.1s ease-out',
+            touchAction: 'none',
+          }}
+          {...touchHandlers}
+          onClick={handleSixTapGesture}
+        >
+          {/* Rotate Animation CSS Manager */}
+          <RotateAnim items={displayableItems} clockState={clockState} />
+          
+          {/* Render all displayable rotate items */}
+          {displayableItems.map((item) => (
+            <RotateItemComponent
+              key={item.itemCode}
+              item={item}
+              calculateBasePosition={calculateBasePosition}
+              calculateItemTransform={calculateItemTransform}
+              calculateTransformOrigin={calculateTransformOrigin}
+            />
+          ))}
+          
+          {/* Dot mark as center reference - highest z-index */}
+          <DotMark />
+        </div>
         
-        {/* Render all displayable rotate items */}
-        {displayableItems.map((item) => (
-          <RotateItemComponent
-            key={item.itemCode}
-            item={item}
-            calculateBasePosition={calculateBasePosition}
-            calculateItemTransform={calculateItemTransform}
-            calculateTransformOrigin={calculateTransformOrigin}
-          />
-        ))}
+        {/* Simple Gesture Controls */}
+        <GestureControls controls={controls} gestureState={gestureState} />
         
-        {/* Dot mark as center reference - highest z-index */}
-        <DotMark />
+        {/* Tap Counter Indicator (for debugging) */}
+        {tapCount > 0 && (
+          <div 
+            style={{
+              position: 'absolute',
+              top: '20px',
+              left: '20px',
+              backgroundColor: 'rgba(59, 130, 246, 0.9)',
+              color: 'white',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              zIndex: 1000,
+              animation: 'pulse 0.5s ease-in-out'
+            }}
+          >
+            Taps: {tapCount}/6
+          </div>
+        )}
       </div>
-      
-      {/* Simple Gesture Controls */}
-      <GestureControls controls={controls} gestureState={gestureState} />
-    </div>
+
+      {/* Modal Overlay for Config UI */}
+      <ModalOverlay isOpen={showConfigUI} onClose={() => setShowConfigUI(false)}>
+        <RotateConfigUI />
+      </ModalOverlay>
+    </>
   );
 };
 
