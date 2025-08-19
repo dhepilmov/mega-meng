@@ -62,26 +62,13 @@ export function convertToTimezone(utcOffset: number): Date {
  */
 export function getTimezoneClockState(timezone?: TimezoneConfig | null): ClockState {
   if (!timezone || timezone.enabled !== 'yes') {
-    const angles = calculateClockAngles();
-    return {
-      hourAngle: angles.hour,
-      minuteAngle: angles.minute,
-      secondAngle: angles.second,
-      timestamp: Date.now(),
-    };
+    return calculateClockAngles();
   }
 
-  const angles = calculateTimezoneClockAngles(
+  return calculateTimezoneClockAngles(
     safeNumber(timezone.utcOffset, 0, -12, 14, 0),
     timezone.use24Hour === 'yes'
   );
-  
-  return {
-    hourAngle: angles.hour,
-    minuteAngle: angles.minute,
-    secondAngle: angles.second,
-    timestamp: Date.now(),
-  };
 }
 
 // ===== ANGLE VALIDATION & CORRECTION =====
