@@ -228,3 +228,235 @@ export function calculateTimezoneClockAngles(utcOffset: number, use24Hour: boole
     second: secondAngle
   };
 }
+
+// ===== PHASE 3: DUAL ROTATION SYSTEM ENHANCEMENTS =====
+
+/**
+ * Calculate advanced orbital position with time-based rotation
+ * Core function for rotation2 orbital mechanics
+ */
+export function calculateAdvancedOrbitalPosition(
+  orbitCenterX: number,
+  orbitCenterY: number,
+  orbitRadius: number,
+  startingAngle: number,
+  currentTime: number,
+  startTime: number,
+  rotationSpeed: number,
+  rotationDirection: '+' | '-' | 'no' | '' | null
+): { x: number; y: number; currentAngle: number } {
+  
+  let currentAngle = startingAngle;
+  
+  // Calculate rotation if enabled
+  if (rotationDirection === '+' || rotationDirection === '-') {
+    const elapsed = (currentTime - startTime) / 1000; // Convert to seconds
+    const degreesPerSecond = 360 / rotationSpeed; // Full rotation based on rotationSpeed
+    const rotatedDegrees = elapsed * degreesPerSecond;
+    
+    if (rotationDirection === '+') {
+      currentAngle = normalize360(startingAngle + rotatedDegrees);
+    } else if (rotationDirection === '-') {
+      currentAngle = normalize360(startingAngle - rotatedDegrees);
+    }
+  }
+  
+  // Calculate orbital position
+  const position = calculateOrbitalPosition(orbitCenterX, orbitCenterY, orbitRadius, currentAngle);
+  
+  return {
+    x: position.x,
+    y: position.y,
+    currentAngle: currentAngle
+  };
+}
+
+/**
+ * Calculate dual rotation system positioning
+ * Combines rotation1 (spin + position) and rotation2 (orbital)
+ */
+export interface DualRotationResult {
+  finalPosition: { x: number; y: number };
+  rotation1Angle: number;
+  rotation2Angle: number;
+  rotation1Transform: string;
+  rotation2Transform: string;
+  combinedTransform: string;
+}
+
+export function calculateDualRotationSystem(
+  config: {
+    rotation1?: {
+      enabled: 'yes' | 'no' | null;
+      itemPositionX: number;
+      itemPositionY: number;
+      rotationSpeed: number;
+      rotationWay: '+' | '-' | 'no' | '' | null;
+      itemTiltPosition: number;
+    };
+    rotation2?: {
+      enabled: 'yes' | 'no' | null;
+      itemRotateAxisX: number;
+      itemRotateAxisY: number;
+      itemPositionX: number; // Orbital radius
+      itemPositionY: number; // Starting angle
+      rotationSpeed: number;
+      rotationWay: '+' | '-' | 'no' | '' | null;
+      itemTiltPosition: number;
+    };
+  },
+  currentTime: number,
+  startTime: number,
+  scale: number = 1
+): DualRotationResult {
+  
+  let finalX = 0;
+  let finalY = 0;
+  let rotation1Angle = 0;
+  let rotation2Angle = 0;
+  
+  // ROTATION1: Spin + Basic Positioning
+  if (config.rotation1?.enabled === 'yes') {
+    // Basic positioning from rotation1
+    finalX += config.rotation1.itemPositionX;
+    finalY += config.rotation1.itemPositionY;
+    
+    // Calculate spin rotation
+    if (config.rotation1.rotationWay === '+' || config.rotation1.rotationWay === '-') {
+      rotation1Angle = calculateRotationAngle(
+        startTime,
+        currentTime,
+        config.rotation1.rotationSpeed,
+        config.rotation1.rotationWay,
+        config.rotation1.itemTiltPosition
+      );
+    } else {
+      rotation1Angle = config.rotation1.itemTiltPosition;
+    }
+  }
+  
+  // ROTATION2: Orbital System
+  if (config.rotation2?.enabled === 'yes') {
+    const orbitalResult = calculateAdvancedOrbitalPosition(
+      config.rotation2.itemRotateAxisX, // Orbit center X
+      config.rotation2.itemRotateAxisY, // Orbit center Y
+      config.rotation2.itemPositionX,   // Orbit radius
+      config.rotation2.itemPositionY,   // Starting angle
+      currentTime,
+      startTime,
+      config.rotation2.rotationSpeed,
+      config.rotation2.rotationWay
+    );
+    
+    // Add orbital position to final position
+    finalX += orbitalResult.x;
+    finalY += orbitalResult.y;
+    rotation2Angle = orbitalResult.currentAngle;
+  }
+  
+  // Generate transform strings
+  const rotation1Transform = `rotate(${rotation1Angle}deg)`;
+  const rotation2Transform = `translate(${finalX}px, ${finalY}px)`;
+  const combinedTransform = `${rotation2Transform} ${rotation1Transform} scale(${scale})`;
+  
+  return {
+    finalPosition: { x: finalX, y: finalY },
+    rotation1Angle,
+    rotation2Angle,
+    rotation1Transform,
+    rotation2Transform,
+    combinedTransform
+  };
+}
+
+/**
+ * Calculate transform origin for complex rotations
+ */
+export function calculateAdvancedTransformOrigin(
+  rotationConfig: {
+    itemAxisX?: number;
+    itemAxisY?: number;
+  },
+  isOrbitalSystem: boolean = false
+): string {
+  if (isOrbitalSystem) {
+    // For orbital systems, use center as origin
+    return '50% 50%';
+  }
+  
+  // For spin systems, use configured axis points
+  const axisX = rotationConfig.itemAxisX ?? 50;
+  const axisY = rotationConfig.itemAxisY ?? 50;
+  return `${axisX}% ${axisY}%`;
+}
+
+/**
+ * Optimize rotation calculations for performance
+ * Use this for high-frequency updates (60fps)
+ */
+export function optimizedRotationCalculation(
+  lastCalculation: DualRotationResult | null,
+  timeDelta: number,
+  rotationSpeed: number,
+  direction: '+' | '-' | 'no' | '' | null
+): number {
+  if (!lastCalculation || !direction || direction === 'no' || direction === '') {
+    return 0;
+  }
+  
+  const deltaSeconds = timeDelta / 1000;
+  const degreesPerSecond = 360 / rotationSpeed;
+  const increment = deltaSeconds * degreesPerSecond;
+  
+  return direction === '+' ? increment : -increment;
+}
+
+/**
+ * Calculate performance impact of layer configuration
+ * Helps optimize complex multi-layer setups
+ */
+export function calculateLayerComplexity(config: {
+  rotation1?: { enabled: 'yes' | 'no' | null };
+  rotation2?: { enabled: 'yes' | 'no' | null };
+  hasEffects?: boolean;
+  isClockHand?: boolean;
+}): {
+  complexity: 'low' | 'medium' | 'high';
+  score: number;
+  recommendations: string[];
+} {
+  let score = 0;
+  const recommendations: string[] = [];
+  
+  // Base complexity scoring
+  if (config.rotation1?.enabled === 'yes') score += 1;
+  if (config.rotation2?.enabled === 'yes') score += 2; // Orbital is more complex
+  if (config.hasEffects) score += 1;
+  if (config.isClockHand) score += 0.5; // Clock hands are optimized
+  
+  // Dual rotation adds extra complexity
+  if (config.rotation1?.enabled === 'yes' && config.rotation2?.enabled === 'yes') {
+    score += 1;
+    recommendations.push('Dual rotation system active - monitor performance');
+  }
+  
+  let complexity: 'low' | 'medium' | 'high';
+  if (score <= 1) {
+    complexity = 'low';
+  } else if (score <= 3) {
+    complexity = 'medium';
+    if (score > 2.5) {
+      recommendations.push('Consider optimizing rotation speeds for better performance');
+    }
+  } else {
+    complexity = 'high';
+    recommendations.push('High complexity layer - consider simplifying for better performance');
+    recommendations.push('Monitor frame rate when multiple high-complexity layers are active');
+  }
+  
+  return {
+    complexity,
+    score,
+    recommendations
+  };
+}
