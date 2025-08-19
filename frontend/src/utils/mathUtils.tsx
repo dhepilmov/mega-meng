@@ -400,7 +400,7 @@ export function optimizedRotationCalculation(
   rotationSpeed: number,
   direction: '+' | '-' | 'no' | '' | null
 ): number {
-  if (!lastCalculation || !direction || direction === 'no' || direction === '') {
+  if (!lastCalculation || !direction || direction === 'no' || direction === '' || direction === null) {
     return 0;
   }
   
