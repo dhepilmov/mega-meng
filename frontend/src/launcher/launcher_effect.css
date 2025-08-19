@@ -1,684 +1,684 @@
-/* ==============================================
-   SHARED STYLING SECTION
-   ============================================== */
-/*SHARED STYLING
-/* Base launcher container and content styles used across all launcher components */
-.launcher-container {
-  width: 100%;
-  height: 100vh;
-  background-color: #1a1a1a; /* Dark background */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.launcher-content {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Loading state styles */
-.loading-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.2rem;
-  color: #e0e0e0; /* Light text color for dark background */
-  z-index: 1001;
-}
-
-/* Dot mark positioning and layering */
-.dot-mark {
-  z-index: 1000 !important;
-}
-/*USED BY
-/app/frontend/src/launcher/launcher_screen.tsx (main launcher container)
-/app/frontend/src/launcher/LauncherUI.tsx (original launcher component)
-/*TWEAK
-Change background-color (#1a1a1a) to modify launcher background - try #000000 for pure black or #2a2a2a for lighter dark.
-Adjust loading-text font-size (1.2rem) for different loading indicator sizes - 0.8rem smaller, 1.5rem larger.
-Modify dot-mark z-index (1000) if layering conflicts occur - increase to 1500+ for higher priority.
-Change launcher-container height (100vh) to different viewport coverage - 95vh for slight margin, 100dvh for dynamic viewport.
-
-/* ==============================================
-   ANIMATION EFFECTS SECTION
-   ============================================== */
-/*SHARED STYLING  
-/* Core animation keyframes and utilities from launcher_animation.tsx integration */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Animation base classes for components */
-.launcher-fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.launcher-slide-up {
-  animation: slideUp 0.3s ease-out;
-}
-
-.launcher-slide-down {
-  animation: slideDown 0.3s ease-out;
-}
-
-.launcher-scale-in {
-  animation: scaleIn 0.2s ease-out;
-}
-
-/* Stagger animation support */
-.launcher-stagger-1 { animation-delay: 0.1s; }
-.launcher-stagger-2 { animation-delay: 0.2s; }
-.launcher-stagger-3 { animation-delay: 0.3s; }
-.launcher-stagger-4 { animation-delay: 0.4s; }
-.launcher-stagger-5 { animation-delay: 0.5s; }
-/*USED BY
-/app/frontend/src/launcher/launcher_screen.tsx (AnimatedElement components)
-/app/frontend/src/launcher/launcher_animation.tsx (animation utilities)  
-/app/frontend/src/App.tsx (app-level transitions)
-/*TWEAK
-Change fadeIn duration (0.3s) for faster/slower fade transitions - 0.1s for quick, 0.6s for slow.
-Adjust slideUp translateY (20px) for different slide distances - 10px subtle, 40px dramatic.
-Modify scaleIn scale (0.8) for different zoom effects - 0.5 for dramatic zoom, 0.9 for subtle.
-Change stagger delays (0.1s increments) for different timing - 0.05s faster sequence, 0.2s slower sequence.
-
-/* ==============================================
-   ROTATION ANIMATION SECTION  
-   ============================================== */
-/*SHARED STYLING
-/* Dynamic rotation animations generated from rotate_anim.tsx logic */
-
-/* Base rotate item styles */
-.rotate-item {
-  pointer-events: auto;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  will-change: transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.rotate-item img {
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  pointer-events: none;
-}
-
-/* Rotation keyframes for different speeds and directions */
-@keyframes rotateClockwise {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes rotateCounterclockwise {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-/* Speed variations for rotation animations */
-.rotate-speed-slow {
-  animation-duration: 10s;
-}
-
-.rotate-speed-medium {
-  animation-duration: 5s;
-}
-
-.rotate-speed-fast {
-  animation-duration: 2s;
-}
-
-.rotate-speed-very-fast {
-  animation-duration: 1s;
-}
-
-/* Rotation directions */
-.rotate-clockwise {
-  animation-name: rotateClockwise;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.rotate-counterclockwise {
-  animation-name: rotateCounterclockwise;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-/* Clock hand specific animations - controlled by real-time JavaScript */
-.clock-hand {
-  transition: none; /* No CSS animation, controlled by real-time transforms */
-}
-
-/* Item-specific rotation classes (generated dynamically) */
-.rotate-item-item_1 { /* Background layer */ }
-.rotate-item-item_2 { /* Minutes circle */ }
-.rotate-item-item_3 { /* Hours circle */ }
-/* Additional item classes generated dynamically in rotate_anim.tsx */
-/*USED BY
-/app/frontend/src/launcher/rotate_anim.tsx (dynamic CSS generation)
-/app/frontend/src/launcher/rotate_logic.tsx (RotateItemComponent)
-/app/frontend/src/launcher/launcher_screen.tsx (RotateAnim component)
-/*TWEAK  
-Change will-change property to 'auto' for better performance if not rotating constantly.
-Adjust rotation keyframes duration - modify @keyframes timing for global speed changes.
-Change rotate-speed-* durations for different speed classifications - 1s to 20s range.
-Modify backface-visibility to 'visible' if rotation artifacts occur on some devices.
-Add perspective to parent container if 3D rotation effects are needed.
-
-/* ==============================================
-   GESTURE EFFECTS SECTION
-   ============================================== */
-/*SHARED STYLING
-/* Touch and gesture interaction feedback from launcher_gesture.tsx integration */
-
-/* Gesture feedback animations */
-.launcher-scale-feedback {
-  transition: transform 0.2s ease-out;
-}
-
-.launcher-tap-feedback {
-  animation: tapPulse 0.3s ease-out;
-}
-
-@keyframes tapPulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* Pinch zoom states */
-.launcher-zooming {
-  transition: transform 0.1s ease-out;
-}
-
-.launcher-zoom-min {
-  transform: scale(0.3);
-}
-
-.launcher-zoom-max {
-  transform: scale(4.0);
-}
-
-/* Gesture control UI styles */
-.gesture-controls {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 20px;
-  padding: 8px 12px;
-  z-index: 1002;
-  user-select: none;
-}
-
-.gesture-control-button {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.gesture-control-button:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
-}
-
-.gesture-zoom-indicator {
-  color: #ffffff;
-  font-size: 11px;
-  min-width: 35px;
-  text-align: center;
-  padding: 0 6px;
-}
-/*USED BY
-/app/frontend/src/launcher/launcher_gesture.tsx (GestureControls component)
-/app/frontend/src/launcher/launcher_screen.tsx (gesture system integration)
-/*TWEAK
-Change tapPulse scale (1.05) for different feedback intensity - 1.02 subtle, 1.1 strong.
-Adjust transition duration (0.2s) for gesture responsiveness - 0.1s instant, 0.4s slow.
-Modify gesture-controls positioning (bottom: 30px, right: 30px) for different placement.
-Change zoom limits (0.3, 4.0) to match gesture system configuration in launcher_screen.tsx.
-Adjust gesture-control-button size (32px) for accessibility - 40px+ for better touch targets.
-
-/* ==============================================
-   VISUAL EFFECTS SECTION
-   ============================================== */
-/*SHARED STYLING
-/* Enhanced visual effects for launcher items from rotate_logic.tsx integration */
-
-/* Effect animations */
-@keyframes pulse {
-  0%, 100% { 
-    opacity: 1; 
-    transform: scale(1); 
-  }
-  50% { 
-    opacity: 0.7; 
-    transform: scale(1.05); 
-  }
-}
-
-@keyframes glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
-  }
-  50% {
-    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
-  }
-}
-
-@keyframes shadowFlicker {
-  0%, 100% {
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-  }
-  50% {
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
-  }
-}
-
-/* Effect classes applied via JavaScript */
-.launcher-glow {
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
-}
-
-.launcher-shadow {
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-}
-
-.launcher-transparent {
-  opacity: 0.7;
-}
-
-.launcher-pulse {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.launcher-glow-animated {
-  animation: glow 3s ease-in-out infinite;
-}
-
-.launcher-shadow-animated {
-  animation: shadowFlicker 2s ease-in-out infinite;
-}
-
-/* Multi-effect combinations */
-.launcher-glow.launcher-pulse {
-  animation: pulse 2s ease-in-out infinite, glow 3s ease-in-out infinite;
-}
-
-.launcher-shadow.launcher-transparent {
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-  opacity: 0.7;
-}
-/*USED BY
-/app/frontend/src/launcher/rotate_logic.tsx (RotateItemComponent applyEffects function)
-/app/frontend/src/launcher/launcher_screen.tsx (visual effects application)
-/app/frontend/src/launcher/rotate_config.tsx (effect property definitions)
-/*TWEAK
-Change pulse opacity range (0.7-1) for different intensity - 0.5-1 for dramatic, 0.8-1 for subtle.
-Adjust glow drop-shadow blur (15px max) for effect strength - 5px subtle, 25px intense.
-Modify pulse animation duration (2s) for different speeds - 1s fast pulse, 4s slow pulse.
-Change shadow opacity (0.3) for visibility - 0.2 lighter shadow, 0.5 darker shadow.
-Adjust transparent opacity (0.7) for different transparency levels - 0.5 more transparent, 0.8 less transparent.
-
-/* ==============================================
-   DEBUG AND DEVELOPMENT SECTION
-   ============================================== */
-/*SHARED STYLING
-/* Development aids and debugging utilities from marker.tsx integration */
-
-/* Tap counter and debug indicators */
-.tap-counter-indicator {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: rgba(59, 130, 246, 0.9);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  z-index: 1000;
-  animation: pulse 0.5s ease-in-out;
-}
-
-/* Development stroke indicators */
-.dev-stroke-button {
-  border: 2px dashed #ff0000;
-  position: relative;
-}
-
-.dev-stroke-container {
-  border: 1px dashed #888888;
-  background-color: rgba(128, 128, 128, 0.2);
-}
-
-.dev-size-indicator {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #ffffff;
-  padding: 2px 4px;
-  border-radius: 4px;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-/* Button sizing and positioning helpers */
-.marker-button-small {
-  width: 32px;
-  height: 32px;
-  padding: 6px;
-  font-size: 14px;
-}
-
-.marker-button-medium {
-  width: 48px;
-  height: 48px;
-  padding: 12px;
-  font-size: 20px;
-}
-
-.marker-button-large {
-  width: 64px;
-  height: 64px;
-  padding: 16px;
-  font-size: 24px;
-}
-
-/* Development grid overlay */
-.dev-grid-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 999;
-  background-image: 
-    linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
-  display: none; /* Enable by changing to 'block' for development */
-}
-/*USED BY
-/app/frontend/src/launcher/marker.tsx (MarkerButton, TopButtonContainer components)
-/app/frontend/src/launcher/launcher_screen.tsx (tap counter, debug indicators)
-/*TWEAK
-Change tap-counter-indicator position (top: 20px, left: 20px) for different placement.
-Adjust dev-stroke colors (#ff0000, #888888) for better visibility during development.
-Modify marker-button sizes (32px, 48px, 64px) for different button scale requirements.
-Change dev-grid-overlay background-size (50px) for different grid density - 25px finer, 100px coarser.
-Toggle dev-grid-overlay display to 'block' for alignment help during development.
-
-/* ==============================================
-   RESPONSIVE AND MOBILE SECTION
-   ============================================== */
-/*SHARED STYLING
-/* Mobile and responsive design adaptations */
-
-/* Base responsive breakpoints */
-@media (max-width: 768px) {
-  .launcher-container {
-    padding: 1rem;
-  }
-  
-  .gesture-controls {
-    bottom: 20px;
-    right: 20px;
-    gap: 6px;
-    padding: 6px 10px;
-  }
-  
-  .gesture-control-button {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
-  }
-  
-  .tap-counter-indicator {
-    top: 15px;
-    left: 15px;
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .launcher-container {
-    padding: 0.5rem;
-  }
-  
-  .loading-text {
-    font-size: 1rem;
-  }
-  
-  .gesture-controls {
-    bottom: 15px;
-    right: 15px;
-    gap: 4px;
-    padding: 4px 8px;
-  }
-  
-  .gesture-control-button {
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
-  }
-  
-  .gesture-zoom-indicator {
-    font-size: 9px;
-    min-width: 25px;
-  }
-  
-  .marker-button-medium {
-    width: 40px;
-    height: 40px;
-    padding: 8px;
-    font-size: 16px;
-  }
-}
-
-/* Touch-specific enhancements */
-@media (hover: none) and (pointer: coarse) {
-  .gesture-control-button {
-    width: 36px;
-    height: 36px;
-  }
-  
-  .marker-button-medium {
-    width: 52px;
-    height: 52px;
-    padding: 14px;
-  }
-  
-  .tap-counter-indicator {
-    padding: 10px 18px;
-    font-size: 16px;
-  }
-}
-
-/* High-DPI display optimizations */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .rotate-item img {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-  }
-  
-  .dev-stroke-button {
-    border-width: 1px; /* Thinner borders on high-DPI */
-  }
-}
-
-/* Landscape orientation adjustments */
-@media (orientation: landscape) and (max-height: 500px) {
-  .gesture-controls {
-    bottom: 10px;
-    right: 10px;
-  }
-  
-  .tap-counter-indicator {
-    top: 10px;
-    left: 10px;
-  }
-}
-/*USED BY
-/app/frontend/src/launcher/launcher_screen.tsx (responsive layout)
-/app/frontend/src/launcher/launcher_gesture.tsx (touch optimization)
-/app/frontend/src/App.tsx (mobile viewport handling)
-/*TWEAK
-Change breakpoint values (768px, 480px) for different mobile targeting - 1024px for tablet, 320px for small phones.
-Adjust touch target sizes (36px, 52px) for accessibility - minimum 44px recommended for touch.
-Modify landscape max-height (500px) trigger for different devices - 600px for larger phones.
-Change high-DPI border-width (1px) if stroke visibility issues occur on retina displays.
-Adjust padding reductions in mobile queries for more/less compact layout.
-
-/* ==============================================
-   PERFORMANCE OPTIMIZATION SECTION
-   ============================================== */
-/*SHARED STYLING
-/* Performance-focused CSS for smooth animations and rendering */
-
-/* Hardware acceleration for animated elements */
-.launcher-accelerated {
-  transform: translateZ(0);
-  will-change: transform;
-  -webkit-transform: translateZ(0);
-}
-
-/* Smooth scrolling and touch optimization */
-.launcher-smooth {
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-
-/* Reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  
-  .launcher-pulse,
-  .launcher-glow-animated,
-  .launcher-shadow-animated {
-    animation: none !important;
-  }
-}
-
-/* GPU layer optimization for rotation items */
-.rotate-item {
-  transform: translateZ(0);
-  will-change: transform, opacity;
-}
-
-/* Optimize for 60fps animations */
-@media (min-width: 1024px) {
-  .launcher-content {
-    will-change: transform, opacity;
-    transform: translateZ(0);
-  }
-  
-  .gesture-controls {
-    will-change: auto;
-  }
-}
-
-/* Memory optimization for large item counts */
-.rotate-item:not(.active) {
-  will-change: auto;
-}
-
-.rotate-item.active {
-  will-change: transform, opacity;
-}
-/*USED BY
-/app/frontend/src/launcher/launcher_screen.tsx (performance optimization)
-/app/frontend/src/launcher/rotate_anim.tsx (smooth rotation rendering)
-/app/frontend/src/launcher/launcher_gesture.tsx (gesture performance)
-TWEAK
-Remove translateZ(0) if causing layer creation issues on low-end devices.*/
-Change will-change properties based on actual animation needs - 'auto' when not animating.
-Adjust reduced-motion duration (0.01ms) if some animation is preferred - 0.1s for minimal animation.
-Add contain: layout style for better layout performance if needed.
-Modify GPU optimization media query (1024px) for different performance tiers.
+/* ==============================================*
+   SHARED STYLING SECTION*
+   ============================================== */*
+/* SHARED STYLING*
+/* Base launcher container and content styles used across all launcher components */*
+.launcher-container {*
+  width: 100%;*
+  height: 100vh;*
+  background-color: #1a1a1a; /* Dark background */*
+  display: flex;*
+  flex-direction: column;*
+  align-items: center;*
+  justify-content: center;*
+  position: relative;*
+  overflow: hidden;*
+}*
+*
+.launcher-content {*
+  width: 100%;*
+  height: 100%;*
+  position: relative;*
+  display: flex;*
+  align-items: center;*
+  justify-content: center;*
+}*
+*
+/* Loading state styles */*
+.loading-text {*
+  position: absolute;*
+  top: 50%;*
+  left: 50%;*
+  transform: translate(-50%, -50%);*
+  font-size: 1.2rem;*
+  color: #e0e0e0; /* Light text color for dark background */*
+  z-index: 1001;*
+}*
+*
+/* Dot mark positioning and layering */*
+.dot-mark {*
+  z-index: 1000 !important;*
+}*
+/* USED BY*
+/app/frontend/src/launcher/launcher_screen.tsx (main launcher container)*
+/app/frontend/src/launcher/LauncherUI.tsx (original launcher component)*
+/* TWEAK*
+Change background-color (#1a1a1a) to modify launcher background - try #000000 for pure black or #2a2a2a for lighter dark.*
+Adjust loading-text font-size (1.2rem) for different loading indicator sizes - 0.8rem smaller, 1.5rem larger.*
+Modify dot-mark z-index (1000) if layering conflicts occur - increase to 1500+ for higher priority.*
+Change launcher-container height (100vh) to different viewport coverage - 95vh for slight margin, 100dvh for dynamic viewport.*
+*
+/* ==============================================*
+   ANIMATION EFFECTS SECTION*
+   ============================================== */*
+/* SHARED STYLING  *
+/* Core animation keyframes and utilities from launcher_animation.tsx integration */*
+@keyframes fadeIn {*
+  from {*
+    opacity: 0;*
+  }*
+  to {*
+    opacity: 1;*
+  }*
+}*
+*
+@keyframes slideUp {*
+  from {*
+    transform: translateY(20px);*
+    opacity: 0;*
+  }*
+  to {*
+    transform: translateY(0);*
+    opacity: 1;*
+  }*
+}*
+*
+@keyframes slideDown {*
+  from {*
+    transform: translateY(-20px);*
+    opacity: 0;*
+  }*
+  to {*
+    transform: translateY(0);*
+    opacity: 1;*
+  }*
+}*
+*
+@keyframes scaleIn {*
+  from {*
+    transform: scale(0.8);*
+    opacity: 0;*
+  }*
+  to {*
+    transform: scale(1);*
+    opacity: 1;*
+  }*
+}*
+*
+/* Animation base classes for components */*
+.launcher-fade-in {*
+  animation: fadeIn 0.3s ease-in-out;*
+}*
+*
+.launcher-slide-up {*
+  animation: slideUp 0.3s ease-out;*
+}*
+*
+.launcher-slide-down {*
+  animation: slideDown 0.3s ease-out;*
+}*
+*
+.launcher-scale-in {*
+  animation: scaleIn 0.2s ease-out;*
+}*
+*
+/* Stagger animation support */*
+.launcher-stagger-1 { animation-delay: 0.1s; }*
+.launcher-stagger-2 { animation-delay: 0.2s; }*
+.launcher-stagger-3 { animation-delay: 0.3s; }*
+.launcher-stagger-4 { animation-delay: 0.4s; }*
+.launcher-stagger-5 { animation-delay: 0.5s; }*
+/* USED BY*
+/app/frontend/src/launcher/launcher_screen.tsx (AnimatedElement components)*
+/app/frontend/src/launcher/launcher_animation.tsx (animation utilities)  *
+/app/frontend/src/App.tsx (app-level transitions)*
+/* TWEAK*
+Change fadeIn duration (0.3s) for faster/slower fade transitions - 0.1s for quick, 0.6s for slow.*
+Adjust slideUp translateY (20px) for different slide distances - 10px subtle, 40px dramatic.*
+Modify scaleIn scale (0.8) for different zoom effects - 0.5 for dramatic zoom, 0.9 for subtle.*
+Change stagger delays (0.1s increments) for different timing - 0.05s faster sequence, 0.2s slower sequence.*
+*
+/* ==============================================*
+   ROTATION ANIMATION SECTION  *
+   ============================================== */*
+/* SHARED STYLING*
+/* Dynamic rotation animations generated from rotate_anim.tsx logic */*
+*
+/* Base rotate item styles */*
+.rotate-item {*
+  pointer-events: auto;*
+  user-select: none;*
+  -webkit-user-select: none;*
+  -moz-user-select: none;*
+  -ms-user-select: none;*
+  will-change: transform;*
+  backface-visibility: hidden;*
+  -webkit-backface-visibility: hidden;*
+}*
+*
+.rotate-item img {*
+  user-select: none;*
+  -webkit-user-select: none;*
+  -moz-user-select: none;*
+  -ms-user-select: none;*
+  pointer-events: none;*
+}*
+*
+/* Rotation keyframes for different speeds and directions */*
+@keyframes rotateClockwise {*
+  from {*
+    transform: rotate(0deg);*
+  }*
+  to {*
+    transform: rotate(360deg);*
+  }*
+}*
+*
+@keyframes rotateCounterclockwise {*
+  from {*
+    transform: rotate(0deg);*
+  }*
+  to {*
+    transform: rotate(-360deg);*
+  }*
+}*
+*
+/* Speed variations for rotation animations */*
+.rotate-speed-slow {*
+  animation-duration: 10s;*
+}*
+*
+.rotate-speed-medium {*
+  animation-duration: 5s;*
+}*
+*
+.rotate-speed-fast {*
+  animation-duration: 2s;*
+}*
+*
+.rotate-speed-very-fast {*
+  animation-duration: 1s;*
+}*
+*
+/* Rotation directions */*
+.rotate-clockwise {*
+  animation-name: rotateClockwise;*
+  animation-timing-function: linear;*
+  animation-iteration-count: infinite;*
+}*
+*
+.rotate-counterclockwise {*
+  animation-name: rotateCounterclockwise;*
+  animation-timing-function: linear;*
+  animation-iteration-count: infinite;*
+}*
+*
+/* Clock hand specific animations - controlled by real-time JavaScript */*
+.clock-hand {*
+  transition: none; /* No CSS animation, controlled by real-time transforms */*
+}*
+*
+/* Item-specific rotation classes (generated dynamically) */*
+.rotate-item-item_1 { /* Background layer */ }*
+.rotate-item-item_2 { /* Minutes circle */ }*
+.rotate-item-item_3 { /* Hours circle */ }*
+/* Additional item classes generated dynamically in rotate_anim.tsx */*
+/* USED BY*
+/app/frontend/src/launcher/rotate_anim.tsx (dynamic CSS generation)*
+/app/frontend/src/launcher/rotate_logic.tsx (RotateItemComponent)*
+/app/frontend/src/launcher/launcher_screen.tsx (RotateAnim component)*
+/* TWEAK  *
+Change will-change property to 'auto' for better performance if not rotating constantly.*
+Adjust rotation keyframes duration - modify @keyframes timing for global speed changes.*
+Change rotate-speed-* durations for different speed classifications - 1s to 20s range.*
+Modify backface-visibility to 'visible' if rotation artifacts occur on some devices.*
+Add perspective to parent container if 3D rotation effects are needed.*
+*
+/* ==============================================*
+   GESTURE EFFECTS SECTION*
+   ============================================== */*
+/* SHARED STYLING*
+/* Touch and gesture interaction feedback from launcher_gesture.tsx integration */*
+*
+/* Gesture feedback animations */*
+.launcher-scale-feedback {*
+  transition: transform 0.2s ease-out;*
+}*
+*
+.launcher-tap-feedback {*
+  animation: tapPulse 0.3s ease-out;*
+}*
+*
+@keyframes tapPulse {*
+  0% {*
+    transform: scale(1);*
+  }*
+  50% {*
+    transform: scale(1.05);*
+  }*
+  100% {*
+    transform: scale(1);*
+  }*
+}*
+*
+/* Pinch zoom states */*
+.launcher-zooming {*
+  transition: transform 0.1s ease-out;*
+}*
+*
+.launcher-zoom-min {*
+  transform: scale(0.3);*
+}*
+*
+.launcher-zoom-max {*
+  transform: scale(4.0);*
+}*
+*
+/* Gesture control UI styles */*
+.gesture-controls {*
+  position: fixed;*
+  bottom: 30px;*
+  right: 30px;*
+  display: flex;*
+  align-items: center;*
+  gap: 8px;*
+  background: rgba(0, 0, 0, 0.7);*
+  border-radius: 20px;*
+  padding: 8px 12px;*
+  z-index: 1002;*
+  user-select: none;*
+}*
+*
+.gesture-control-button {*
+  width: 32px;*
+  height: 32px;*
+  border-radius: 50%;*
+  border: none;*
+  background: rgba(255, 255, 255, 0.2);*
+  color: #ffffff;*
+  font-size: 16px;*
+  cursor: pointer;*
+  display: flex;*
+  align-items: center;*
+  justify-content: center;*
+  transition: all 0.2s ease;*
+}*
+*
+.gesture-control-button:hover {*
+  background: rgba(255, 255, 255, 0.3);*
+  transform: scale(1.1);*
+}*
+*
+.gesture-zoom-indicator {*
+  color: #ffffff;*
+  font-size: 11px;*
+  min-width: 35px;*
+  text-align: center;*
+  padding: 0 6px;*
+}*
+/* USED BY*
+/app/frontend/src/launcher/launcher_gesture.tsx (GestureControls component)*
+/app/frontend/src/launcher/launcher_screen.tsx (gesture system integration)*
+/* TWEAK*
+Change tapPulse scale (1.05) for different feedback intensity - 1.02 subtle, 1.1 strong.*
+Adjust transition duration (0.2s) for gesture responsiveness - 0.1s instant, 0.4s slow.*
+Modify gesture-controls positioning (bottom: 30px, right: 30px) for different placement.*
+Change zoom limits (0.3, 4.0) to match gesture system configuration in launcher_screen.tsx.*
+Adjust gesture-control-button size (32px) for accessibility - 40px+ for better touch targets.*
+*
+/* ==============================================*
+   VISUAL EFFECTS SECTION*
+   ============================================== */*
+/* SHARED STYLING*
+/* Enhanced visual effects for launcher items from rotate_logic.tsx integration */*
+*
+/* Effect animations */*
+@keyframes pulse {*
+  0%, 100% { *
+    opacity: 1; *
+    transform: scale(1); *
+  }*
+  50% { *
+    opacity: 0.7; *
+    transform: scale(1.05); *
+  }*
+}*
+*
+@keyframes glow {*
+  0%, 100% {*
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));*
+  }*
+  50% {*
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));*
+  }*
+}*
+*
+@keyframes shadowFlicker {*
+  0%, 100% {*
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));*
+  }*
+  50% {*
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));*
+  }*
+}*
+*
+/* Effect classes applied via JavaScript */*
+.launcher-glow {*
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));*
+}*
+*
+.launcher-shadow {*
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));*
+}*
+*
+.launcher-transparent {*
+  opacity: 0.7;*
+}*
+*
+.launcher-pulse {*
+  animation: pulse 2s ease-in-out infinite;*
+}*
+*
+.launcher-glow-animated {*
+  animation: glow 3s ease-in-out infinite;*
+}*
+*
+.launcher-shadow-animated {*
+  animation: shadowFlicker 2s ease-in-out infinite;*
+}*
+*
+/* Multi-effect combinations */*
+.launcher-glow.launcher-pulse {*
+  animation: pulse 2s ease-in-out infinite, glow 3s ease-in-out infinite;*
+}*
+*
+.launcher-shadow.launcher-transparent {*
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));*
+  opacity: 0.7;*
+}*
+/* USED BY*
+/app/frontend/src/launcher/rotate_logic.tsx (RotateItemComponent applyEffects function)*
+/app/frontend/src/launcher/launcher_screen.tsx (visual effects application)*
+/app/frontend/src/launcher/rotate_config.tsx (effect property definitions)*
+/* TWEAK*
+Change pulse opacity range (0.7-1) for different intensity - 0.5-1 for dramatic, 0.8-1 for subtle.*
+Adjust glow drop-shadow blur (15px max) for effect strength - 5px subtle, 25px intense.*
+Modify pulse animation duration (2s) for different speeds - 1s fast pulse, 4s slow pulse.*
+Change shadow opacity (0.3) for visibility - 0.2 lighter shadow, 0.5 darker shadow.*
+Adjust transparent opacity (0.7) for different transparency levels - 0.5 more transparent, 0.8 less transparent.*
+*
+/* ==============================================*
+   DEBUG AND DEVELOPMENT SECTION*
+   ============================================== */*
+/* SHARED STYLING*
+/* Development aids and debugging utilities from marker.tsx integration */*
+*
+/* Tap counter and debug indicators */*
+.tap-counter-indicator {*
+  position: absolute;*
+  top: 20px;*
+  left: 20px;*
+  background-color: rgba(59, 130, 246, 0.9);*
+  color: white;*
+  padding: 8px 16px;*
+  border-radius: 20px;*
+  font-size: 14px;*
+  font-weight: bold;*
+  z-index: 1000;*
+  animation: pulse 0.5s ease-in-out;*
+}*
+*
+/* Development stroke indicators */*
+.dev-stroke-button {*
+  border: 2px dashed #ff0000;*
+  position: relative;*
+}*
+*
+.dev-stroke-container {*
+  border: 1px dashed #888888;*
+  background-color: rgba(128, 128, 128, 0.2);*
+}*
+*
+.dev-size-indicator {*
+  position: absolute;*
+  top: -20px;*
+  left: 50%;*
+  transform: translateX(-50%);*
+  font-size: 10px;*
+  background-color: rgba(0, 0, 0, 0.8);*
+  color: #ffffff;*
+  padding: 2px 4px;*
+  border-radius: 4px;*
+  white-space: nowrap;*
+  pointer-events: none;*
+}*
+*
+/* Button sizing and positioning helpers */*
+.marker-button-small {*
+  width: 32px;*
+  height: 32px;*
+  padding: 6px;*
+  font-size: 14px;*
+}*
+*
+.marker-button-medium {*
+  width: 48px;*
+  height: 48px;*
+  padding: 12px;*
+  font-size: 20px;*
+}*
+*
+.marker-button-large {*
+  width: 64px;*
+  height: 64px;*
+  padding: 16px;*
+  font-size: 24px;*
+}*
+*
+/* Development grid overlay */*
+.dev-grid-overlay {*
+  position: fixed;*
+  top: 0;*
+  left: 0;*
+  width: 100vw;*
+  height: 100vh;*
+  pointer-events: none;*
+  z-index: 999;*
+  background-image: *
+    linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),*
+    linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);*
+  background-size: 50px 50px;*
+  display: none; /* Enable by changing to 'block' for development */*
+}*
+/* USED BY*
+/app/frontend/src/launcher/marker.tsx (MarkerButton, TopButtonContainer components)*
+/app/frontend/src/launcher/launcher_screen.tsx (tap counter, debug indicators)*
+/* TWEAK*
+Change tap-counter-indicator position (top: 20px, left: 20px) for different placement.*
+Adjust dev-stroke colors (#ff0000, #888888) for better visibility during development.*
+Modify marker-button sizes (32px, 48px, 64px) for different button scale requirements.*
+Change dev-grid-overlay background-size (50px) for different grid density - 25px finer, 100px coarser.*
+Toggle dev-grid-overlay display to 'block' for alignment help during development.*
+*
+/* ==============================================*
+   RESPONSIVE AND MOBILE SECTION*
+   ============================================== */*
+/* SHARED STYLING*
+/* Mobile and responsive design adaptations */*
+*
+/* Base responsive breakpoints */*
+@media (max-width: 768px) {*
+  .launcher-container {*
+    padding: 1rem;*
+  }*
+  *
+  .gesture-controls {*
+    bottom: 20px;*
+    right: 20px;*
+    gap: 6px;*
+    padding: 6px 10px;*
+  }*
+  *
+  .gesture-control-button {*
+    width: 28px;*
+    height: 28px;*
+    font-size: 14px;*
+  }*
+  *
+  .tap-counter-indicator {*
+    top: 15px;*
+    left: 15px;*
+    padding: 6px 12px;*
+    font-size: 12px;*
+  }*
+}*
+*
+@media (max-width: 480px) {*
+  .launcher-container {*
+    padding: 0.5rem;*
+  }*
+  *
+  .loading-text {*
+    font-size: 1rem;*
+  }*
+  *
+  .gesture-controls {*
+    bottom: 15px;*
+    right: 15px;*
+    gap: 4px;*
+    padding: 4px 8px;*
+  }*
+  *
+  .gesture-control-button {*
+    width: 24px;*
+    height: 24px;*
+    font-size: 12px;*
+  }*
+  *
+  .gesture-zoom-indicator {*
+    font-size: 9px;*
+    min-width: 25px;*
+  }*
+  *
+  .marker-button-medium {*
+    width: 40px;*
+    height: 40px;*
+    padding: 8px;*
+    font-size: 16px;*
+  }*
+}*
+*
+/* Touch-specific enhancements */*
+@media (hover: none) and (pointer: coarse) {*
+  .gesture-control-button {*
+    width: 36px;*
+    height: 36px;*
+  }*
+  *
+  .marker-button-medium {*
+    width: 52px;*
+    height: 52px;*
+    padding: 14px;*
+  }*
+  *
+  .tap-counter-indicator {*
+    padding: 10px 18px;*
+    font-size: 16px;*
+  }*
+}*
+*
+/* High-DPI display optimizations */*
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {*
+  .rotate-item img {*
+    image-rendering: -webkit-optimize-contrast;*
+    image-rendering: crisp-edges;*
+  }*
+  *
+  .dev-stroke-button {*
+    border-width: 1px; /* Thinner borders on high-DPI */*
+  }*
+}*
+*
+/* Landscape orientation adjustments */*
+@media (orientation: landscape) and (max-height: 500px) {*
+  .gesture-controls {*
+    bottom: 10px;*
+    right: 10px;*
+  }*
+  *
+  .tap-counter-indicator {*
+    top: 10px;*
+    left: 10px;*
+  }*
+}*
+/* USED BY*
+/app/frontend/src/launcher/launcher_screen.tsx (responsive layout)*
+/app/frontend/src/launcher/launcher_gesture.tsx (touch optimization)*
+/app/frontend/src/App.tsx (mobile viewport handling)*
+/* TWEAK*
+Change breakpoint values (768px, 480px) for different mobile targeting - 1024px for tablet, 320px for small phones.*
+Adjust touch target sizes (36px, 52px) for accessibility - minimum 44px recommended for touch.*
+Modify landscape max-height (500px) trigger for different devices - 600px for larger phones.*
+Change high-DPI border-width (1px) if stroke visibility issues occur on retina displays.*
+Adjust padding reductions in mobile queries for more/less compact layout.*
+*
+/* ==============================================*
+   PERFORMANCE OPTIMIZATION SECTION*
+   ============================================== */*
+/* SHARED STYLING*
+/* Performance-focused CSS for smooth animations and rendering */*
+*
+/* Hardware acceleration for animated elements */*
+.launcher-accelerated {*
+  transform: translateZ(0);*
+  will-change: transform;*
+  -webkit-transform: translateZ(0);*
+}*
+*
+/* Smooth scrolling and touch optimization */*
+.launcher-smooth {*
+  -webkit-overflow-scrolling: touch;*
+  scroll-behavior: smooth;*
+}*
+*
+/* Reduced motion preferences */*
+@media (prefers-reduced-motion: reduce) {*
+  * {*
+    animation-duration: 0.01ms !important;*
+    animation-iteration-count: 1 !important;*
+    transition-duration: 0.01ms !important;*
+  }*
+  *
+  .launcher-pulse,*
+  .launcher-glow-animated,*
+  .launcher-shadow-animated {*
+    animation: none !important;*
+  }*
+}*
+*
+/* GPU layer optimization for rotation items */*
+.rotate-item {*
+  transform: translateZ(0);*
+  will-change: transform, opacity;*
+}*
+*
+/* Optimize for 60fps animations */*
+@media (min-width: 1024px) {*
+  .launcher-content {*
+    will-change: transform, opacity;*
+    transform: translateZ(0);*
+  }*
+  *
+  .gesture-controls {*
+    will-change: auto;*
+  }*
+}*
+*
+/* Memory optimization for large item counts */*
+.rotate-item:not(.active) {*
+  will-change: auto;*
+}*
+*
+.rotate-item.active {*
+  will-change: transform, opacity;*
+}*
+/* USED BY*
+/app/frontend/src/launcher/launcher_screen.tsx (performance optimization)*
+/app/frontend/src/launcher/rotate_anim.tsx (smooth rotation rendering)*
+/app/frontend/src/launcher/launcher_gesture.tsx (gesture performance)*
+TWEAK*
+Remove translateZ(0) if causing layer creation issues on low-end devices.*/*
+Change will-change properties based on actual animation needs - 'auto' when not animating.*
+Adjust reduced-motion duration (0.01ms) if some animation is preferred - 0.1s for minimal animation.*
+Add contain: layout style for better layout performance if needed.*
+Modify GPU optimization media query (1024px) for different performance tiers.*
