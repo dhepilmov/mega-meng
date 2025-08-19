@@ -13,7 +13,15 @@
 
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { RotateItemConfig, ClockState } from '../../../types/launcher.types';
-import { calculateRotationAngle, calculateTransformMatrix, normalize360 } from '../../../utils/mathUtils';
+import { 
+  calculateRotationAngle, 
+  calculateTransformMatrix, 
+  normalize360,
+  calculateDualRotationSystem,
+  calculateAdvancedTransformOrigin,
+  calculateLayerComplexity,
+  DualRotationResult
+} from '../../../utils/mathUtils';
 import { safeGet, safeNumber, safeString, safeBoolean } from '../../../utils/safeAccessors';
 import { applyLayerEffects, layerImageStyles } from '../../../styles/layer.styles';
 import { ANIMATION_CONSTANTS, VALIDATION_LIMITS, Z_INDEX } from '../../../constants/launcher.constants';
