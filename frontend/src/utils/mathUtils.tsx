@@ -11,6 +11,8 @@
 // Modify positioning algorithms in calculateOrbitalPosition for different orbital mechanics.
 // Adjust smooth animation curves by changing easing functions.
 
+import { ClockState } from '../types/launcher.types';
+
 /**
  * Normalize angle to 0-360 degree range
  */
