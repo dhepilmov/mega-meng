@@ -11,7 +11,6 @@
 // Change gesture handling for different interaction patterns.
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import RotateConfigUI from './launcher_config';
 import './launcher_effect.css';
 
 // ===== NEW MODULAR IMPORTS =====
@@ -20,6 +19,9 @@ import { LauncherConfigManager } from '../launcher_core/launcher_core_config_man
 import { LauncherDataProcessor, ProcessedRotateItem } from '../launcher_core/launcher_core_data_processor';
 import { useGestures, useBackupClick } from '../launcher_core/launcher_core_user_input';
 import { ClockLayer01 } from '../launcher_core/clock/layers/clock_layer_01';
+
+// Settings system import
+import { LauncherSettingsUI } from '../launcher_core/launcher_core_settings';
 
 // Component imports
 import DotMark from '../components/DotMark';
