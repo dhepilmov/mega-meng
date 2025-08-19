@@ -1,7 +1,7 @@
 /* ==============================================
    SHARED STYLING SECTION
    ============================================== */
-//SHARED STYLING
+/*SHARED STYLING
 /* Base launcher container and content styles used across all launcher components */
 .launcher-container {
   width: 100%;
@@ -39,10 +39,10 @@
 .dot-mark {
   z-index: 1000 !important;
 }
-//USED BY
+/*USED BY
 /app/frontend/src/launcher/launcher_screen.tsx (main launcher container)
 /app/frontend/src/launcher/LauncherUI.tsx (original launcher component)
-//TWEAK
+/*TWEAK
 Change background-color (#1a1a1a) to modify launcher background - try #000000 for pure black or #2a2a2a for lighter dark.
 Adjust loading-text font-size (1.2rem) for different loading indicator sizes - 0.8rem smaller, 1.5rem larger.
 Modify dot-mark z-index (1000) if layering conflicts occur - increase to 1500+ for higher priority.
@@ -51,7 +51,7 @@ Change launcher-container height (100vh) to different viewport coverage - 95vh f
 /* ==============================================
    ANIMATION EFFECTS SECTION
    ============================================== */
-//SHARED STYLING  
+/*SHARED STYLING  
 /* Core animation keyframes and utilities from launcher_animation.tsx integration */
 @keyframes fadeIn {
   from {
@@ -118,11 +118,11 @@ Change launcher-container height (100vh) to different viewport coverage - 95vh f
 .launcher-stagger-3 { animation-delay: 0.3s; }
 .launcher-stagger-4 { animation-delay: 0.4s; }
 .launcher-stagger-5 { animation-delay: 0.5s; }
-//USED BY
+/*USED BY
 /app/frontend/src/launcher/launcher_screen.tsx (AnimatedElement components)
 /app/frontend/src/launcher/launcher_animation.tsx (animation utilities)  
 /app/frontend/src/App.tsx (app-level transitions)
-//TWEAK
+/*TWEAK
 Change fadeIn duration (0.3s) for faster/slower fade transitions - 0.1s for quick, 0.6s for slow.
 Adjust slideUp translateY (20px) for different slide distances - 10px subtle, 40px dramatic.
 Modify scaleIn scale (0.8) for different zoom effects - 0.5 for dramatic zoom, 0.9 for subtle.
@@ -131,7 +131,7 @@ Change stagger delays (0.1s increments) for different timing - 0.05s faster sequ
 /* ==============================================
    ROTATION ANIMATION SECTION  
    ============================================== */
-//SHARED STYLING
+/*SHARED STYLING
 /* Dynamic rotation animations generated from rotate_anim.tsx logic */
 
 /* Base rotate item styles */
@@ -213,11 +213,11 @@ Change stagger delays (0.1s increments) for different timing - 0.05s faster sequ
 .rotate-item-item_2 { /* Minutes circle */ }
 .rotate-item-item_3 { /* Hours circle */ }
 /* Additional item classes generated dynamically in rotate_anim.tsx */
-//USED BY
+/*USED BY
 /app/frontend/src/launcher/rotate_anim.tsx (dynamic CSS generation)
 /app/frontend/src/launcher/rotate_logic.tsx (RotateItemComponent)
 /app/frontend/src/launcher/launcher_screen.tsx (RotateAnim component)
-//TWEAK  
+/*TWEAK  
 Change will-change property to 'auto' for better performance if not rotating constantly.
 Adjust rotation keyframes duration - modify @keyframes timing for global speed changes.
 Change rotate-speed-* durations for different speed classifications - 1s to 20s range.
@@ -227,7 +227,7 @@ Add perspective to parent container if 3D rotation effects are needed.
 /* ==============================================
    GESTURE EFFECTS SECTION
    ============================================== */
-//SHARED STYLING
+/*SHARED STYLING
 /* Touch and gesture interaction feedback from launcher_gesture.tsx integration */
 
 /* Gesture feedback animations */
@@ -306,10 +306,10 @@ Add perspective to parent container if 3D rotation effects are needed.
   text-align: center;
   padding: 0 6px;
 }
-//USED BY
+/*USED BY
 /app/frontend/src/launcher/launcher_gesture.tsx (GestureControls component)
 /app/frontend/src/launcher/launcher_screen.tsx (gesture system integration)
-//TWEAK
+/*TWEAK
 Change tapPulse scale (1.05) for different feedback intensity - 1.02 subtle, 1.1 strong.
 Adjust transition duration (0.2s) for gesture responsiveness - 0.1s instant, 0.4s slow.
 Modify gesture-controls positioning (bottom: 30px, right: 30px) for different placement.
@@ -319,7 +319,7 @@ Adjust gesture-control-button size (32px) for accessibility - 40px+ for better t
 /* ==============================================
    VISUAL EFFECTS SECTION
    ============================================== */
-//SHARED STYLING
+/*SHARED STYLING
 /* Enhanced visual effects for launcher items from rotate_logic.tsx integration */
 
 /* Effect animations */
@@ -386,11 +386,11 @@ Adjust gesture-control-button size (32px) for accessibility - 40px+ for better t
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
   opacity: 0.7;
 }
-//USED BY
+/*USED BY
 /app/frontend/src/launcher/rotate_logic.tsx (RotateItemComponent applyEffects function)
 /app/frontend/src/launcher/launcher_screen.tsx (visual effects application)
 /app/frontend/src/launcher/rotate_config.tsx (effect property definitions)
-//TWEAK
+/*TWEAK
 Change pulse opacity range (0.7-1) for different intensity - 0.5-1 for dramatic, 0.8-1 for subtle.
 Adjust glow drop-shadow blur (15px max) for effect strength - 5px subtle, 25px intense.
 Modify pulse animation duration (2s) for different speeds - 1s fast pulse, 4s slow pulse.
@@ -400,7 +400,7 @@ Adjust transparent opacity (0.7) for different transparency levels - 0.5 more tr
 /* ==============================================
    DEBUG AND DEVELOPMENT SECTION
    ============================================== */
-//SHARED STYLING
+/*SHARED STYLING
 /* Development aids and debugging utilities from marker.tsx integration */
 
 /* Tap counter and debug indicators */
@@ -480,10 +480,10 @@ Adjust transparent opacity (0.7) for different transparency levels - 0.5 more tr
   background-size: 50px 50px;
   display: none; /* Enable by changing to 'block' for development */
 }
-//USED BY
+/*USED BY
 /app/frontend/src/launcher/marker.tsx (MarkerButton, TopButtonContainer components)
 /app/frontend/src/launcher/launcher_screen.tsx (tap counter, debug indicators)
-//TWEAK
+/*TWEAK
 Change tap-counter-indicator position (top: 20px, left: 20px) for different placement.
 Adjust dev-stroke colors (#ff0000, #888888) for better visibility during development.
 Modify marker-button sizes (32px, 48px, 64px) for different button scale requirements.
@@ -493,7 +493,7 @@ Toggle dev-grid-overlay display to 'block' for alignment help during development
 /* ==============================================
    RESPONSIVE AND MOBILE SECTION
    ============================================== */
-//SHARED STYLING
+/*SHARED STYLING
 /* Mobile and responsive design adaptations */
 
 /* Base responsive breakpoints */
@@ -601,11 +601,11 @@ Toggle dev-grid-overlay display to 'block' for alignment help during development
     left: 10px;
   }
 }
-//USED BY
+/*USED BY
 /app/frontend/src/launcher/launcher_screen.tsx (responsive layout)
 /app/frontend/src/launcher/launcher_gesture.tsx (touch optimization)
 /app/frontend/src/App.tsx (mobile viewport handling)
-//TWEAK
+/*TWEAK
 Change breakpoint values (768px, 480px) for different mobile targeting - 1024px for tablet, 320px for small phones.
 Adjust touch target sizes (36px, 52px) for accessibility - minimum 44px recommended for touch.
 Modify landscape max-height (500px) trigger for different devices - 600px for larger phones.
@@ -615,7 +615,7 @@ Adjust padding reductions in mobile queries for more/less compact layout.
 /* ==============================================
    PERFORMANCE OPTIMIZATION SECTION
    ============================================== */
-//SHARED STYLING
+/*SHARED STYLING
 /* Performance-focused CSS for smooth animations and rendering */
 
 /* Hardware acceleration for animated elements */
