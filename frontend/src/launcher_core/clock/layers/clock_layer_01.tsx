@@ -405,10 +405,25 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
             borderRadius: '2px',
             whiteSpace: 'nowrap',
             pointerEvents: 'none',
+            maxWidth: '200px',
+            zIndex: 1000,
           }}
         >
-          {config.itemCode} | Layer {config.itemLayer}
-          {isClockHand && ` | ${config.handType}`}
+          <div>{config.itemCode} | Layer {config.itemLayer}</div>
+          {isClockHand && <div>{config.handType} hand</div>}
+          <div>Complexity: {layerState.layerComplexity.complexity}</div>
+          {layerState.dualRotationResult && (
+            <>
+              <div>R1: {layerState.dualRotationResult.rotation1Angle.toFixed(1)}°</div>
+              <div>R2: {layerState.dualRotationResult.rotation2Angle.toFixed(1)}°</div>
+              <div>Pos: {layerState.dualRotationResult.finalPosition.x.toFixed(1)}, {layerState.dualRotationResult.finalPosition.y.toFixed(1)}</div>
+            </>
+          )}
+          {layerState.layerComplexity.recommendations.length > 0 && (
+            <div style={{ color: 'yellow', fontSize: '9px' }}>
+              ⚠ {layerState.layerComplexity.recommendations[0]}
+            </div>
+          )}
         </div>
       )}
     </div>
