@@ -337,7 +337,7 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
     top: '50%',
     left: '50%',
     transform: `translate(-50%, -50%) ${layerState.currentTransform}`,
-    transformOrigin: calculateTransformOrigin(),
+    transformOrigin: layerState.transformOrigin,
     zIndex: Z_INDEX.CLOCK_LAYERS_START + config.itemLayer,
     pointerEvents: 'none',
     ...layerState.currentEffects,
@@ -347,7 +347,13 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
       border: '1px dashed rgba(255, 0, 0, 0.5)',
       backgroundColor: 'rgba(0, 255, 0, 0.1)',
     }),
-  }), [layerState.currentTransform, layerState.currentEffects, calculateTransformOrigin, config.itemLayer, debugMode]);
+  }), [
+    layerState.currentTransform, 
+    layerState.currentEffects, 
+    layerState.transformOrigin, 
+    config.itemLayer, 
+    debugMode
+  ]);
   
   // ===== ERROR HANDLING =====
   
