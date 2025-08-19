@@ -678,7 +678,3 @@ Adjust padding reductions in mobile queries for more/less compact layout.
 /app/frontend/src/launcher/launcher_gesture.tsx (gesture performance)
 TWEAK
 Remove translateZ(0) if causing layer creation issues on low-end devices.*/
-Change will-change properties based on actual animation needs - 'auto' when not animating.
-Adjust reduced-motion duration (0.01ms) if some animation is preferred - 0.1s for minimal animation.
-Add contain: layout style for better layout performance if needed.
-Modify GPU optimization media query (1024px) for different performance tiers.
