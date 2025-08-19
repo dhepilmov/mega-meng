@@ -327,7 +327,7 @@ const LauncherScreen: React.FC<LauncherScreenProps> = () => {
           console.log('Configuration updated:', config);
           setLauncherConfig(config);
           // Process the new configuration
-          const processed = LauncherDataProcessor.processRotateItems(config);
+          const processed = LauncherDataProcessor.processRotateConfig(config);
           setProcessedItems(processed);
         }}
       />
