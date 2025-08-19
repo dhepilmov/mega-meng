@@ -315,16 +315,22 @@ const LauncherScreen: React.FC<LauncherScreenProps> = () => {
     <>
       {renderMainContent()}
 
-      {/* Modal Overlay for Config UI */}
-      <ModalOverlay 
+      {/* Advanced Settings UI */}
+      <LauncherSettingsUI 
         isOpen={showConfigUI} 
         onClose={() => setShowConfigUI(false)}
-        title="Launcher Configuration"
-        closeOnEscKey={true}
-        closeOnOverlayClick={true}
-      >
-        <RotateConfigUI />
-      </ModalOverlay>
+        onSettingsChange={(settings) => {
+          console.log('Settings updated:', settings);
+          // Handle settings changes if needed
+        }}
+        onConfigChange={(config) => {
+          console.log('Configuration updated:', config);
+          setLauncherConfig(config);
+          // Process the new configuration
+          const processed = LauncherDataProcessor.processRotateItems(config);
+          setProcessedItems(processed);
+        }}
+      />
     </>
   );
 };
