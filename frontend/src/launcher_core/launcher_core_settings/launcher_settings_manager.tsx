@@ -429,7 +429,7 @@ export class LauncherSettingsManager {
           restoredFrom: backup.timestamp,
           reason: backup.metadata.reason,
         },
-        warnings: validation.warnings,
+        warnings: validation.warnings.map(w => w.message),
       };
     } catch (error) {
       return {
