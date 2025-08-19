@@ -55,6 +55,15 @@ interface LayerState {
   animationStartTime: number;
   lastUpdateTime: number;
   errors: string[];
+  
+  // Phase 3: Enhanced dual rotation state
+  dualRotationResult: DualRotationResult | null;
+  layerComplexity: {
+    complexity: 'low' | 'medium' | 'high';
+    score: number;
+    recommendations: string[];
+  };
+  transformOrigin: string;
 }
 
 // ===== CLOCK LAYER COMPONENT =====
