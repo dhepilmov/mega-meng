@@ -122,6 +122,7 @@ export const SUCCESS_MESSAGES = {
   BACKUP_CREATED: 'Backup created successfully',
   IMPORT_SUCCESS: 'Import completed successfully',
   RESET_COMPLETE: 'Settings reset to defaults',
+  LAYER_COPIED: 'Layer configuration copied',
 } as const;
 
 export const ERROR_MESSAGES = {
