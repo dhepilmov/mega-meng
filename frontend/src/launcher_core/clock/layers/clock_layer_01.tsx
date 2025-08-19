@@ -110,24 +110,6 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
            config.handRotation && config.handRotation !== null;
   }, [config.handType, config.handRotation]);
   
-  // Get the active rotation configuration
-  const activeRotationConfig = useMemo(() => {
-    if (isClockHand && config.handRotation === 'ROTATION1') {
-      return config.rotation1;
-    } else if (isClockHand && config.handRotation === 'ROTATION2') {
-      return config.rotation2;
-    }
-    
-    // For non-clock items, prefer rotation1 if enabled, otherwise rotation2
-    if (safeString(config.rotation1?.enabled) === 'yes') {
-      return config.rotation1;
-    } else if (safeString(config.rotation2?.enabled) === 'yes') {
-      return config.rotation2;
-    }
-    
-    return null;
-  }, [isClockHand, config.handRotation, config.rotation1, config.rotation2]);
-  
   // Calculate visibility
   const isLayerVisible = useMemo(() => {
     return safeString(config.itemDisplay) === 'yes' && 
