@@ -105,11 +105,33 @@ export const VALIDATION_LIMITS = {
 
 // ===== STORAGE KEYS =====
 export const STORAGE_KEYS = {
-  SETTINGS: 'launcher_settings',
-  FILES: 'launcher_files',
-  USER_CONFIG: 'launcher_user_config',
-  PRESETS: 'launcher_presets',
-  LAYER_CONFIG: 'launcher_layer_config',
+  LAUNCHER_CONFIG: 'launcher_config_v2',
+  SETTINGS: 'launcher_settings_v2',
+  PRESETS: 'launcher_presets_v2',
+  BACKUPS: 'launcher_backups_v2',
+  CACHE: 'launcher_cache_v2',
+  USER_PREFERENCES: 'launcher_user_prefs_v2',
+} as const;
+
+// ===== SUCCESS/ERROR MESSAGES =====
+export const SUCCESS_MESSAGES = {
+  CONFIG_SAVED: 'Configuration saved successfully',
+  PRESET_CREATED: 'Preset created successfully',
+  PRESET_LOADED: 'Preset loaded successfully',
+  SETTINGS_UPDATED: 'Settings updated successfully',
+  BACKUP_CREATED: 'Backup created successfully',
+  IMPORT_SUCCESS: 'Import completed successfully',
+  RESET_COMPLETE: 'Settings reset to defaults',
+} as const;
+
+export const ERROR_MESSAGES = {
+  CONFIG_LOAD_FAILED: 'Failed to load configuration',
+  STORAGE_ERROR: 'Storage operation failed',
+  VALIDATION_ERROR: 'Validation failed',
+  PRESET_NOT_FOUND: 'Preset not found',
+  BACKUP_FAILED: 'Backup operation failed',
+  IMPORT_FAILED: 'Import operation failed',
+  INVALID_DATA: 'Invalid data format',
 } as const;
 
 // ===== DEFAULT VALUES =====
