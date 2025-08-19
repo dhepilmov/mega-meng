@@ -204,7 +204,7 @@ export class ClockConfigProcessor {
   } {
     const rotation1: ClockLayerConfig[] = [];
     const rotation2: ClockLayerConfig[] = [];
-    const static: ClockLayerConfig[] = [];
+    const staticLayers: ClockLayerConfig[] = [];
 
     configs.forEach(config => {
       const hasRotation1 = safeString(config.rotation1?.enabled) === 'yes';
