@@ -46,7 +46,7 @@ export class LauncherConfigManager {
    */
   static loadConfig(): RotateItemConfig[] {
     try {
-      const stored = localStorage.getItem(STORAGE_KEYS.USER_CONFIG);
+      const stored = localStorage.getItem(STORAGE_KEYS.LAUNCHER_CONFIG);
       
       if (!stored) {
         console.log('No stored config found, creating default configuration');
