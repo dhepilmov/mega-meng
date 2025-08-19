@@ -185,7 +185,7 @@ export class LauncherConfigManager {
   private static cleanOldBackups(): void {
     try {
       const backupKeys: string[] = [];
-      const prefix = `${STORAGE_KEYS.USER_CONFIG}_backup_`;
+      const prefix = `${STORAGE_KEYS.LAUNCHER_CONFIG}_backup_`;
 
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
