@@ -200,7 +200,7 @@ export class ClockConfigProcessor {
   static groupByRotationType(configs: ClockLayerConfig[]): {
     rotation1: ClockLayerConfig[];
     rotation2: ClockLayerConfig[];
-    static: ClockLayerConfig[];
+    staticLayers: ClockLayerConfig[];
   } {
     const rotation1: ClockLayerConfig[] = [];
     const rotation2: ClockLayerConfig[] = [];
