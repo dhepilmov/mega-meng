@@ -150,8 +150,8 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
           },
           rotation2: {
             ...config.rotation2,
-            itemRotateAxisX: config.rotation2?.itemRotateAxisX || 0,
-            itemRotateAxisY: config.rotation2?.itemRotateAxisY || 0,
+            itemRotateAxisX: config.rotation2?.itemAxisX || 0,
+            itemRotateAxisY: config.rotation2?.itemAxisY || 0,
             itemTiltPosition: config.rotation2?.itemTiltPosition || 0
           }
         };
