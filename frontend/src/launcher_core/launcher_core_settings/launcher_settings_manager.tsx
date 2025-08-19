@@ -571,7 +571,7 @@ export class LauncherSettingsManager {
         success: true,
         message: 'Settings imported successfully',
         data: this.currentSettings,
-        warnings: validation.warnings,
+        warnings: validation.warnings.map(w => w.message),
       };
     } catch (error) {
       return {
