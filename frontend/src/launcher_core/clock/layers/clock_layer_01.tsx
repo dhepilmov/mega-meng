@@ -88,6 +88,15 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
     animationStartTime: Date.now(),
     lastUpdateTime: Date.now(),
     errors: [],
+    
+    // Phase 3: Enhanced dual rotation initialization
+    dualRotationResult: null,
+    layerComplexity: {
+      complexity: 'low',
+      score: 0,
+      recommendations: []
+    },
+    transformOrigin: '50% 50%',
   });
   
   const animationRef = useRef<number | null>(null);
