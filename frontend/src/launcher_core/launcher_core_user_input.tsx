@@ -244,15 +244,11 @@ export const useGestures = (config: Partial<GestureConfig> = {}): UseGesturesRet
       }
     }
     
-    // Double tap zoom
-    if (touches.length === 1 && fullConfig.enableDoubleTapZoom && tapCount === 1) {
-      setTimeout(() => {
-        if (tapCount === 2) {
-          const targetScale = gestureState.scale === 1 ? fullConfig.doubleTapZoomScale : 1;
-          setGestureState(prev => ({ ...prev, scale: targetScale }));
-          fullConfig.onDoubleTap?.();
-        }
-      }, 300);
+    // Double tap zoom (check for second tap)
+    if (touches.length === 1 && fullConfig.enableDoubleTapZoom && tapCount === 2) {
+      const targetScale = gestureState.scale === 1 ? fullConfig.doubleTapZoomScale : 1;
+      setGestureState(prev => ({ ...prev, scale: targetScale }));
+      fullConfig.onDoubleTap?.();
     }
   }, [
     getTouchPoints, 
