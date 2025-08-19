@@ -215,7 +215,7 @@ export class ClockConfigProcessor {
       } else if (hasRotation2) {
         rotation2.push(config);
       } else {
-        static.push(config);
+        staticLayers.push(config);
       }
     });
 
