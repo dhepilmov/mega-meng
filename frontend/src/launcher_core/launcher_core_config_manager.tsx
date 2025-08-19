@@ -164,7 +164,7 @@ export class LauncherConfigManager {
    */
   private static createBackup(): void {
     try {
-      const current = localStorage.getItem(STORAGE_KEYS.USER_CONFIG);
+      const current = localStorage.getItem(STORAGE_KEYS.LAUNCHER_CONFIG);
       if (!current) return;
 
       const timestamp = new Date().toISOString();
