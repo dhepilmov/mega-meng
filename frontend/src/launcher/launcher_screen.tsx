@@ -1175,8 +1175,6 @@ const GestureControls: React.FC<GestureControlsProps> = ({
 //Change getDisplayableItems filtering logic to show/hide different item types.
 //Modify calculateItemTransform positioning calculations for different layouts.
 
-import { rotateConfig, RotateItemConfig, RotationConfig } from './rotate_config';
-
 // SAFE PROPERTY ACCESS UTILITIES - Default to 'no'/null if undefined
 const safeString = (value: any, defaultValue: string = 'no'): string => {
   return value !== undefined && value !== null ? String(value) : defaultValue;
