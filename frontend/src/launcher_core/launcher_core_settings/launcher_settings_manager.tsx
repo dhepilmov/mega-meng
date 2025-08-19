@@ -404,8 +404,8 @@ export class LauncherSettingsManager {
         return {
           success: false,
           message: 'Backup data is invalid',
-          errors: validation.errors,
-          warnings: validation.warnings,
+          errors: validation.errors.map(e => e.message),
+          warnings: validation.warnings.map(w => w.message),
         };
       }
 
