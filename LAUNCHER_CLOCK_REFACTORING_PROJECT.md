@@ -1436,4 +1436,243 @@ Tab System Implementation:
 
 **TOTAL PROJECT PROGRESS: 100% COMPLETE** 🎉
 
+---
+
+## 📋 **PHASE 6: ARCHITECTURAL CONSOLIDATION**
+
+### **🎯 PROJECT EVOLUTION - LAUNCHER CODE CONSOLIDATION**
+
+**Status**: 🚀 **READY FOR EXECUTION** - Post-Phase 5 Optimization  
+**Priority**: **HIGH** - Code Organization & Maintainability  
+**Estimated Time**: 2-3 hours  
+**Goal**: Consolidate scattered launcher code into unified, self-contained module
+
+### **📊 CURRENT ARCHITECTURE PROBLEMS:**
+
+#### **Scattered Code Structure:**
+```
+/frontend/src/
+├── launcher/                    # Some launcher files
+├── launcher_core/              # Core logic scattered here  
+├── types/                      # Mixed launcher + app types
+├── utils/                      # Mixed launcher + app utilities
+├── constants/                  # Mixed constants
+├── styles/                     # Mixed styles
+├── data/                       # Launcher config data
+├── components/                 # Mixed components
+└── App.tsx                     # Orchestrator mixed with launcher logic
+```
+
+**Issues Identified:**
+- ❌ **Maintenance Difficulty**: Launcher code spread across 8+ directories
+- ❌ **Poor Separation**: App infrastructure mixed with launcher logic
+- ❌ **Inconsistent Naming**: Multiple naming conventions (snake_case, camelCase, kebab-case)
+- ❌ **Hard to Navigate**: Developers spend time hunting for launcher-related files
+- ❌ **Coupling Issues**: App components tightly coupled with launcher internals
+- ❌ **Non-Portable**: Cannot easily extract launcher as separate module
+
+### **🏗️ PROPOSED UNIFIED ARCHITECTURE:**
+
+#### **Self-Contained Launcher Module:**
+```
+/frontend/src/
+├── launcher/                           # 🎯 ALL LAUNCHER CODE CONSOLIDATED
+│   ├── core/
+│   │   ├── engine.tsx                 # Main launcher engine (from launcher_screen.tsx)
+│   │   ├── config-manager.tsx         # Configuration management
+│   │   ├── data-processor.tsx         # Data transformation
+│   │   ├── user-input.tsx             # Gesture and input handling
+│   │   └── index.tsx                  # Core exports
+│   │
+│   ├── clock/
+│   │   ├── orchestrator.tsx           # Clock system coordinator
+│   │   ├── animations.tsx             # Animation management
+│   │   ├── config-processor.tsx       # Clock configuration
+│   │   ├── utils.tsx                  # Clock utilities
+│   │   ├── defaults.tsx               # Default configurations
+│   │   ├── types.tsx                  # Clock-specific types
+│   │   └── layers/
+│   │       ├── layer-01.tsx           # Individual layers (clean naming)
+│   │       ├── layer-02.tsx           # (renamed from clock_layer_xx)
+│   │       ├── ...                    # All 20 layers
+│   │       ├── layer-20.tsx
+│   │       └── layer-default.tsx      # Error recovery layer
+│   │
+│   ├── settings/
+│   │   ├── manager.tsx                # Settings management system
+│   │   ├── validator.tsx              # Smart validation engine
+│   │   ├── presets.tsx                # Preset management
+│   │   ├── ui.tsx                     # Settings interface (7-tab system)
+│   │   ├── types.tsx                  # Settings-specific types
+│   │   └── index.tsx                  # Settings exports
+│   │
+│   ├── components/
+│   │   ├── dot-mark.tsx               # Launcher-specific components
+│   │   ├── gesture-controls.tsx       # Gesture handling components
+│   │   ├── modal-overlay.tsx          # Modal systems
+│   │   ├── marker-button.tsx          # Launcher buttons
+│   │   └── top-button-container.tsx   # Button containers
+│   │
+│   ├── utils/
+│   │   ├── math.tsx                   # Mathematical calculations & rotations
+│   │   ├── safe-accessors.tsx         # Safe data access utilities
+│   │   └── performance.tsx            # Performance monitoring utilities
+│   │
+│   ├── types/
+│   │   ├── launcher.tsx               # Core launcher interfaces
+│   │   ├── rotation.tsx               # Rotation system types
+│   │   └── index.tsx                  # Centralized type exports
+│   │
+│   ├── constants/
+│   │   ├── launcher.tsx               # Launcher configuration constants
+│   │   ├── rotation.tsx               # Rotation system constants
+│   │   └── validation.tsx             # Validation ranges and limits
+│   │
+│   ├── styles/
+│   │   ├── modal.tsx                  # Modal styling objects
+│   │   ├── layer.tsx                  # Layer styling objects
+│   │   ├── animation.tsx              # Animation CSS definitions
+│   │   └── effects.css                # Launcher-specific CSS effects
+│   │
+│   ├── data/
+│   │   ├── config-default.tsx         # Default launcher configuration
+│   │   └── config-user.tsx            # User configuration modifications
+│   │
+│   └── index.tsx                      # 🎯 MAIN LAUNCHER MODULE EXPORT
+│
+├── App.tsx                            # 🎮 APP ORCHESTRATOR ONLY
+├── components/                        # General app components (non-launcher)
+├── utils/                             # General app utilities (non-launcher)
+├── index.tsx                          # Application entry point
+└── index.css                          # Global application styles
+```
+
+### **✨ ARCHITECTURAL BENEFITS:**
+
+#### **Organization Improvements:**
+- ✅ **Self-Contained Module**: All launcher logic consolidated in one location
+- ✅ **Clean Naming Convention**: Consistent kebab-case naming without prefixes
+- ✅ **Clear Separation**: Launcher code completely separate from app infrastructure
+- ✅ **Intuitive Navigation**: Developers know exactly where to find launcher code
+- ✅ **Modular Design**: Each subdirectory has single responsibility
+
+#### **Technical Advantages:**
+- ✅ **Portable Architecture**: Could be extracted as separate npm package
+- ✅ **Reduced Coupling**: App orchestrator only imports launcher module
+- ✅ **Easier Testing**: Isolated launcher functionality for unit testing
+- ✅ **Scalable Growth**: Room for launcher expansion without cluttering root
+- ✅ **Team Collaboration**: Multiple developers can work on launcher without conflicts
+
+#### **Maintenance Benefits:**
+- ✅ **Faster Development**: No time wasted hunting for scattered files
+- ✅ **Consistent Patterns**: Uniform file structure and naming conventions
+- ✅ **Easier Refactoring**: Changes contained within launcher module
+- ✅ **Better Documentation**: Clear module boundaries for documentation
+- ✅ **Simplified Debugging**: Issues traced within contained launcher structure
+
+### **📋 IMPLEMENTATION PLAN:**
+
+#### **Phase 6.1: Structure Creation & Core Migration**
+**Estimated Time**: 45 minutes
+- [ ] Create complete `launcher/` directory structure
+- [ ] Migrate `launcher_core/` files with clean naming:
+  - `launcher_screen.tsx` → `launcher/core/engine.tsx`
+  - `launcher_core_config_manager.tsx` → `launcher/core/config-manager.tsx`
+  - `launcher_core_data_processor.tsx` → `launcher/core/data-processor.tsx`
+  - `launcher_core_user_input.tsx` → `launcher/core/user-input.tsx`
+- [ ] Update all internal imports within migrated files
+- [ ] Create `launcher/core/index.tsx` with proper exports
+
+#### **Phase 6.2: Clock System Consolidation**  
+**Estimated Time**: 45 minutes
+- [ ] Migrate entire `launcher_core/clock/` system:
+  - `clock_orchestrator.tsx` → `launcher/clock/orchestrator.tsx`
+  - `clock_animations.tsx` → `launcher/clock/animations.tsx`
+  - `clock_utils.tsx` → `launcher/clock/utils.tsx`
+  - `clock_defaults.tsx` → `launcher/clock/defaults.tsx`
+  - All 21 layer files → `launcher/clock/layers/layer-01.tsx` through `layer-20.tsx`
+- [ ] Update clock system imports and exports
+- [ ] Verify dual rotation system still functional
+
+#### **Phase 6.3: Settings System Migration**
+**Estimated Time**: 30 minutes  
+- [ ] Migrate `launcher_core/launcher_core_settings/` to `launcher/settings/`:
+  - `launcher_settings_manager.tsx` → `launcher/settings/manager.tsx`
+  - `launcher_settings_validator.tsx` → `launcher/settings/validator.tsx`
+  - `launcher_settings_presets.tsx` → `launcher/settings/presets.tsx`
+  - `launcher_settings_ui.tsx` → `launcher/settings/ui.tsx`
+  - `launcher_settings_types.tsx` → `launcher/settings/types.tsx`
+- [ ] Update settings system imports
+- [ ] Verify 6-tap gesture and 7-tab interface still working
+
+#### **Phase 6.4: Supporting Systems Migration**
+**Estimated Time**: 45 minutes
+- [ ] Migrate scattered utilities, types, constants:
+  - `utils/` launcher files → `launcher/utils/`
+  - `types/` launcher files → `launcher/types/`
+  - `constants/` launcher files → `launcher/constants/`
+  - `styles/` launcher files → `launcher/styles/`
+  - `data/` launcher files → `launcher/data/`
+  - `components/` launcher files → `launcher/components/`
+- [ ] Update all cross-references and imports
+- [ ] Clean up empty directories in root
+
+#### **Phase 6.5: Orchestrator Simplification**
+**Estimated Time**: 30 minutes
+- [ ] Create clean `launcher/index.tsx` main export
+- [ ] Simplify `App.tsx` to only import from `launcher/` module
+- [ ] Remove launcher logic from root-level files
+- [ ] Update remaining app infrastructure to use launcher module
+- [ ] Verify complete application functionality
+
+#### **Phase 6.6: Final Integration Testing**
+**Estimated Time**: 15 minutes
+- [ ] Test TypeScript compilation with new structure
+- [ ] Verify 6-tap gesture opens settings modal
+- [ ] Test all 7 settings tabs functionality
+- [ ] Validate 20-layer dual rotation system
+- [ ] Confirm backend integration still working
+- [ ] Performance validation (maintain 60fps target)
+
+### **🎯 SUCCESS CRITERIA:**
+
+#### **Code Organization:**
+- [ ] **100% Launcher Code**: All launcher-related code inside `launcher/` directory
+- [ ] **Clean Naming**: Consistent kebab-case naming throughout launcher module
+- [ ] **Zero Duplication**: No scattered launcher code in root directories
+- [ ] **Minimal Orchestration**: App.tsx only imports and initializes launcher module
+
+#### **Functionality Preservation:**
+- [ ] **Feature Parity**: All launcher functionality works identically
+- [ ] **Settings System**: 6-tap gesture and 7-tab interface operational
+- [ ] **Dual Rotation**: All 20 layers with rotation mechanics functional
+- [ ] **Performance**: Maintain existing performance benchmarks
+- [ ] **TypeScript**: Clean compilation without errors
+
+#### **Architecture Quality:**
+- [ ] **Self-Contained**: Launcher module completely independent
+- [ ] **Clear Interfaces**: Well-defined boundaries between launcher and app
+- [ ] **Documentation**: Updated file paths and architecture documentation
+- [ ] **Future-Ready**: Structure supports easy enhancement and potential extraction
+
+### **📊 EXPECTED IMPACT:**
+
+#### **Developer Experience:**
+- **File Location Time**: 70% reduction in time spent finding launcher files
+- **Code Navigation**: Intuitive directory structure for faster development
+- **Maintenance Velocity**: 50% faster for launcher-specific modifications
+- **Team Collaboration**: Reduced conflicts with clear module boundaries
+
+#### **Code Quality:**
+- **Coupling Reduction**: Clean separation between launcher and app concerns
+- **Testability**: Isolated launcher module enables comprehensive testing
+- **Reusability**: Launcher module ready for extraction or reuse
+- **Maintainability**: Consistent patterns and organization throughout
+
+---
+
+**PHASE 6 STATUS**: 🚀 **READY FOR EXECUTION** - Architectural consolidation planned
+
+**PROJECT EVOLUTION**: Phase 5 Complete → Phase 6 Architectural Optimization → Production Ready
+
 * * *
