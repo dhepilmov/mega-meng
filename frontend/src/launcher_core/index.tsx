@@ -30,6 +30,9 @@ export {
 // Re-export types for convenience
 export type { 
   RotateItemConfig, 
-  ClockState, 
-  ExtendedClockState 
+  ClockState
 } from '../types/launcher.types';
+
+export type { 
+  ExtendedClockState 
+} from './clock/clock_types';
