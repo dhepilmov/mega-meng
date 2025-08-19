@@ -292,8 +292,8 @@ export function calculateDualRotationSystem(
     };
     rotation2?: {
       enabled: 'yes' | 'no' | null;
-      itemRotateAxisX: number;
-      itemRotateAxisY: number;
+      itemAxisX: number;
+      itemAxisY: number;
       itemPositionX: number; // Orbital radius
       itemPositionY: number; // Starting angle
       rotationSpeed: number;
