@@ -334,8 +334,8 @@ export function calculateDualRotationSystem(
   // ROTATION2: Orbital System
   if (config.rotation2?.enabled === 'yes') {
     const orbitalResult = calculateAdvancedOrbitalPosition(
-      config.rotation2.itemRotateAxisX, // Orbit center X
-      config.rotation2.itemRotateAxisY, // Orbit center Y
+      config.rotation2.itemAxisX, // Orbit center X
+      config.rotation2.itemAxisY, // Orbit center Y
       config.rotation2.itemPositionX,   // Orbit radius
       config.rotation2.itemPositionY,   // Starting angle
       currentTime,
