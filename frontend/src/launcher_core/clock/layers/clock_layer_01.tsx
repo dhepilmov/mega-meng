@@ -19,9 +19,9 @@ import {
   normalize360,
   calculateDualRotationSystem,
   calculateAdvancedTransformOrigin,
-  calculateLayerComplexity,
-  DualRotationResult
+  calculateLayerComplexity
 } from '../../../utils/mathUtils';
+import type { DualRotationResult } from '../../../utils/mathUtils';
 import { safeGet, safeNumber, safeString, safeBoolean } from '../../../utils/safeAccessors';
 import { applyLayerEffects, layerImageStyles } from '../../../styles/layer.styles';
 import { ANIMATION_CONSTANTS, VALIDATION_LIMITS, Z_INDEX } from '../../../constants/launcher.constants';
