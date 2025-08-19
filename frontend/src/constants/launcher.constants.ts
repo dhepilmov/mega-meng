@@ -132,6 +132,10 @@ export const ERROR_MESSAGES = {
   BACKUP_FAILED: 'Backup operation failed',
   IMPORT_FAILED: 'Import operation failed',
   INVALID_DATA: 'Invalid data format',
+  INVALID_CONFIG: 'Invalid configuration provided',
+  MISSING_ASSET: 'Asset file not found',
+  CALCULATION_ERROR: 'Error in mathematical calculation',
+  RENDER_ERROR: 'Error rendering component',
 } as const;
 
 // ===== DEFAULT VALUES =====
