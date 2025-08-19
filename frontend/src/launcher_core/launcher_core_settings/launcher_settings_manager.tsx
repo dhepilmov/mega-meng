@@ -203,7 +203,7 @@ export class LauncherSettingsManager {
 
       // Create backup before updating
       if (this.isDifferent(this.currentSettings, fixedSettings)) {
-        this.createAutoBackup('manual');
+        this.createAutoBackup('auto');
       }
 
       // Update current settings
