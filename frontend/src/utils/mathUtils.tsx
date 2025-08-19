@@ -218,9 +218,10 @@ export function calculateTimezoneClockAngles(utcOffset: number, use24Hour: boole
   const secondAngle = ((seconds + milliseconds/1000) / 60) * 360;
 
   return {
-    hour: hourAngle,
-    minute: minuteAngle,
-    second: secondAngle
+    hourAngle: hourAngle,
+    minuteAngle: minuteAngle,
+    secondAngle: secondAngle,
+    timestamp: Date.now()
   };
 }
 
