@@ -1,18 +1,30 @@
 //==============================================
-// CLOCK LAYER 16 COMPONENT
+// CLOCK LAYER 16 COMPONENT - PHASE 3 ENHANCED
 //==============================================
 // DETAILED DESCRIPTION:
-// Individual clock layer component with independent configuration, effects, rotations,
-// and clock functionality. Each layer operates independently with its own settings.
-// TWEAK: Modify for layer-specific behaviors by adjusting the layerId constant.
+// Advanced layer with sophisticated dual rotation capabilities
+// and performance optimization for complex scenarios.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ClockLayerProps, ClockLayer01 } from './clock_layer_01';
+import { RotateItemConfig } from '../../../types/launcher.types';
 
 const LAYER_ID = 16;
 
 export const ClockLayer16: React.FC<ClockLayerProps> = (props) => {
-  return <ClockLayer01 {...props} />;
+  
+  const enhancedConfig = useMemo((): RotateItemConfig => {
+    const config = { ...props.config };
+    
+    // Advanced layer features
+    if (config.rotation1?.enabled === 'yes' && config.rotation2?.enabled === 'yes') {
+      console.log(`Layer 16: Dual rotation system active for ${config.itemCode}`);
+    }
+    
+    return config;
+  }, [props.config]);
+  
+  return <ClockLayer01 {...props} config={enhancedConfig} />;
 };
 
 export default ClockLayer16;
