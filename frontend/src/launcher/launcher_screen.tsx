@@ -46,6 +46,55 @@ export interface RotateItemConfig {
 }
 
 //==============================================
+// ROTATE CONFIG DATA
+//==============================================
+
+export const rotateConfig: RotateItemConfig[] = [
+  // LAYER 1 - Clock Background
+  {
+    itemCode: 'item_1',
+    itemName: 'clockBG',
+    itemPath: 'res/clockBG.png',
+    itemLayer: 1,
+    itemSize: 20,
+    itemDisplay: 'yes',
+    handType: 'hour',
+    handRotation: 'ROTATION1',
+    timezone: {
+      enabled: 'yes',
+      utcOffset: 0,
+      use24Hour: 'yes',
+    },
+    shadow: 'no',
+    glow: 'no',
+    transparent: 'no',
+    pulse: 'no',
+    render: 'yes',
+    rotation1: {
+      enabled: 'yes',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 86400,
+      rotationWay: '+',
+    },
+    rotation2: {
+      enabled: 'no',
+      itemTiltPosition: 0,
+      itemAxisX: 50,
+      itemAxisY: 50,
+      itemPositionX: 0,
+      itemPositionY: 0,
+      rotationSpeed: 0,
+      rotationWay: '',
+    },
+  },
+  // Add more layers as needed - for now just one to test
+];
+
+//==============================================
 // CLOCK LOGIC SECTION
 //==============================================
 //DETAILED DESCRIPTION:
