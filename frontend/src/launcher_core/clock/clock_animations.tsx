@@ -10,7 +10,8 @@
 // Change transition durations for smoother or snappier animations.
 
 import { ClockState } from '../../types/launcher.types';
-import { interpolateAngles, normalize360 } from '../../utils/mathUtils';
+import { normalize360 } from '../../utils/mathUtils';
+import { interpolateAngles } from './clock_utils';
 import { ANIMATION_CONSTANTS } from '../../constants/launcher.constants';
 
 // ===== ANIMATION INTERFACES =====
