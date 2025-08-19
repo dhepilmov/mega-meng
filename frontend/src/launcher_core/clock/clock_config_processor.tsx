@@ -219,7 +219,7 @@ export class ClockConfigProcessor {
       }
     });
 
-    return { rotation1, rotation2, static };
+    return { rotation1, rotation2, staticLayers };
   }
 
   /**
