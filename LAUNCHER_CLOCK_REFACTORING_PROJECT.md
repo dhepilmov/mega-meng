@@ -1,6 +1,9 @@
 # 🚀 LAUNCHER CLOCK REFACTORING & ENHANCEMENT PROJECT
 **Complete Development Plan & Implementation Roadmap**
-
+***DEVELOPER MUST FOLLOW
+- READ LATEST LOG UPDATE ESPECIALLY LATEST UPDTAE
+- AFTER CREATE NEW FILE AI ASSISTANT MUST UPDATE THIS LOG, what files that has been created and its purpouse, then continue testing.
+- SKIP TESTING BACKEND until AI assistant asked to do so
 ---
 
 ## 📋 **PROJECT OVERVIEW**
