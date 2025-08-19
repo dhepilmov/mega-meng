@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { RotateAnim } from './rotate_anim';
 import RotateConfigUI from './launcher_config';
 import './launcher_effect.css';
 
