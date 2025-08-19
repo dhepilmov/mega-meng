@@ -136,92 +136,87 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
            config.itemPath.length > 0;
   }, [config.itemDisplay, config.render, config.itemPath]);
   
-  // ===== ROTATION CALCULATIONS =====
+  // ===== PHASE 3: DUAL ROTATION CALCULATIONS =====
   
-  const calculateLayerRotation = useCallback((timestamp: number): number => {
+  const calculateLayerRotation = useCallback((timestamp: number): DualRotationResult => {
     try {
-      // Clock hands use real-time angles
+      // For clock hands, use real-time angles for rotation1
       if (isClockHand && clockState) {
+        let clockAngle = 0;
         switch (config.handType) {
           case 'hour':
-            return clockState.hourAngle;
+            clockAngle = clockState.hourAngle;
+            break;
           case 'minute':
-            return clockState.minuteAngle;
+            clockAngle = clockState.minuteAngle;
+            break;
           case 'second':
-            return clockState.secondAngle;
+            clockAngle = clockState.secondAngle;
+            break;
           default:
-            return 0;
+            clockAngle = 0;
         }
-      }
-      
-      // Non-clock items use time-based rotation
-      if (activeRotationConfig && safeString(activeRotationConfig.enabled) === 'yes') {
-        const rotationSpeed = safeNumber(activeRotationConfig.rotationSpeed, 86400);
-        const direction = safeString(activeRotationConfig.rotationWay, 'no');
-        const initialAngle = safeNumber(activeRotationConfig.itemTiltPosition, 0);
         
-        return calculateRotationAngle(
-          startTimeRef.current,
-          timestamp,
-          rotationSpeed,
-          direction as any,
-          initialAngle
-        );
+        // For clock hands, override rotation1 angle but keep positioning
+        const dualConfig = {
+          rotation1: {
+            ...config.rotation1,
+            enabled: 'yes' as const,
+            rotationWay: '+' as const,
+            rotationSpeed: 1, // Ignored for clock hands
+            itemTiltPosition: clockAngle // Use real-time clock angle
+          },
+          rotation2: config.rotation2
+        };
+        
+        return calculateDualRotationSystem(dualConfig, timestamp, startTimeRef.current);
       }
       
-      return safeNumber(activeRotationConfig?.itemTiltPosition, 0);
+      // For non-clock items, use time-based dual rotation system
+      return calculateDualRotationSystem(
+        {
+          rotation1: config.rotation1,
+          rotation2: config.rotation2
+        },
+        timestamp,
+        startTimeRef.current
+      );
+      
     } catch (error) {
-      const errorMsg = `Rotation calculation error for layer ${config.itemCode}: ${error}`;
+      const errorMsg = `Dual rotation calculation error for layer ${config.itemCode}: ${error}`;
       console.error(errorMsg);
       onError?.(errorMsg);
-      return 0;
+      
+      // Return safe default
+      return {
+        finalPosition: { x: 0, y: 0 },
+        rotation1Angle: 0,
+        rotation2Angle: 0,
+        rotation1Transform: 'rotate(0deg)',
+        rotation2Transform: 'translate(0px, 0px)',
+        combinedTransform: 'translate(0px, 0px) rotate(0deg) scale(1)'
+      };
     }
-  }, [isClockHand, clockState, config.handType, config.itemCode, activeRotationConfig, onError]);
-  
-  // ===== POSITION CALCULATIONS =====
-  
-  const calculateLayerPosition = useCallback(() => {
-    try {
-      let positionX = 0;
-      let positionY = 0;
-      
-      // Apply rotation1 positioning if enabled
-      if (safeString(config.rotation1?.enabled) === 'yes') {
-        positionX += safeNumber(config.rotation1.itemPositionX, 0);
-        positionY += safeNumber(config.rotation1.itemPositionY, 0);
-      }
-      
-      // Apply rotation2 positioning if enabled (orbital positioning)
-      if (safeString(config.rotation2?.enabled) === 'yes') {
-        const orbitalX = safeNumber(config.rotation2.itemPositionX, 0);
-        const orbitalY = safeNumber(config.rotation2.itemPositionY, 0);
-        
-        // TODO: Implement orbital mechanics here
-        // For now, just add the position values
-        positionX += orbitalX;
-        positionY += orbitalY;
-      }
-      
-      return { x: positionX, y: positionY };
-    } catch (error) {
-      const errorMsg = `Position calculation error for layer ${config.itemCode}: ${error}`;
-      console.error(errorMsg);
-      onError?.(errorMsg);
-      return { x: 0, y: 0 };
-    }
-  }, [config.rotation1, config.rotation2, config.itemCode, onError]);
-  
+  }, [isClockHand, clockState, config.handType, config.rotation1, config.rotation2, config.itemCode, onError]);
+
   // ===== TRANSFORM ORIGIN CALCULATION =====
   
   const calculateTransformOrigin = useCallback(() => {
-    if (isClockHand && activeRotationConfig) {
-      const axisX = safeNumber(activeRotationConfig.itemAxisX, 50);
-      const axisY = safeNumber(activeRotationConfig.itemAxisY, 50);
-      return `${axisX}% ${axisY}%`;
-    }
+    // Determine which rotation system is primary
+    const useRotation1 = safeString(config.rotation1?.enabled) === 'yes';
+    const useRotation2 = safeString(config.rotation2?.enabled) === 'yes';
     
-    return '50% 50%'; // Default center
-  }, [isClockHand, activeRotationConfig]);
+    if (useRotation1 && !useRotation2) {
+      // Pure spin system - use rotation1 axis
+      return calculateAdvancedTransformOrigin(config.rotation1, false);
+    } else if (useRotation2) {
+      // Orbital system (with or without spin) - use center for orbital motion
+      return calculateAdvancedTransformOrigin({}, true);
+    } else {
+      // No rotation - use center
+      return '50% 50%';
+    }
+  }, [config.rotation1, config.rotation2]);
   
   // ===== EFFECTS APPLICATION =====
   
