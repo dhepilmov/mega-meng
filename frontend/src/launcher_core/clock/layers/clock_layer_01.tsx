@@ -106,8 +106,8 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
   
   // Check if this layer is configured as a clock hand
   const isClockHand = useMemo(() => {
-    return config.handType && config.handType !== null && 
-           config.handRotation && config.handRotation !== null;
+    return !!(config.handType && config.handType !== null && 
+              config.handRotation && config.handRotation !== null);
   }, [config.handType, config.handRotation]);
   
   // Calculate visibility
