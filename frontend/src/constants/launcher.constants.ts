@@ -214,14 +214,7 @@ export const DEV_FLAGS = {
   LOG_FRAME_RATES: false,
 } as const;
 
-// ===== ERROR MESSAGES =====
-export const ERROR_MESSAGES = {
-  INVALID_CONFIG: 'Invalid configuration provided',
-  MISSING_ASSET: 'Asset file not found',
-  STORAGE_ERROR: 'Error accessing local storage',
-  CALCULATION_ERROR: 'Error in mathematical calculation',
-  RENDER_ERROR: 'Error rendering component',
-} as const;
+// ===== PERFORMANCE CONSTANTS =====
 
 // ===== SUCCESS MESSAGES =====
 export const SUCCESS_MESSAGES = {
