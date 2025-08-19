@@ -554,6 +554,13 @@ export class LauncherSettingsManager {
 
       // Apply imported settings
       this.currentSettings = validation.fixedSettings || importData.settings;
+      if (!this.currentSettings) {
+        return {
+          success: false,
+          message: 'Failed to apply imported settings',
+          errors: ['Invalid settings data after validation'],
+        };
+      }
       this.currentSettings.lastModified = Date.now();
       
       // Save settings
