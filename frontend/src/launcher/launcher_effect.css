@@ -1,0 +1,137 @@
+/* Launcher Container Styles */
+.launcher-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #1a1a1a; /* Dark background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.launcher-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Loading state */
+.loading-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: #e0e0e0; /* Light text color for dark background */
+  z-index: 1001;
+}
+
+/* Dot mark should be on top of everything */
+.dot-mark {
+  z-index: 1000 !important;
+}
+
+/* Pulse animation for tap counter */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .launcher-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .launcher-container {
+    padding: 0.5rem;
+  }
+  
+  .loading-text {
+    font-size: 1rem;
+  }
+}
+
+/* Animation base classes for future use */
+.launcher-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.launcher-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Enhanced visual effects for launcher items */
+.launcher-glow {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+}
+
+.launcher-shadow {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.launcher-transparent {
+  opacity: 0.7;
+}
+
+.launcher-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Gesture feedback effects */
+.launcher-scale-feedback {
+  transition: transform 0.2s ease-out;
+}
+
+.launcher-tap-feedback {
+  animation: tapPulse 0.3s ease-out;
+}
+
+@keyframes tapPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
