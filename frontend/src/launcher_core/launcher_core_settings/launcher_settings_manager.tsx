@@ -544,8 +544,8 @@ export class LauncherSettingsManager {
         return {
           success: false,
           message: 'Imported settings are invalid',
-          errors: validation.errors,
-          warnings: validation.warnings,
+          errors: validation.errors.map(e => e.message),
+          warnings: validation.warnings.map(w => w.message),
         };
       }
 
