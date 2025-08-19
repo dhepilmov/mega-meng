@@ -11,6 +11,10 @@
 // Change animation timing types to adjust performance characteristics.
 // Add new orbital mechanics by extending OrbitalConfig interface.
 
+// ===== IMPORTS =====
+
+import { ValidationResult } from '../launcher_core/launcher_core_settings/launcher_settings_validator';
+
 // ===== ROTATION MODES =====
 
 export type RotationMode = 'spin' | 'orbital' | 'hybrid' | 'disabled';
