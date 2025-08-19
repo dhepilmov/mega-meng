@@ -66,7 +66,7 @@ export function getTimezoneClockState(timezone?: TimezoneConfig | null): ClockSt
   }
 
   return calculateTimezoneClockAngles(
-    safeNumber(timezone.utcOffset, 0, -12, 14, 0),
+    safeNumber(timezone.utcOffset, -12, 14, 0),
     timezone.use24Hour === 'yes'
   );
 }
