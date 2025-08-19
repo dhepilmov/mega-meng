@@ -236,16 +236,27 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
     if (isPaused || !isLayerVisible) return;
     
     const now = Date.now();
-    const rotation = calculateLayerRotation(now);
-    const position = calculateLayerPosition();
     const size = safeNumber(config.itemSize, 100) / 100; // Convert percentage to scale
     
-    // Create transform matrix
-    const transform = calculateTransformMatrix(
-      position.x,
-      position.y,
-      rotation,
-      size
+    // Phase 3: Calculate dual rotation system
+    const dualRotationResult = calculateLayerRotation(now);
+    
+    // Calculate layer complexity for performance monitoring
+    const layerComplexity = calculateLayerComplexity({
+      rotation1: config.rotation1,
+      rotation2: config.rotation2,
+      hasEffects: config.shadow === 'yes' || config.glow === 'yes' || 
+                  config.transparent === 'yes' || config.pulse === 'yes',
+      isClockHand: isClockHand
+    });
+    
+    // Calculate transform origin based on rotation system
+    const transformOrigin = calculateTransformOrigin();
+    
+    // Create the final transform (dual rotation system handles everything)
+    const finalTransform = dualRotationResult.combinedTransform.replace(
+      'scale(1)',
+      `scale(${size})`
     );
     
     // Calculate effects
@@ -253,10 +264,15 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
     
     setLayerState(prev => ({
       ...prev,
-      currentTransform: transform,
+      currentTransform: finalTransform,
       currentEffects: effects,
       lastUpdateTime: now,
       isVisible: isLayerVisible,
+      
+      // Phase 3: Enhanced state
+      dualRotationResult,
+      layerComplexity,
+      transformOrigin,
     }));
     
     // Schedule next update for non-clock items (clock hands update via clockState changes)
@@ -266,10 +282,16 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
   }, [
     isPaused, 
     isLayerVisible, 
-    calculateLayerRotation, 
-    calculateLayerPosition, 
+    calculateLayerRotation,
+    calculateTransformOrigin,
     calculateLayerEffects,
     config.itemSize,
+    config.rotation1,
+    config.rotation2,
+    config.shadow,
+    config.glow,
+    config.transparent,
+    config.pulse,
     isClockHand
   ]);
   
