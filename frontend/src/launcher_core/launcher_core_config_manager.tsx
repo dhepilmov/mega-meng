@@ -263,7 +263,7 @@ export class LauncherConfigManager {
   static getAvailableBackups(): Array<{ key: string; timestamp: string }> {
     try {
       const backups: Array<{ key: string; timestamp: string }> = [];
-      const prefix = `${STORAGE_KEYS.USER_CONFIG}_backup_`;
+      const prefix = `${STORAGE_KEYS.LAUNCHER_CONFIG}_backup_`;
 
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
