@@ -94,7 +94,7 @@ export class LauncherConfigManager {
         return false;
       }
 
-      localStorage.setItem(STORAGE_KEYS.USER_CONFIG, JSON.stringify(config));
+      localStorage.setItem(STORAGE_KEYS.LAUNCHER_CONFIG, JSON.stringify(config));
       console.log('Configuration saved successfully');
       return true;
     } catch (error) {
