@@ -11,7 +11,7 @@
 // Change position calculations for different layout behaviors.
 // Update error handling for better layer resilience.
 
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import { RotateItemConfig, ClockState } from '../../../types/launcher.types';
 import { 
   calculateRotationAngle, 
