@@ -3,6 +3,49 @@ import RotateConfigUI from './launcher_config';
 import './launcher_effect.css';
 
 //==============================================
+// TYPE DEFINITIONS FROM ROTATE_CONFIG
+//==============================================
+
+export interface RotationConfig {
+  enabled: 'yes' | 'no' | null;
+  itemTiltPosition: number;
+  itemAxisX: number; // percentage from its own center
+  itemAxisY: number; // percentage from its own center
+  itemPositionX: number; // percentage from center/dot mark
+  itemPositionY: number; // percentage from center/dot mark
+  rotationSpeed: number; // seconds per full rotate
+  rotationWay: '+' | '-' | 'no' | '' | null; // + clockwise, - anti-clockwise, no/empty = no rotate
+}
+
+export interface RotateItemConfig {
+  itemCode: string;
+  itemName: string;
+  itemPath: string;
+  itemLayer: number;
+  itemSize: number; // percentage from its own center
+  itemDisplay: 'yes' | 'no' | ''; // Controls whether PNG is displayed or hidden
+  
+  // CLOCK HAND CONFIGURATION
+  handType?: 'hour' | 'minute' | 'second' | null;
+  handRotation?: 'ROTATION1' | 'ROTATION2' | null;
+  // When handType is set, clock logic overrides the specified rotation
+  
+  // TIMEZONE (only for hour hands)
+  timezone?: TimezoneConfig | null;
+  
+  // EFFECT
+  shadow: 'yes' | 'no';
+  glow: 'yes' | 'no';
+  transparent: 'yes' | 'no';
+  pulse: 'yes' | 'no';
+  render: 'yes' | 'no';
+  
+  // ROTATION CONFIGURATION
+  rotation1: RotationConfig;
+  rotation2: RotationConfig;
+}
+
+//==============================================
 // CLOCK LOGIC SECTION
 //==============================================
 //DETAILED DESCRIPTION:
