@@ -221,7 +221,7 @@ export class LauncherSettingsManager {
         success: true,
         message: SUCCESS_MESSAGES.CONFIG_SAVED,
         data: this.currentSettings,
-        warnings: validation.warnings,
+        warnings: validation.warnings.map(w => w.message),
       };
     } catch (error) {
       return {
