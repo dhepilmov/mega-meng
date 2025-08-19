@@ -185,7 +185,7 @@ export function calculateClockAngles(): ClockState { {
 /**
  * Calculate timezone-adjusted clock angles
  */
-export function calculateTimezoneClockAngles(utcOffset: number, use24Hour: boolean = true): ClockState { {
+export function calculateTimezoneClockAngles(utcOffset: number, use24Hour: boolean = true): ClockState {
   const now = new Date();
   const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
   const timezoneTime = new Date(utc + (utcOffset * 3600000));
