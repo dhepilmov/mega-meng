@@ -148,7 +148,12 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
             rotationSpeed: 1, // Ignored for clock hands
             itemTiltPosition: clockAngle // Use real-time clock angle
           },
-          rotation2: config.rotation2
+          rotation2: {
+            ...config.rotation2,
+            itemRotateAxisX: config.rotation2?.itemRotateAxisX || 0,
+            itemRotateAxisY: config.rotation2?.itemRotateAxisY || 0,
+            itemTiltPosition: config.rotation2?.itemTiltPosition || 0
+          }
         };
         
         return calculateDualRotationSystem(dualConfig, timestamp, startTimeRef.current);
