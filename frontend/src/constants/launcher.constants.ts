@@ -217,10 +217,4 @@ export const DEV_FLAGS = {
 
 // ===== PERFORMANCE CONSTANTS =====
 
-// ===== SUCCESS MESSAGES =====
-export const SUCCESS_MESSAGES = {
-  CONFIG_SAVED: 'Configuration saved successfully',
-  PRESET_CREATED: 'Preset created successfully',
-  LAYER_COPIED: 'Layer configuration copied',
-  RESET_COMPLETE: 'Reset to defaults complete',
-} as const;
+// ===== PERFORMANCE CONSTANTS =====
