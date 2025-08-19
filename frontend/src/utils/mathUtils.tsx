@@ -154,7 +154,7 @@ export function percentageToPixels(
 /**
  * Calculate current time angles for clock hands
  */
-export function calculateClockAngles(): ClockState { {
+export function calculateClockAngles(): ClockState {
   const now = new Date();
   const hours = now.getHours();
   const minutes = now.getMinutes();
