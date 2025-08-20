@@ -192,7 +192,7 @@ export const LAYER_PROPERTIES = {
   DEFAULT_LAYER_NAME: 'Layer',
   
   // Asset path prefix
-  ASSET_PATH_PREFIX: 'res/',
+  ASSET_PATH_PREFIX: 'launcher_core/clock/layers_res/',
   
   // File extensions
   IMAGE_EXTENSIONS: ['.png', '.jpg', '.jpeg', '.gif', '.svg'],
