@@ -164,9 +164,9 @@ export class LauncherDataProcessor {
     }
 
     // Remove 'res/' prefix if present (it's handled by base path)
-    const cleanPath = itemPath.replace(/^res\//, '');
+    const cleanPath = itemPath.replace(/^(res\/|launcher_core\/clock\/layers_res\/)/, '');
     
-    return `${this.options.baseImagePath}${cleanPath}`;
+    return `${this.options.baseImagePath}layers_res/${cleanPath}`;
   }
 
   /**
