@@ -49,7 +49,7 @@ export class LauncherDataProcessor {
   private static imageCache = new Map<string, HTMLImageElement>();
   private static loadingPromises = new Map<string, Promise<HTMLImageElement>>();
   private static options: DataProcessorOptions = {
-    baseImagePath: '/launcher/',
+    baseImagePath: '/launcher_core/clock/',
     enableImagePreloading: true,
     imageLoadTimeout: 5000,
     cacheImages: true,
