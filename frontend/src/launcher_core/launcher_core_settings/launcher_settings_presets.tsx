@@ -646,7 +646,7 @@ export class PresetManager {
       {
         itemCode: 'clock_bg',
         itemName: 'Clock Background',
-        itemPath: 'res/clockBG.png',
+        itemPath: 'launcher_core/clock/layers_res/clockBG.png',
         itemLayer: 1,
         itemSize: 100,
         itemDisplay: 'yes',
