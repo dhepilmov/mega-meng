@@ -41,9 +41,6 @@ export { default as ClockLayer19 } from './layers/layer-19';
 export { default as ClockLayer20 } from './layers/layer-20';
 export { default as ClockLayerDefault } from './layers/layer-default';
 
-// ===== LAYER EXPORTS WITH ORIGINAL NAMES (for compatibility) =====
-export { default as ClockLayer01 } from './layers/layer-01';
-
 // ===== CLOCK SYSTEM UTILITIES =====
 export const ClockSystem = {
   // Version info
