@@ -38,7 +38,7 @@ export interface RotateItemConfig {
   // Basic Properties
   itemCode: string;                  // Unique identifier for the item (item_1 to item_20)
   itemName: string;                  // Display name or PNG filename without extension
-  itemPath: string;                  // File path relative to res/ folder
+  itemPath: string;                  // File path relative to layers_res/ folder
   itemLayer: number;                 // Layer order (1-20, higher = on top)
   itemSize: number;                  // Scale percentage (1-1000%)
   itemDisplay: 'yes' | 'no' | '';    // Controls whether PNG is displayed or hidden
