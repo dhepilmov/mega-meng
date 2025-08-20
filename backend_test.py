@@ -340,6 +340,12 @@ class BackendTester:
         # Test 6: Error handling
         self.test_error_handling()
         
+        # Test 7: Performance benchmarks
+        self.test_performance_benchmarks()
+        
+        # Test 8: Service health
+        self.test_service_health()
+        
         return self.generate_summary()
     
     def generate_summary(self):
