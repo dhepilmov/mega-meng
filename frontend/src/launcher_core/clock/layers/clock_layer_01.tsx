@@ -278,6 +278,14 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
     isClockHand
   ]);
   
+  // Separate animation loop for non-clock items
+  const animationLoop = useCallback(() => {
+    updateLayerState();
+    if (!isClockHand && !isPaused && isLayerVisible) {
+      animationRef.current = requestAnimationFrame(animationLoop);
+    }
+  }, [updateLayerState, isClockHand, isPaused, isLayerVisible]);
+
   // ===== EFFECTS =====
   
   // Update when clock state changes (for clock hands)
