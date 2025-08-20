@@ -680,7 +680,7 @@ export class PresetManager {
       {
         itemCode: 'minute_hand',
         itemName: 'Minute Hand',
-        itemPath: 'res/minuteHand.png',
+        itemPath: 'launcher_core/clock/layers_res/minuteHand.png',
         itemLayer: 3,
         itemSize: 100,
         itemDisplay: 'yes',
