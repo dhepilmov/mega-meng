@@ -1,0 +1,166 @@
+/* 🎨 Warung Meng Main Styles */
+/* Following meng_styles_* naming convention */
+/* Optimized for old devices and fast loading */
+
+/* Traditional Indonesian color palette */
+:root {
+  --warung-brown: #8B4513;
+  --warung-gold: #DAA520;
+  --warung-orange: #FF8C00;
+  --warung-cream: #FFF8DC;
+  --warung-dark-brown: #654321;
+  --warung-light-brown: #D2B48C;
+}
+
+/* Base styles for Warung Meng */
+.warung-meng-app {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--warung-dark-brown);
+  background-color: var(--warung-cream);
+}
+
+/* Hero section styles */
+.warung-hero {
+  background: linear-gradient(135deg, var(--warung-brown) 0%, var(--warung-orange) 100%);
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.warung-hero-title {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.warung-hero-tagline {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  opacity: 0.9;
+}
+
+/* Menu section styles */
+.warung-menu-category {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--warung-gold);
+}
+
+.warung-menu-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.warung-menu-item:hover {
+  background-color: #fafafa;
+}
+
+.warung-menu-item:last-child {
+  border-bottom: none;
+}
+
+.warung-price {
+  color: var(--warung-brown);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.warung-popular {
+  background: var(--warung-gold);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.warung-spicy {
+  color: #e53e3e;
+}
+
+.warung-vegetarian {
+  color: #38a169;
+}
+
+/* Contact section styles */
+.warung-contact {
+  background: var(--warung-light-brown);
+  color: var(--warung-dark-brown);
+}
+
+.warung-contact-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Button styles */
+.warung-btn {
+  background: var(--warung-brown);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.warung-btn:hover {
+  background: var(--warung-dark-brown);
+  color: white;
+}
+
+/* Responsive optimizations for old devices */
+@media (max-width: 640px) {
+  .warung-menu-category {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .warung-hero {
+    padding: 2rem 1rem;
+  }
+  
+  .warung-contact-card {
+    padding: 1rem;
+  }
+}
+
+/* Reduce animations for better performance on old devices */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* High contrast for accessibility */
+@media (prefers-contrast: high) {
+  .warung-menu-item {
+    border-bottom: 2px solid #000;
+  }
+  
+  .warung-popular {
+    background: #000;
+    color: #fff;
+  }
+}
+
+/* Print styles */
+@media print {
+  .warung-hero {
+    background: none !important;
+    color: black !important;
+  }
+  
+  .warung-menu-category {
+    box-shadow: none !important;
+    border: 1px solid #000;
+  }
+}
