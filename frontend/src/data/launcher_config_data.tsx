@@ -153,7 +153,7 @@ export const rotateConfig: RotateItemConfig[] = [
   {
     itemCode: 'item_5',
     itemName: 'orbitingDecoration',
-    itemPath: 'res/decoration.png',
+    itemPath: 'launcher_core/clock/layers_res/decoration.png',
     itemLayer: 5,
     itemSize: 40,
     itemDisplay: 'no', // Disabled by default
