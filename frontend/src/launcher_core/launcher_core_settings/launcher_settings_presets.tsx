@@ -663,7 +663,7 @@ export class PresetManager {
       {
         itemCode: 'hour_hand',
         itemName: 'Hour Hand',
-        itemPath: 'res/hourHand.png',
+        itemPath: 'launcher_core/clock/layers_res/hourHand.png',
         itemLayer: 2,
         itemSize: 100,
         itemDisplay: 'yes',
