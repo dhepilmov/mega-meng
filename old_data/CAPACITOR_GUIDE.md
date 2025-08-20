@@ -30,7 +30,7 @@ yarn cap:open
 
 ### **Backend URL Configuration:**
 - **File**: `/app/frontend/.env`
-- **Current**: `REACT_APP_BACKEND_URL=https://phase5-clock.preview.emergentagent.com`
+- **Current**: `REACT_APP_BACKEND_URL=https://code-refactor-test.preview.emergentagent.com`
 - **Local Testing**: Change to `http://localhost:8001`
 - **Production**: Change to your deployed backend URL
 
