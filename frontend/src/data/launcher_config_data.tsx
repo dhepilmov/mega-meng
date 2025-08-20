@@ -62,7 +62,7 @@ export const rotateConfig: RotateItemConfig[] = [
   {
     itemCode: 'item_2',
     itemName: 'minuteHand',
-    itemPath: 'res/minute_hand.png',
+    itemPath: 'launcher_core/clock/layers_res/minute_hand.png',
     itemLayer: 2,
     itemSize: 85,
     itemDisplay: 'yes',
