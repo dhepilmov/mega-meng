@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Launcher from './launcher_core/launcher_screen';
+import LauncherEngine from './launcher';
 import './App.css';
 
 const App: React.FC = () => {
@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Launcher />} />
+          <Route path="/" element={<LauncherEngine />} />
         </Routes>
       </BrowserRouter>
     </div>
