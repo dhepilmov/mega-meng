@@ -3,6 +3,9 @@
 //==============================================
 // Central export point for all launcher core modules
 
+// Main launcher component
+export { default as LauncherScreen } from './launcher_screen';
+
 // Core managers
 export { LauncherConfigManager } from './launcher_core_config_manager';
 export { LauncherDataProcessor } from './launcher_core_data_processor';
