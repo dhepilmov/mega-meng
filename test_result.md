@@ -125,13 +125,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "FastAPI Server Status"
-    - "API Endpoints Functionality"
-    - "MongoDB Connection"
-    - "CORS Configuration"
-    - "Performance Metrics"
-    - "Service Integration"
-  stuck_tasks: []
+    - "Frontend Testing"
+  stuck_tasks: 
+    - "Frontend Testing"
   test_all: false
   test_priority: "high_first"
 
