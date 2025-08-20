@@ -35,7 +35,8 @@ const App: React.FC = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<WarungMengApp />} />
+          <Route path="/welcome" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </div>
