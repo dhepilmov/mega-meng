@@ -14,14 +14,14 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import './launcher_effect.css';
 
 // ===== NEW MODULAR IMPORTS =====
-import { useClockOrchestrator } from '../launcher_core/clock/clock_orchestrator';
-import { LauncherConfigManager } from '../launcher_core/launcher_core_config_manager';
-import { LauncherDataProcessor, ProcessedRotateItem } from '../launcher_core/launcher_core_data_processor';
-import { useGestures, useBackupClick } from '../launcher_core/launcher_core_user_input';
-import { ClockLayer01 } from '../launcher_core/clock/layers/clock_layer_01';
+import { useClockOrchestrator } from './clock/clock_orchestrator';
+import { LauncherConfigManager } from './launcher_core_config_manager';
+import { LauncherDataProcessor, ProcessedRotateItem } from './launcher_core_data_processor';
+import { useGestures, useBackupClick } from './launcher_core_user_input';
+import { ClockLayer01 } from './clock/layers/clock_layer_01';
 
 // Settings system import
-import { LauncherSettingsUI } from '../launcher_core/launcher_core_settings';
+import { LauncherSettingsUI } from './launcher_core_settings';
 
 // Component imports
 import DotMark from '../components/DotMark';
