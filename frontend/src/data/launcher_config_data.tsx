@@ -208,7 +208,7 @@ export const createExpandedConfig = (): RotateItemConfig[] => {
       expanded.push({
         itemCode: `item_${i}`,
         itemName: `Layer ${i}`,
-        itemPath: `res/layer_${i}.png`,
+        itemPath: `launcher_core/clock/layers_res/layer_${i}.png`,
         itemLayer: i,
         itemSize: 100,
         itemDisplay: 'no', // Disabled by default
