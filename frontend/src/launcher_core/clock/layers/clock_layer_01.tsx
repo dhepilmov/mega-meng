@@ -262,10 +262,6 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
       transformOrigin,
     }));
     
-    // Schedule next update for non-clock items (clock hands update via clockState changes)
-    if (!isClockHand && !isPaused) {
-      animationRef.current = requestAnimationFrame(updateLayerState);
-    }
   }, [
     isPaused, 
     isLayerVisible, 
