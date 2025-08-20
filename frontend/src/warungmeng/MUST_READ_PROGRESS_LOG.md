@@ -25,12 +25,12 @@
 - ✅ Applied traditional Indonesian styling (browns, golds, oranges)
 
 ### 🔄 In Progress
+- ✅ Website integration into main app completed
 - 🔄 Testing website functionality
-- 🔄 Performance optimization verification
 
 ### 📋 Next Steps
 - [ ] Test website on different screen sizes
-- [ ] Verify loading speed on old devices
+- [ ] Verify loading speed on old devices  
 - [ ] Add final optimizations if needed
 - [ ] Document editing instructions for user
 
