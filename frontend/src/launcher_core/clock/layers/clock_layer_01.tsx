@@ -289,12 +289,12 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
     if (isClockHand) {
       updateLayerState();
     }
-  }, [clockState, isClockHand]); // Removed updateLayerState from dependencies
+  }, [clockState, isClockHand, updateLayerState]);
   
   // Update when configuration changes
   useEffect(() => {
     updateLayerState();
-  }, [config]); // Removed updateLayerState from dependencies
+  }, [config, updateLayerState]);
   
   // Start animation for non-clock items
   useEffect(() => {
@@ -308,14 +308,14 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isClockHand, isPaused, isLayerVisible]); // Removed updateLayerState from dependencies
+  }, [isClockHand, isPaused, isLayerVisible, updateLayerState]);
   
   // Force update when requested
   useEffect(() => {
     if (forceUpdate) {
       updateLayerState();
     }
-  }, [forceUpdate]); // Removed updateLayerState from dependencies
+  }, [forceUpdate, updateLayerState]);
   
   // ===== LAYER STYLES =====
   
