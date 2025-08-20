@@ -294,32 +294,7 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
   // Update when configuration changes
   useEffect(() => {
     updateLayerState();
-  }, [
-    config.itemCode,
-    config.itemPath, 
-    config.itemSize,
-    config.itemDisplay,
-    config.render,
-    config.handType,
-    config.handRotation,
-    config.rotation1?.enabled,
-    config.rotation1?.rotationSpeed,
-    config.rotation1?.rotationWay,
-    config.rotation1?.itemTiltPosition,
-    config.rotation1?.itemAxisX,
-    config.rotation1?.itemAxisY,
-    config.rotation2?.enabled,
-    config.rotation2?.rotationSpeed,
-    config.rotation2?.rotationWay,
-    config.rotation2?.itemTiltPosition,
-    config.rotation2?.itemAxisX,
-    config.rotation2?.itemAxisY,
-    config.shadow,
-    config.glow,
-    config.transparent,
-    config.pulse,
-    updateLayerState
-  ]);
+  }, [config, updateLayerState]);
   
   // Start animation for non-clock items
   useEffect(() => {
