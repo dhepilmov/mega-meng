@@ -304,7 +304,7 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
   useEffect(() => {
     if (!isClockHand && !isPaused && isLayerVisible) {
       startTimeRef.current = Date.now();
-      animationRef.current = requestAnimationFrame(updateLayerState);
+      animationRef.current = requestAnimationFrame(animationLoop);
     }
     
     return () => {
@@ -312,7 +312,7 @@ export const ClockLayer01: React.FC<ClockLayerProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isClockHand, isPaused, isLayerVisible, updateLayerState]);
+  }, [isClockHand, isPaused, isLayerVisible, animationLoop]);
   
   // Force update when requested
   useEffect(() => {
