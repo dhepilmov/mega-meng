@@ -212,6 +212,106 @@ class BackendTester:
             self.log_test("Error Handling", False, f"Error handling test failed: {str(e)}")
             return False
     
+    def test_performance_benchmarks(self):
+        """Test response times for all endpoints"""
+        try:
+            endpoints = [
+                ("GET /api/", f"{API_BASE_URL}/"),
+                ("GET /api/status", f"{API_BASE_URL}/status"),
+                ("POST /api/status", f"{API_BASE_URL}/status")
+            ]
+            
+            performance_results = {}
+            
+            for endpoint_name, url in endpoints:
+                times = []
+                
+                # Run each endpoint 5 times to get average
+                for i in range(5):
+                    start_time = time.time()
+                    
+                    if endpoint_name.startswith("POST"):
+                        test_data = {"client_name": f"PerfTest_{i}_{int(time.time())}"}
+                        response = self.session.post(url, json=test_data, headers={'Content-Type': 'application/json'}, timeout=10)
+                    else:
+                        response = self.session.get(url, timeout=10)
+                    
+                    end_time = time.time()
+                    response_time = (end_time - start_time) * 1000  # Convert to milliseconds
+                    
+                    if response.status_code == 200:
+                        times.append(response_time)
+                    else:
+                        self.log_test("Performance Benchmarks", False, f"{endpoint_name} failed with status {response.status_code}")
+                        return False
+                
+                avg_time = sum(times) / len(times)
+                performance_results[endpoint_name] = {
+                    'avg_ms': round(avg_time, 1),
+                    'min_ms': round(min(times), 1),
+                    'max_ms': round(max(times), 1)
+                }
+            
+            # Calculate overall average
+            overall_avg = sum(result['avg_ms'] for result in performance_results.values()) / len(performance_results)
+            
+            perf_summary = f"Overall avg: {overall_avg:.1f}ms. Details: " + ", ".join([
+                f"{endpoint}: {data['avg_ms']}ms" for endpoint, data in performance_results.items()
+            ])
+            
+            self.log_test("Performance Benchmarks", True, perf_summary, performance_results)
+            return True
+            
+        except Exception as e:
+            self.log_test("Performance Benchmarks", False, f"Performance test failed: {str(e)}")
+            return False
+    
+    def test_service_health(self):
+        """Test supervisor service health"""
+        try:
+            import subprocess
+            
+            # Check supervisor status
+            result = subprocess.run(['sudo', 'supervisorctl', 'status'], 
+                                  capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0:
+                status_output = result.stdout
+                
+                # Parse service statuses
+                services = {}
+                for line in status_output.strip().split('\n'):
+                    if line.strip():
+                        parts = line.split()
+                        if len(parts) >= 2:
+                            service_name = parts[0]
+                            service_status = parts[1]
+                            services[service_name] = service_status
+                
+                # Check critical services
+                critical_services = ['backend', 'frontend', 'mongodb']
+                all_running = True
+                
+                for service in critical_services:
+                    if service not in services or services[service] != 'RUNNING':
+                        all_running = False
+                        break
+                
+                if all_running:
+                    running_services = [f"{k}:{v}" for k, v in services.items() if v == 'RUNNING']
+                    self.log_test("Service Health", True, f"All critical services running. Status: {', '.join(running_services)}")
+                    return True
+                else:
+                    self.log_test("Service Health", False, f"Some services not running. Status: {services}")
+                    return False
+            else:
+                self.log_test("Service Health", False, f"Failed to check supervisor status: {result.stderr}")
+                return False
+                
+        except Exception as e:
+            self.log_test("Service Health", False, f"Service health check failed: {str(e)}")
+            return False
+    
     def run_all_tests(self):
         """Run all backend tests"""
         print("=" * 60)
