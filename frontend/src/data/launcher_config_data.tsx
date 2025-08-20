@@ -124,7 +124,7 @@ export const rotateConfig: RotateItemConfig[] = [
   {
     itemCode: 'item_4',
     itemName: 'secondHand',
-    itemPath: 'res/second_hand.png',
+    itemPath: 'launcher_core/clock/layers_res/second_hand.png',
     itemLayer: 4,
     itemSize: 90,
     itemDisplay: 'yes',
