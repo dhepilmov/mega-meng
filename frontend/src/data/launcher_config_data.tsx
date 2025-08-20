@@ -20,7 +20,7 @@ export const rotateConfig: RotateItemConfig[] = [
   {
     itemCode: 'item_1',
     itemName: 'clockBG',
-    itemPath: 'res/clockBG.png',
+    itemPath: 'launcher_core/clock/layers_res/clockBG.png',
     itemLayer: 1,
     itemSize: 20,
     itemDisplay: 'yes',
