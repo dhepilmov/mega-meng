@@ -19,7 +19,7 @@ const MaintenanceScreen: React.FC = () => {
         {/* Subtitle */}
         <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
           We're working hard to improve your experience.<br />
-          Please check back soon!
+          Please check back soon! [VITE HOT RELOAD TEST]
         </p>
 
         {/* Details */}
