@@ -8,11 +8,7 @@ export default defineConfig({
     port: 3000,
     host: '0.0.0.0',
     open: false,
-    allowedHosts: [
-      'localhost',
-      '.preview.emergentagent.com',
-      '.vscode-*.preview.emergentagent.com'
-    ]
+    allowedHosts: 'all'  // Allow all hosts for development in containerized environment
   },
   build: {
     outDir: 'build',
