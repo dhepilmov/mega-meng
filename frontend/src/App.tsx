@@ -40,6 +40,8 @@ const App: React.FC = () => {
           <Route path="/" element={<MaintenanceScreen />} />
           <Route path="/welcome" element={<HomePage />} />
           <Route path="/warungmeng" element={<WarungMengApp />} />
+          <Route path="/yuzha" element={<YuzhaLauncherScreen />} />
+          <Route path="/launcher" element={<YuzhaLauncherScreen />} />
         </Routes>
       </BrowserRouter>
     </div>
