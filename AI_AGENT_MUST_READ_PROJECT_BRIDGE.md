@@ -77,7 +77,7 @@
 - **TypeScript**: 5.9.2 (Latest stable) 
 - **Tailwind CSS**: 3.4.17 (Stable v3 - v4 has breaking changes)
 - **React Router**: 7.5.1 (Built-in TypeScript support)
-- **Build Tool**: Create React App 5.0.1
+- **Build Tool**: Vite 5.4.19 (Modern, fast build system)
 
 ### **Backend**  
 - **FastAPI**: Python-based API framework
