@@ -39,10 +39,19 @@ const App: React.FC = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          {/* Main Route - Maintenance Screen */}
           <Route path="/" element={<MaintenanceScreen />} />
+          
+          {/* Development Foundation Route */}
           <Route path="/welcome" element={<HomePage />} />
-          <Route path="/warungmeng" element={<WarungMengApp />} />
-          <Route path="/yuzha" element={<YuzhaLauncherScreen />} />
+          
+          {/* WarungMeng Website Routes - Complete Independence */}
+          <Route path="/warungmeng/*" element={<WarungMengRouter />} />
+          
+          {/* Yuzha Personal App Routes - Complete Independence */}
+          <Route path="/yuzha/*" element={<YuzhaRouter />} />
+          
+          {/* Legacy direct routes for backward compatibility */}
           <Route path="/launcher" element={<YuzhaLauncherScreen />} />
         </Routes>
       </BrowserRouter>
