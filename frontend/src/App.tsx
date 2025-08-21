@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import WarungMengApp from './warungmeng/WarungMengApp';
 import MaintenanceScreen from './warungmeng/MaintenanceScreen';
+import { YuzhaLauncherScreen } from './Yuzha';
 import './App.css';
 
 const HomePage: React.FC = () => {
