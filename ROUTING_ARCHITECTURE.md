@@ -11,12 +11,16 @@ Both applications work **simultaneously and independently** with their own routi
 
 ### Main Routes
 ```
-/ → MaintenanceScreen (public landing)
+🚀 PRIMARY APP
+/ → YuzhaLauncherScreen (Yuzha Launcher - Main app on Netlify)
+
+🔧 DEVELOPMENT
 /welcome → Foundation/Development page
 ```
 
 ### WarungMeng Website Routes (Namespace: /warungmeng/*)
 ```
+/warungmeng → MaintenanceScreen (WarungMeng maintenance page) 
 /warungmeng/ → WarungMengApp (main cafe website)
 /warungmeng/home → WarungMengApp (alternative)
 /warungmeng/maintenance → MaintenanceScreen (for website maintenance)
