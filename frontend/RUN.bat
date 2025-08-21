@@ -142,7 +142,17 @@ if "%errorlevel%"=="4" (
   start "" "%BASE%/yuzha"
 )
 echo.
-echo Server running! Backend should be at: https://yuzhayo.pythonanywhere.com/api/
+echo ===============================================
+echo SERVER INFORMATION:
+echo Frontend: %BASE%
+echo Backend API: https://yuzhayo.pythonanywhere.com/api/
+echo ===============================================
+echo.
+echo NOTE: If browser doesn't open automatically:
+echo 1. Check the Vite console window for actual port
+echo 2. Manually open: %BASE%
+echo 3. Add route manually: %BASE%/yuzha or %BASE%/warungmeng
+echo.
 goto EXIT
 
 :FAIL
