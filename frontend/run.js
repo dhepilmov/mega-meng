@@ -141,16 +141,19 @@ async function startServer(type, port) {
     
     // For dev server, check if Vite picked a different port
     if (type === 'dev') {
-      for (let testPort = port; testPort <= port + 10; testPort++) {
+      const http = await import('http');
+      
+      for (let testPort = port; testPort <= port + 5; testPort++) {
         try {
-          const response = await fetch(`http://localhost:${testPort}`, { 
-            method: 'HEAD',
-            signal: AbortSignal.timeout(1000)
+          await new Promise((resolve, reject) => {
+            const req = http.get(`http://localhost:${testPort}`, { timeout: 1000 }, (res) => {
+              actualPort = testPort;
+              resolve(res);
+            });
+            req.on('error', reject);
+            req.on('timeout', reject);
           });
-          if (response.ok) {
-            actualPort = testPort;
-            break;
-          }
+          break;
         } catch (error) {
           // Port not responding, try next
         }
@@ -159,7 +162,7 @@ async function startServer(type, port) {
     
     log(`🌐 Server detected on port ${actualPort}`, 'green');
     showRouteMenu(`http://localhost:${actualPort}`);
-  }, type === 'netlify' ? 3000 : 2000);
+  }, type === 'netlify' ? 3000 : 3000);
   
   return server;
 }
