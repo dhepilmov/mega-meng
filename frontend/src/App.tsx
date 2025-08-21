@@ -36,20 +36,20 @@ const App: React.FC = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          {/* Main Route - Yuzha Launcher (Primary App) */}
+          {/* 🚀 MAIN ROUTE - Yuzha Launcher (Primary App on Netlify) */}
           <Route path="/" element={<YuzhaLauncherScreen />} />
           
-          {/* Development Foundation Route */}
+          {/* 🔧 Development Foundation Route */}
           <Route path="/welcome" element={<HomePage />} />
           
-          {/* WarungMeng Website Routes - Accessible at /warungmeng */}
+          {/* 🏪 WarungMeng Website Routes - Accessible at /warungmeng */}
           <Route path="/warungmeng" element={<MaintenanceScreen />} />
           <Route path="/warungmeng/*" element={<WarungMengRouter />} />
           
-          {/* Yuzha Personal App Routes - Complete Independence */}
+          {/* 🎯 Yuzha Extended Routes - Complete Independence */}
           <Route path="/yuzha/*" element={<YuzhaRouter />} />
           
-          {/* Legacy direct routes for backward compatibility */}
+          {/* 🔄 Legacy Compatibility Routes */}
           <Route path="/launcher" element={<YuzhaLauncherScreen />} />
         </Routes>
       </BrowserRouter>
