@@ -11,7 +11,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "vite",
-    "test": "echo \"Tests need to be configured for Vite\" && exit 1"
+    "test": "echo \"Tests need to be configured for Vite\" && exit 1",
+    "launcher": "node run.js",
+    "launcher:reinstall": "node run.js --reinstall"
   },
   "dependencies": {
     "react": "^19.0.0",
