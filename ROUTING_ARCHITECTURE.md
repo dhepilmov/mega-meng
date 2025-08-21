@@ -38,6 +38,19 @@ Both applications work **simultaneously and independently** with their own routi
 /launcher → YuzhaLauncherScreen (direct access, backward compatibility)
 ```
 
+## 🚀 **UPDATED ROUTING STRUCTURE (Latest)**
+
+### **Current Implementation (January 2025)**
+```
+App.tsx (Main Router)
+├── / → YuzhaLauncherScreen (🚀 PRIMARY APP)
+├── /welcome → HomePage (🔧 Development)
+├── /warungmeng → MaintenanceScreen (🏪 WarungMeng landing)
+├── /warungmeng/* → WarungMengRouter (🏪 WarungMeng website)
+├── /yuzha/* → YuzhaRouter (🎯 Yuzha extended)
+└── /launcher → YuzhaLauncherScreen (🔄 Legacy compatibility)
+```
+
 ## Architecture Benefits
 
 ### 1. Complete Independence
