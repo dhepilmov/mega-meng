@@ -44,6 +44,25 @@
 
 ## ✅ [COMPLETED CHANGES]
 
+### **January 21, 2025 - Vite Host Configuration Fix**
+**Agent**: AI Development Agent  
+**Issue**: "Blocked request. This host is not allowed" error with VSCode preview URLs
+
+**Problem**: 
+- Vite blocks requests from unrecognized hosts (DNS rebinding protection)
+- VSCode preview URLs are dynamically generated (vscode-*.preview.emergentagent.com)
+- Default Vite config only allows localhost
+
+**Solution Applied**:
+- ✅ **Updated**: vite.config.ts with `allowedHosts: 'all'`
+- ✅ **Reasoning**: Safe in controlled containerized environment
+- ✅ **Verified**: App now accessible through any preview URL
+- ✅ **Tested**: localhost:3002 working without host blocking errors
+
+**Impact**: Vite dev server now works with dynamic VSCode preview URLs in containerized environment
+
+---
+
 ### **January 21, 2025 - PHASE 2: Component Migration & Entry Points Complete**
 **Agent**: AI Development Agent  
 **Request**: Complete Vite migration by testing components, verifying functionality, and cleaning obsolete files
