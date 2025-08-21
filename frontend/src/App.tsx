@@ -36,13 +36,14 @@ const App: React.FC = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          {/* Main Route - Maintenance Screen */}
-          <Route path="/" element={<MaintenanceScreen />} />
+          {/* Main Route - Yuzha Launcher (Primary App) */}
+          <Route path="/" element={<YuzhaLauncherScreen />} />
           
           {/* Development Foundation Route */}
           <Route path="/welcome" element={<HomePage />} />
           
-          {/* WarungMeng Website Routes - Complete Independence */}
+          {/* WarungMeng Website Routes - Accessible at /warungmeng */}
+          <Route path="/warungmeng" element={<MaintenanceScreen />} />
           <Route path="/warungmeng/*" element={<WarungMengRouter />} />
           
           {/* Yuzha Personal App Routes - Complete Independence */}
