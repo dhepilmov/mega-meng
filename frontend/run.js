@@ -101,7 +101,7 @@ function installDependencies() {
   });
 }
 
-function startServer(type, port) {
+async function startServer(type, port) {
   let command, args, title;
   
   switch (type) {
