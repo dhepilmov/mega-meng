@@ -13,7 +13,8 @@
     "start": "vite",
     "test": "echo \"Tests need to be configured for Vite\" && exit 1",
     "launcher": "node run.js",
-    "launcher:reinstall": "node run.js --reinstall"
+    "launcher:reinstall": "node run.js --reinstall",
+    "test:routes": "node test-routes.js"
   },
   "dependencies": {
     "react": "^19.0.0",
