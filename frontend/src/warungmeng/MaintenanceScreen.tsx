@@ -12,6 +12,7 @@ const MaintenanceScreen: React.FC = () => {
           <div className="w-24 h-24 mx-auto bg-yellow-500 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-lg">
             🔧
           </div>
+          </a>
         </div>
 
         {/* Main Message */}
