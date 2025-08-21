@@ -1,18 +1,17 @@
-import React from 'react';
+// MAINTENANCE SCREEN — IMPORT SECTION
+import React from "react";
 import { DummyButton } from "../dummy_button";
 
-
+// MAINTENANCE SCREEN — LOGIC SECTION
 const MaintenanceScreen: React.FC = () => {
   return (
+    // MAINTENANCE SCREEN — UI SECTION
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center px-4">
       <div className="text-center max-w-2xl mx-auto">
         {/* Maintenance Icon */}
-        <a href="http://localhost:3000/yuzha" aria-label="Open Yuzha" title="Open Yuzha">
         <div className="mb-8">
-          <div className="w-24 h-24 mx-auto bg-yellow-500 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-lg">
-            🔧
-          </div>
-          </a>
+          <DummyButton href="http://localhost:3000/yuzha" label="Open Yuzha" />
+          {/* If you want SPA routing instead: <DummyButton to="/yuzha" label="Open Yuzha" /> */}
         </div>
 
         {/* Main Message */}
@@ -33,17 +32,17 @@ const MaintenanceScreen: React.FC = () => {
           </p>
           <div className="flex items-center justify-center text-yellow-400">
             <svg className="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
-              <circle 
-                className="opacity-25" 
-                cx="12" 
-                cy="12" 
-                r="10" 
-                stroke="currentColor" 
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
                 strokeWidth="4"
               />
-              <path 
-                className="opacity-75" 
-                fill="currentColor" 
+              <path
+                className="opacity-75"
+                fill="currentColor"
                 d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
