@@ -43,6 +43,35 @@
 
 ## ✅ [COMPLETED CHANGES]
 
+### **January 21, 2025 - USER_GUIDANCE.md Creation**
+**Agent**: AI Development Agent  
+**Request**: Create beginner-friendly localhost setup documentation
+
+**Changes Made**:
+- ✅ **Created**: `/app/USER_GUIDANCE.md` comprehensive setup guide
+- ✅ **Target Audience**: Windows 10 64-bit beginners (non-technical users)
+- ✅ **Complete Coverage**: Prerequisites → GitHub download → Setup → Running → Verification
+- ✅ **Detailed Sections**: Prerequisites, ZIP download, dependency installation, service startup, troubleshooting
+- ✅ **Step-by-Step**: Clear instructions with command examples and verification steps
+- ✅ **Troubleshooting**: Common issues and solutions for setup problems
+
+**Content Structure**:
+```
+📖 Introduction & overview
+✅ Prerequisites (Node.js, Python, Git, VS Code)
+📥 GitHub ZIP download method  
+🛠️ Project setup (Yarn, dependencies)
+🚀 Running both frontend and backend
+🔍 Verification checklist
+🚨 Comprehensive troubleshooting
+📝 Development workflow guidance
+🎓 Next steps and learning resources
+```
+
+**Impact**: Non-technical users can now independently set up Mega Meng locally from GitHub ZIP to running application
+
+---
+
 ### **January 21, 2025 - Routing Optimization** 
 **Agent**: AI Development Agent  
 **Request**: Clean routing structure, delete unnecessary routes
