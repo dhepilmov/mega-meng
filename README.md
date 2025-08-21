@@ -2,7 +2,15 @@
 
 ## 🎯 Project Overview
 
-**Mega Meng** is a clean, modern full-stack web application built with React frontend and Flask backend. The project started as a complex launcher/clock system but was **completely cleaned and rebuilt** as a solid foundation for future development.
+**Mega Meng** is a clean, modern full-stack web application built with React frontend and FastAPI backend. The project features a **dual-application architecture** with **Yuzha Launcher** as the primary app and **WarungMeng** as an independent business website.
+
+## 🚀 **Current Live Status (Updated)**
+
+### **Primary Application: Yuzha Launcher**
+- **Main Route (/)**: Professional application launcher with modern UI
+- **Live on Netlify**: https://mega-meng.netlify.app (Shows Yuzha Launcher)
+- **Features**: Fast Launch, Smart Control, Easy Setup interfaces
+- **Design**: Blue-to-purple gradient with glassmorphism effects
 
 ---
 
