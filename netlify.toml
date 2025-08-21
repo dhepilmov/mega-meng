@@ -1,0 +1,8 @@
+[build]
+  # your build logs showed the app lives in /frontend
+  base = "frontend"
+  command = "npm run build"
+  publish = "frontend/dist"
+
+[build.environment]
+  NODE_VERSION = "20"
