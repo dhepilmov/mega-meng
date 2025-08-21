@@ -135,9 +135,30 @@ async function startServer(type, port) {
     env: { ...process.env, PORT: port.toString() }
   });
   
-  // Wait a moment for server to start
-  setTimeout(() => {
-    showRouteMenu(`http://localhost:${port}`);
+  // Wait a moment for server to start, then detect actual port
+  setTimeout(async () => {
+    let actualPort = port;
+    
+    // For dev server, check if Vite picked a different port
+    if (type === 'dev') {
+      for (let testPort = port; testPort <= port + 10; testPort++) {
+        try {
+          const response = await fetch(`http://localhost:${testPort}`, { 
+            method: 'HEAD',
+            signal: AbortSignal.timeout(1000)
+          });
+          if (response.ok) {
+            actualPort = testPort;
+            break;
+          }
+        } catch (error) {
+          // Port not responding, try next
+        }
+      }
+    }
+    
+    log(`🌐 Server detected on port ${actualPort}`, 'green');
+    showRouteMenu(`http://localhost:${actualPort}`);
   }, type === 'netlify' ? 3000 : 2000);
   
   return server;
