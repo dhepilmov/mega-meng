@@ -77,18 +77,32 @@ if "%ANS%"=="2" goto START_NETLIFY
 if "%ANS%"=="3" goto START_STATIC
 
 :START_DEV
-echo == Starting Dev server (Vite will auto-select port) ==
+echo == Starting Dev server ==
 start "Mega Meng Dev Server" cmd /k "npm run dev"
 echo.
 echo == Waiting for Vite to start... ==
 powershell -NoProfile -Command "Start-Sleep -Seconds 3" >nul 2>&1
-echo.
-echo == Vite may have selected port 3001 or higher if 3000 is busy ==
-echo == Check the Vite console output for the actual port ==
-echo.
-set /p "ACTUAL_PORT=Enter the actual port Vite is using (check console above): "
-if "%ACTUAL_PORT%"=="" set "ACTUAL_PORT=3001"
-goto ROUTE_MENU_WITH http://localhost:%ACTUAL_PORT%
+
+REM Check common ports that Vite might use
+set "FOUND_PORT="
+for %%p in (3000 3001 3002 3003) do (
+  powershell -NoProfile -Command "try { $response = Invoke-WebRequest -Uri 'http://localhost:%%p' -TimeoutSec 1; exit 0 } catch { exit 1 }" >nul 2>&1
+  if !errorlevel! equ 0 (
+    set "FOUND_PORT=%%p"
+    goto PORT_FOUND
+  )
+)
+
+:PORT_FOUND
+if defined FOUND_PORT (
+  echo == Dev server detected on port %FOUND_PORT% ==
+  goto ROUTE_MENU_WITH http://localhost:%FOUND_PORT%
+) else (
+  echo == Could not detect port automatically ==
+  echo == Common ports: 3000, 3001, 3002, 3003 ==
+  echo == Check the Vite console window for the actual port ==
+  goto ROUTE_MENU_WITH http://localhost:3001
+)
 
 :START_NETLIFY
 echo == Starting Netlify Dev on http://localhost:%NETLIFY_PORT% ==
