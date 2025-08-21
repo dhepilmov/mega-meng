@@ -26,16 +26,14 @@
 ├── 📋 AI_AGENT_MUST_READ_PROJECT_BRIDGE.md     (This file - main bridge)
 ├── 📋 AI_AGENT_MUST_READ_DEVELOPMENT_LOG.md    (Change tracking & plans)  
 ├── 📋 AI_AGENT_MUST_READ_DEPLOYMENT_INFO.md    (Deployment & access info)
-├── 📋 USER_GUIDANCE.md                         (Beginner setup guide - ZIP to localhost)
+├── 📋 PHASE_2_HANDOFF_INSTRUCTIONS.md          (Completed - can be archived)
 ├── 
 ├── 🎨 frontend/                                (React 19 + TypeScript + Vite + Tailwind)
 │   ├── vite.config.ts                         (Modern Vite build configuration)
 │   ├── index.html                             (Vite entry point)
 │   ├── src/
-│   │   ├── main.tsx                           (Vite React entry point)
-│   │   ├── src/
+│   │   ├── main.tsx                           (Vite React entry point - ACTIVE)
 │   │   ├── App.tsx                            (Main routing - ROOT REDIRECTS TO /warungmeng)
-│   │   ├── index.tsx                          (React root)
 │   │   ├── App.css                            (Global styles)
 │   │   ├── 🏪 warungmeng/                     (WarungMeng business website)
 │   │   │   ├── WarungMengRouter.tsx           (WarungMeng routing logic)
