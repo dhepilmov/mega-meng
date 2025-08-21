@@ -158,6 +158,12 @@
 
 **Track all PROJECT_STRUCTURE section changes here:**
 
+### **January 21, 2025 - User Documentation Addition**
+- **Added**: `USER_GUIDANCE.md` to project root
+- **Purpose**: Beginner-friendly localhost setup guide
+- **Target**: Windows 10 64-bit non-technical users
+- **Updated**: PROJECT_STRUCTURE section in bridge file
+
 ### **January 21, 2025 - Bridge Documentation System**
 - **Added**: `AI_AGENT_MUST_READ_*.md` files to root
 - **Removed**: All existing `.md` files from project
