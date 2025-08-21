@@ -7,6 +7,7 @@ const MaintenanceScreen: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center px-4">
       <div className="text-center max-w-2xl mx-auto">
         {/* Maintenance Icon */}
+        <a href="http://localhost:3000/yuzha" aria-label="Open Yuzha" title="Open Yuzha">
         <div className="mb-8">
           <div className="w-24 h-24 mx-auto bg-yellow-500 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-lg">
             🔧
