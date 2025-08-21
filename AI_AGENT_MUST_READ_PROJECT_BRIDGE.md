@@ -26,6 +26,7 @@
 ├── 📋 AI_AGENT_MUST_READ_PROJECT_BRIDGE.md     (This file - main bridge)
 ├── 📋 AI_AGENT_MUST_READ_DEVELOPMENT_LOG.md    (Change tracking & plans)  
 ├── 📋 AI_AGENT_MUST_READ_DEPLOYMENT_INFO.md    (Deployment & access info)
+├── 📋 USER_GUIDANCE.md                         (Beginner setup guide - ZIP to localhost)
 ├── 
 ├── 🎨 frontend/                                (React 19 + TypeScript + Tailwind)
 │   ├── src/
