@@ -132,8 +132,10 @@ Testing: Backend and frontend testing agents available
 ## 🛠️ Available Features & Capabilities
 
 ### **Current Features:**
-- ✅ **Clean React Frontend** with professional welcome page
-- ✅ **Working Flask API** with health endpoints
+- ✅ **Yuzha Launcher as Primary App** - Beautiful application launcher on root route (/)
+- ✅ **WarungMeng Business Website** - Accessible at dedicated /warungmeng route
+- ✅ **Clean React Frontend** with professional UI and modern design
+- ✅ **Working FastAPI Backend** with health endpoints and MongoDB integration
 - ✅ **CORS Configuration** for cross-origin requests
 - ✅ **Auto-deployment** pipeline (GitHub → Netlify)
 - ✅ **Responsive Design** with Tailwind CSS
