@@ -77,10 +77,18 @@ if "%ANS%"=="2" goto START_NETLIFY
 if "%ANS%"=="3" goto START_STATIC
 
 :START_DEV
-echo == Starting Dev server on http://localhost:%DEV_PORT% ==
-start "Mega Meng Dev Server" cmd /k "set PORT=%DEV_PORT% && npm run dev"
-powershell -NoProfile -Command "Start-Sleep -Seconds 2" >nul 2>&1
-goto ROUTE_MENU_WITH http://localhost:%DEV_PORT%
+echo == Starting Dev server (Vite will auto-select port) ==
+start "Mega Meng Dev Server" cmd /k "npm run dev"
+echo.
+echo == Waiting for Vite to start... ==
+powershell -NoProfile -Command "Start-Sleep -Seconds 3" >nul 2>&1
+echo.
+echo == Vite may have selected port 3001 or higher if 3000 is busy ==
+echo == Check the Vite console output for the actual port ==
+echo.
+set /p "ACTUAL_PORT=Enter the actual port Vite is using (check console above): "
+if "%ACTUAL_PORT%"=="" set "ACTUAL_PORT=3001"
+goto ROUTE_MENU_WITH http://localhost:%ACTUAL_PORT%
 
 :START_NETLIFY
 echo == Starting Netlify Dev on http://localhost:%NETLIFY_PORT% ==
