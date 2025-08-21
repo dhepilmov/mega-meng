@@ -119,7 +119,8 @@ function startServer(type, port) {
       // Build first if needed
       if (!fs.existsSync('build/index.html')) {
         log('🔨 Building production bundle...', 'yellow');
-        require('child_process').execSync('npm run build', { stdio: 'inherit' });
+        const { execSync } = await import('child_process');
+        execSync('npm run build', { stdio: 'inherit' });
       }
       command = 'npx';
       args = ['--yes', 'serve', '-s', 'build', '-l', port.toString()];
