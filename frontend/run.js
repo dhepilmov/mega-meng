@@ -48,8 +48,10 @@ function checkRequirements() {
 
   // Check Node.js and npm
   try {
-    require('child_process').execSync('node --version', { stdio: 'pipe' });
-    require('child_process').execSync('npm --version', { stdio: 'pipe' });
+    import('child_process').then(cp => {
+      cp.execSync('node --version', { stdio: 'pipe' });
+      cp.execSync('npm --version', { stdio: 'pipe' });
+    });
   } catch (error) {
     log('❌ ERROR: Node.js or npm not found in PATH', 'red');
     process.exit(1);
