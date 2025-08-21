@@ -28,8 +28,12 @@
 ├── 📋 AI_AGENT_MUST_READ_DEPLOYMENT_INFO.md    (Deployment & access info)
 ├── 📋 USER_GUIDANCE.md                         (Beginner setup guide - ZIP to localhost)
 ├── 
-├── 🎨 frontend/                                (React 19 + TypeScript + Tailwind)
+├── 🎨 frontend/                                (React 19 + TypeScript + Vite + Tailwind)
+│   ├── vite.config.ts                         (Modern Vite build configuration)
+│   ├── index.html                             (Vite entry point)
 │   ├── src/
+│   │   ├── main.tsx                           (Vite React entry point)
+│   │   ├── src/
 │   │   ├── App.tsx                            (Main routing - ROOT REDIRECTS TO /warungmeng)
 │   │   ├── index.tsx                          (React root)
 │   │   ├── App.css                            (Global styles)
