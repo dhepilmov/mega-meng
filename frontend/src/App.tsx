@@ -1,7 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { MaintenanceScreen, WarungMengRouter } from './warungmeng';
-import { YuzhaLauncherScreen, YuzhaRouter } from './Yuzha';
+import { YuzhaRouter } from './Yuzha';
 import './App.css';
 
 const HomePage: React.FC = () => {
