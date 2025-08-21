@@ -5,10 +5,14 @@
  * Provides easy development server management with route picker
  */
 
-const fs = require('fs');
-const path = require('path');
-const { spawn, exec } = require('child_process');
-const crypto = require('crypto');
+import fs from 'fs';
+import path from 'path';
+import { spawn, exec } from 'child_process';
+import crypto from 'crypto';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuration
 const CONFIG = {
